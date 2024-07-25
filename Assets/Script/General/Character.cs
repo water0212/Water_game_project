@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     public UnityEvent<Transform,float> onTakeDamage;
     public UnityEvent<Character> onHealthChange;
+    public UnityEvent<Character> UpdateCharacterFuntions;
     public UnityEvent onperfectBlock;
     [Header("數值")]
     public float maxHealth;
@@ -33,6 +34,7 @@ public class Character : MonoBehaviour
     [Header("廣播")]
     public VoidEventSO DeadEvent;
     public CharacterEventSO HealthChangeEvent;
+    public CharacterEventSO RollingTimesEvent;
     private void Awake() {
         playerController = GetComponent<PlayerControler>();    
         rb = GetComponent<Rigidbody2D>();
@@ -48,6 +50,7 @@ public class Character : MonoBehaviour
         manaPoint = maxMana;
     }
     private void Update() {
+        UpdateCharacterFuntions.Invoke(this);
         if(wasHited){
             hitCD-=Time.deltaTime;
             if(hitCD<0){
@@ -74,6 +77,7 @@ public class Character : MonoBehaviour
             if(attacker.attack>0)
             onTakeDamage?.Invoke(attacker.transform,attackDisplaces);
         }else{
+            healthPoint = 0;
             DeadEvent.RaiseEvent();
             isDead = true;   
             gameObject.layer = 2; 

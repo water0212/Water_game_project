@@ -645,6 +645,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  UpdateCharacterFuntions:
+    m_PersistentCalls:
+      m_Calls: []
   onperfectBlock:
     m_PersistentCalls:
       m_Calls:
@@ -680,6 +683,7 @@ MonoBehaviour:
   isPerfectBlock: 0
   DeadEvent: {fileID: 11400000, guid: 7c606dd4559b26a459ec21d3250cdd9d, type: 2}
   HealthChangeEvent: {fileID: 0}
+  RollingTimesEvent: {fileID: 0}
 --- !u!1001 &365898790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6851,6 +6855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStateBar: {fileID: 1513650358}
   HealthChangeEvent: {fileID: 11400000, guid: 4b537f33c57d225439300ad4b6cebc93, type: 2}
+  RollingChangeEvent: {fileID: 0}
 --- !u!4 &1471525112
 Transform:
   m_ObjectHideFlags: 0
@@ -6957,7 +6962,7 @@ MonoBehaviour:
   HealthDelayImage: {fileID: 906365372}
   RollingTimesImage: {fileID: 180404741}
   ExperienceImage: {fileID: 461710263}
-  HealthDelayRate: 0.5
+  HealthDelayRate: 1
 --- !u!1 &1628690832
 GameObject:
   m_ObjectHideFlags: 0
@@ -7776,10 +7781,10 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 698201489}
   - {fileID: 619394802}
-  - {fileID: 1471525112}
   - {fileID: 1197768647}
   - {fileID: 705307116}
   - {fileID: 2119552205794643423}
   - {fileID: 331989642}
+  - {fileID: 1471525112}
   - {fileID: 1732707297}
   - {fileID: 1379432670}

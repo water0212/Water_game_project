@@ -22,4 +22,7 @@ public class PlayerStateBar : MonoBehaviour
     public void OnHealthChange(float persentage){
         HealthImage.fillAmount = persentage;
     }
+    public void RollingTimesChange(float persentage){
+        RollingTimesImage.fillAmount = persentage;
+    }
 }
