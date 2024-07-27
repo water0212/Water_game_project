@@ -39,7 +39,7 @@ public class knightChaseState : BaseState
     {
        if(currentEnemy.physicCheck.isGround&&currentEnemy.physicCheck.isOnTheFloor&&currentEnemy.canMove&&!currentEnemy.attacking&&!currentEnemy.Stuning&&!currentEnemy.readyToattack) ChaseMove();
        else if(!currentEnemy.physicCheck.isOnTheFloor) currentEnemy.rb.velocity =Vector2.zero;
-       if(!currentEnemy.Stuning)CheckAndFaceOn();
+       //if(!currentEnemy.Stuning&&!currentEnemy.attacking)CheckAndFaceOn();
         if(currentEnemy.physicCheck.touchWall)Jump();
     }
 
@@ -52,7 +52,7 @@ public class knightChaseState : BaseState
 
     private void ChaseMove()
     {
-        CheckAndFaceOn();
+        if(!currentEnemy.attacking)CheckAndFaceOn();
         currentEnemy.rb.velocity = new Vector2(currentEnemy.currentSpeed*chaseFaceOn*Time.deltaTime,currentEnemy.rb.velocity.y) ; //武士_在地上時移動
         
     }

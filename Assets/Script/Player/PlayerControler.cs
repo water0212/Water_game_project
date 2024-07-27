@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerControler : MonoBehaviour
 {
+    [Header("廣播")]
+    public CharacterEventSO RollingChangeEvent;
+    [Header("取得")]
     private Rigidbody2D rb2D;
     private CapsuleCollider2D capCo2D;
     public PlayerInputAction inputAction;
@@ -37,6 +40,7 @@ public class PlayerControler : MonoBehaviour
     public bool isAttacking;
     public bool isHurt;
     public bool isHanging;
+    public bool isFailing;
     [Header("除錯")]
     public float lineDownStartOffset;
     public float lineDownEndOffset;
@@ -94,7 +98,8 @@ public class PlayerControler : MonoBehaviour
                 jump--;
         }
         }
-        if(physicCheck.isGround&&rb2D.velocity.y<0){
+
+        if(physicCheck.isGround&&rb2D.velocity.y<= 0.1){
         canJumpTimes=MaxJumpTimes;   
         }
         
@@ -161,6 +166,7 @@ public class PlayerControler : MonoBehaviour
         return;
         //isRolling = true;
         //character.isInvincible = true;
+        RollingChangeEvent.OnEventRaised(character);
         character.RollTimes--;
         anim.SetTrigger("RollActive");
     rb2D.velocity = new Vector2(transform.localScale.x * RollForce, rb2D.velocity.y);

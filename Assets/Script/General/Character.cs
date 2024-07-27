@@ -6,9 +6,10 @@ using UnityEngine.Events;
 public class Character : MonoBehaviour
 {
     // Start is called before the first frame update
+    public FloatEventSO ExperienceGived;
+    public FloatEventSO ExperienceChange;
     public UnityEvent<Transform,float> onTakeDamage;
     public UnityEvent<Character> onHealthChange;
-    public UnityEvent<Character> UpdateCharacterFuntions;
     public UnityEvent onperfectBlock;
     [Header("數值")]
     public float maxHealth;
@@ -23,6 +24,8 @@ public class Character : MonoBehaviour
     public int RollTimes;
     public float Rollrecovery;
     public float MaxRollrecovery;
+    public float ExperiencePoint;
+    public float MaxExperience;
     [Header("狀態")]
     public bool wasHited;
     public bool isDead;
@@ -34,7 +37,6 @@ public class Character : MonoBehaviour
     [Header("廣播")]
     public VoidEventSO DeadEvent;
     public CharacterEventSO HealthChangeEvent;
-    public CharacterEventSO RollingTimesEvent;
     private void Awake() {
         playerController = GetComponent<PlayerControler>();    
         rb = GetComponent<Rigidbody2D>();
@@ -44,30 +46,37 @@ public class Character : MonoBehaviour
         manaPoint = maxMana;
         Rollrecovery = MaxRollrecovery;
         onHealthChange?.Invoke(this);
+        ExperienceProgress(0);
+    }
+    private void OnEnable() {
+        ExperienceGived.OnEventRaised += ExperienceProgress;
+    }
+    private void OnDisable() {
+        ExperienceGived.OnEventRaised -= ExperienceProgress;
     }
     private void NewGame() {
         healthPoint= maxHealth;
         manaPoint = maxMana;
     }
     private void Update() {
-        UpdateCharacterFuntions.Invoke(this);
         if(wasHited){
             hitCD-=Time.deltaTime;
             if(hitCD<0){
                 wasHited=false;
             }
         }
-        if(RollTimes<MaxRollTimes){
+        if(RollTimes<MaxRollTimes){       
             Rollrecovery-=Time.deltaTime;
             if(Rollrecovery<=0){
                 RollTimes++;
                 Rollrecovery = MaxRollrecovery;
             }
+            playerController.RollingChangeEvent.OnEventRaised(this);
         }
     }
     #region 受傷與死亡
     public void TakeDamage(Attack attacker,float attackDisplaces){
-            if(wasHited&&isInvincible)
+            if(wasHited|| isInvincible)
         return;
             if(healthPoint-attacker.attack>0){
             healthPoint-=attacker.attack;
@@ -106,5 +115,11 @@ public class Character : MonoBehaviour
     private void DisableInvincible() {
         isInvincible = false;
         Debug.Log("Invincible Disabled");
+    }
+    private void ExperienceProgress(float ExperiencePointGived)
+    {
+        ExperiencePoint +=ExperiencePointGived;
+        float persentage = ExperiencePoint/MaxExperience;
+        ExperienceChange.RaiseEvent(persentage);
     }
 }

@@ -9,20 +9,34 @@ public class UIManager : MonoBehaviour
     [Header("監聽")]
     public CharacterEventSO HealthChangeEvent;
     public CharacterEventSO RollingChangeEvent;
+    public FloatEventSO ExperienceChangeEvent;
     private void OnEnable() {
         HealthChangeEvent.OnEventRaised += OnHealthEvent;
         RollingChangeEvent.OnEventRaised += RollingEvent;
+        ExperienceChangeEvent.OnEventRaised += ExperienceEvent;
         
     }
     private void OnDisable() {
         HealthChangeEvent.OnEventRaised -= OnHealthEvent;
         RollingChangeEvent.OnEventRaised -= RollingEvent;
+        ExperienceChangeEvent.OnEventRaised -= ExperienceEvent;
     }
 
-    private void RollingEvent(Character character)
+    private void ExperienceEvent(float ExperiencePoint)
     {
-        float persentage = character.RollTimes/character.MaxRollTimes;
-        playerStateBar.OnHealthChange(persentage);
+        playerStateBar.OnExperienceChange(ExperiencePoint);
+    }
+
+    private void RollingEvent(Character character)//客製化UI
+    {
+        float persentage = (float)character.RollTimes/(float) character.MaxRollTimes;
+        if(persentage == 0.5f)
+        playerStateBar.OnRollingTimesChange(0.8f);
+        else if(persentage == 1f){
+            playerStateBar.OnRollingTimesChange(1f);
+        } else {
+            playerStateBar.OnRollingTimesChange(0);
+        }
     }
 
     private void OnHealthEvent(Character character)

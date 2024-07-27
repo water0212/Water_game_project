@@ -508,6 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880b20cad854705488b5adf544298e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RollingChangeEvent: {fileID: 11400000, guid: b738658c73b07194982af2177ec57fe9, type: 2}
   inputDirection: {x: 0, y: 0}
   jumpPhysicsState: {fileID: 6200000, guid: 4a43b1500cb11084c9b47c7d4b19d01c, type: 2}
   normalPhysicsState: {fileID: 6200000, guid: 6f62498d6ce462540b61c583c4ccdcdd, type: 2}
@@ -519,7 +520,7 @@ MonoBehaviour:
   hurtForce: 10
   hurtTime: 0.5
   maxHurtTime: 0.5
-  RollForce: 10
+  RollForce: 15
   canJumpTimes: 0
   MaxJumpTimes: 1
   jumpDelay: 0
@@ -529,6 +530,7 @@ MonoBehaviour:
   isAttacking: 0
   isHurt: 0
   isHanging: 0
+  isFailing: 0
   lineDownStartOffset: 1.9
   lineDownEndOffset: 1.1
   hangOffsetx: 0.1
@@ -545,9 +547,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6ba927721389f42a3579b77f50a84a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkRadious: 0.13
-  flooroffset: {x: -0.06, y: 0}
-  bottomOffset: {x: -0.05, y: 0}
+  checkRadious: 0.16
+  flooroffset: {x: -0.04, y: 0}
+  bottomOffset: {x: -0.04, y: 0}
   wallOffset: {x: 0.3, y: 0.66}
   grabEdgeOffset: {x: 0.36, y: 1.16}
   groundLayer:
@@ -603,6 +605,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69172cf51d4cf844ebb42fc8b94f4008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ExperienceGived: {fileID: 11400000, guid: 2bec30c6090ab01458fac51bd50ce6da, type: 2}
+  ExperienceChange: {fileID: 11400000, guid: 492ad7e4c3080c344b8829c658d5dd95, type: 2}
   onTakeDamage:
     m_PersistentCalls:
       m_Calls:
@@ -645,9 +649,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  UpdateCharacterFuntions:
-    m_PersistentCalls:
-      m_Calls: []
   onperfectBlock:
     m_PersistentCalls:
       m_Calls:
@@ -663,7 +664,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  maxHealth: 20
+  maxHealth: 100
   healthPoint: 20
   maxMana: 50
   manaPoint: 0
@@ -675,6 +676,8 @@ MonoBehaviour:
   RollTimes: 0
   Rollrecovery: 0
   MaxRollrecovery: 2
+  ExperiencePoint: 0
+  MaxExperience: 80
   wasHited: 0
   isDead: 0
   isInvincible: 0
@@ -682,8 +685,7 @@ MonoBehaviour:
   wasBlocking: 0
   isPerfectBlock: 0
   DeadEvent: {fileID: 11400000, guid: 7c606dd4559b26a459ec21d3250cdd9d, type: 2}
-  HealthChangeEvent: {fileID: 0}
-  RollingTimesEvent: {fileID: 0}
+  HealthChangeEvent: {fileID: 11400000, guid: 4b537f33c57d225439300ad4b6cebc93, type: 2}
 --- !u!1001 &365898790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1234,7 +1236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: 0
   attackMultiplier: 1.2
-  attackDisplaces: 5
+  attackDisplaces: 8
 --- !u!60 &568284846
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1669,7 +1671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: 0
   attackMultiplier: 1
-  attackDisplaces: 2
+  attackDisplaces: 3
 --- !u!60 &720335913
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6770,7 +6772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: 0
   attackMultiplier: 1.1
-  attackDisplaces: 1
+  attackDisplaces: 4
 --- !u!60 &1452433562
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6855,7 +6857,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStateBar: {fileID: 1513650358}
   HealthChangeEvent: {fileID: 11400000, guid: 4b537f33c57d225439300ad4b6cebc93, type: 2}
-  RollingChangeEvent: {fileID: 0}
+  RollingChangeEvent: {fileID: 11400000, guid: b738658c73b07194982af2177ec57fe9, type: 2}
+  ExperienceChangeEvent: {fileID: 11400000, guid: 492ad7e4c3080c344b8829c658d5dd95, type: 2}
 --- !u!4 &1471525112
 Transform:
   m_ObjectHideFlags: 0
@@ -7663,11 +7666,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 994411869214482368, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.45
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 994411869214482368, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.77
+      value: 3.87
       objectReference: {fileID: 0}
     - target: {fileID: 994411869214482368, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7728,6 +7731,14 @@ PrefabInstance:
     - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: checkDistance
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
+      propertyPath: ExperienceGive
+      value: 
+      objectReference: {fileID: 11400000, guid: 2bec30c6090ab01458fac51bd50ce6da, type: 2}
+    - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
+      propertyPath: ExperiencePoint
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2652887031606593402, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x

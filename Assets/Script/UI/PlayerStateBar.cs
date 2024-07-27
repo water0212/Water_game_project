@@ -22,7 +22,10 @@ public class PlayerStateBar : MonoBehaviour
     public void OnHealthChange(float persentage){
         HealthImage.fillAmount = persentage;
     }
-    public void RollingTimesChange(float persentage){
+    public void OnRollingTimesChange(float persentage){
         RollingTimesImage.fillAmount = persentage;
+    }
+    public void OnExperienceChange(float persentage){
+        ExperienceImage.fillAmount  = persentage;
     }
 }

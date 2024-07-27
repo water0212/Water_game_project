@@ -11,6 +11,7 @@ using Unity.Mathematics;
 
 public class Enemy : MonoBehaviour
 {
+    public FloatEventSO ExperienceGive;
     public ParticleSystem HurtEffect;
     public ParticleSystem DeadEffect;
     [HideInInspector]public Rigidbody2D rb;
@@ -40,6 +41,7 @@ public class Enemy : MonoBehaviour
     public float hurtForce;
     public float chaseTime;
     public float attackDelay;
+    public int ExperiencePoint;
     [Header("計時器")]
     public float moveRecovery;
     public float maxMoveRecovery;
@@ -150,6 +152,7 @@ public class Enemy : MonoBehaviour
         anim.SetTrigger("Die");
         this.gameObject.layer = 2;
         canMove = false;
+        ExperienceGive.OnEventRaised(ExperiencePoint);
     }
     public void DestoryGB(){
         Destroy(gameObject);
