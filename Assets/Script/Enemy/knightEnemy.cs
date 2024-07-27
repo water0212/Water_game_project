@@ -19,5 +19,4 @@ public class knightEnemy : Enemy
         }
     }    
     #endregion
-    
 }

@@ -60,6 +60,7 @@ public class Enemy : MonoBehaviour
     public bool Stuning;
     public bool ishit;
     public bool readyToattack;
+    public bool isHurted;
 
     [Header("階段狀態")]
     protected BaseState patrolState;                 //敵人_巡邏狀態
@@ -114,12 +115,21 @@ public class Enemy : MonoBehaviour
             //canMove=false;
             moveRecovery = maxMoveRecovery;
             hitCD = maxHitCD;
-            if(attacker.attack>0)
-            onTakeDamage?.Invoke(attacker.transform);
+            if(attacker.attack>0){
+               onTakeDamage?.Invoke(attacker.transform); 
+               HurtDisplacement(attacker.transform,attackDisplaces);
+            }
+            
+
         }else{
             Dead();
         }
-    }    
+    }   
+    public void HurtDisplacement(Transform attackTransform, float attackDisplaces){//受擊偏移
+        rb.velocity = Vector2.zero;
+        Vector2 vir = new Vector2(rb.transform.position.x - attackTransform.position.x,0.2f).normalized;
+        rb.AddForce(vir*attackDisplaces,ForceMode2D.Impulse);
+    } 
     public void Blocked(float stunTime){
         anim.SetBool("Stuning", true);
         attacking = false;

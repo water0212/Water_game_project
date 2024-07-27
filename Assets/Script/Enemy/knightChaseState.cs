@@ -31,13 +31,13 @@ public class knightChaseState : BaseState
             currentEnemy.SwitchState(NPCstate.Patrol);
         }
         if(!currentEnemy.readyToattack&&FoundEnemyAndAttack()&&!currentEnemy.Stuning) currentEnemy.readyToattack = true;
-        if(currentEnemy.readyToattack&&!currentEnemy.Stuning){
+        if(currentEnemy.readyToattack&&!currentEnemy.Stuning&&!currentEnemy.isDead){
             AttackDelayCount();
         }
     }
     public override void PhysicUpdate()
     {
-       if(currentEnemy.physicCheck.isGround&&currentEnemy.physicCheck.isOnTheFloor&&currentEnemy.canMove&&!currentEnemy.attacking&&!currentEnemy.Stuning&&!currentEnemy.readyToattack) ChaseMove();
+       if(currentEnemy.physicCheck.isGround&&currentEnemy.physicCheck.isOnTheFloor&&currentEnemy.canMove&&!currentEnemy.attacking&&!currentEnemy.Stuning&&!currentEnemy.readyToattack&&!currentEnemy.wasHited) ChaseMove();
        else if(!currentEnemy.physicCheck.isOnTheFloor) currentEnemy.rb.velocity =Vector2.zero;
        //if(!currentEnemy.Stuning&&!currentEnemy.attacking)CheckAndFaceOn();
         if(currentEnemy.physicCheck.touchWall)Jump();
