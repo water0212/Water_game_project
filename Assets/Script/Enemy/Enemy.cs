@@ -12,8 +12,8 @@ using Unity.Mathematics;
 public class Enemy : MonoBehaviour
 {
     public FloatEventSO ExperienceGive;
-    public ParticleSystem HurtEffect;
-    public ParticleSystem DeadEffect;
+ //   public ParticleSystem HurtEffect;
+ //   public ParticleSystem DeadEffect;
     [HideInInspector]public Rigidbody2D rb;
     [HideInInspector]public PhysicCheck physicCheck;
     [HideInInspector]public Animator anim;
@@ -66,6 +66,9 @@ public class Enemy : MonoBehaviour
     protected BaseState patrolState;                 //敵人_巡邏狀態
     protected BaseState currentState;                //敵人_目前狀態
     protected BaseState chaseState;                  //敵人_追擊狀態
+    [Header("廣播")]
+    public PositionEventSO HurtEffect;
+    public PositionEventSO DeadEffect;
     [Header("接收")]
     public VoidEventSO PlayerDead;
     protected virtual void Awake() {
@@ -107,7 +110,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(Attack attacker,float attackDisplaces){
         if(wasHited)return;
         if(healthPoint-attacker.attack>0){
-            ParticleSystem hurtEffect = Instantiate(HurtEffect,transform.position,quaternion.identity);
+            HurtEffect.RaiseEvent(transform.position);
             healthPoint-=attacker.attack;
             wasHited=true;
             isMoveRecovery = true;
@@ -162,13 +165,14 @@ public class Enemy : MonoBehaviour
         anim.SetTrigger("Die");
         this.gameObject.layer = 2;
         canMove = false;
-        ExperienceGive.OnEventRaised(ExperiencePoint);
+        ExperienceGive.RaiseEvent(ExperiencePoint);
     }
     public void DestoryGB(){
         Destroy(gameObject);
     }  
     public void Deadeffect(){
-        ParticleSystem deadEffect = Instantiate(DeadEffect,transform.position,quaternion.identity);
+        //ParticleSystem deadEffect = Instantiate(DeadEffect,transform.position,quaternion.identity);
+        DeadEffect.OnEventRaised(transform.position);
     }
 #endregion
 #region 計時器
