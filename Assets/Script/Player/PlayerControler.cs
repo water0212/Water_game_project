@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +9,9 @@ public class PlayerControler : MonoBehaviour
 {
     [Header("廣播")]
     public CharacterEventSO RollingChangeEvent;
+    public VoidEventSO SkillActive_E;
+    public VoidEventSO SkillActive_Q;
+    public VoidEventSO SkilllLoad;
     [Header("取得")]
     private Rigidbody2D rb2D;
     private CapsuleCollider2D capCo2D;
@@ -60,7 +64,25 @@ public class PlayerControler : MonoBehaviour
         inputAction.GamePlayer.Jump.started += Jump;
         inputAction.GamePlayer.NormalAttack.started += NormalAttack;
         inputAction.GamePlayer.Roll.started += Roll;
+        inputAction.GamePlayer.Skill_E.started += ActiveSkill_E;
+        inputAction.GamePlayer.Skill_Q.started += ActiveSkill_Q;
+        inputAction.GamePlayer.Skill_Load.started += LoadSkill_TEST;
         anim = GetComponent<Animator> ();
+    }
+
+    private void LoadSkill_TEST(InputAction.CallbackContext context)
+    {
+        SkilllLoad.RaiseEvent();
+    }
+
+    private void ActiveSkill_Q(InputAction.CallbackContext context)
+    {
+        SkillActive_Q.RaiseEvent();
+    }
+
+    private void ActiveSkill_E(InputAction.CallbackContext context)
+    {
+        SkillActive_E.RaiseEvent();
     }
 
     private void OnEnable() {

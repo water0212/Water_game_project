@@ -145,7 +145,8 @@ public class Enemy : MonoBehaviour
     #region 切換狀態
     public void SwitchState(NPCstate state) 
     {
-        var newState = state switch 
+        var newState = state 
+        switch 
         {
             NPCstate.Patrol => patrolState,
             NPCstate.Chase => chaseState,
