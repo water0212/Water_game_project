@@ -394,6 +394,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: EdgeCarb
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isBlock
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2425664969302661576}
   m_Solo: 0
@@ -1461,6 +1464,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: BlockActive
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: EdgeCarb
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7968886453988431304}
