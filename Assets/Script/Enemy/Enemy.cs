@@ -107,20 +107,20 @@ public class Enemy : MonoBehaviour
         currentState.OnExit();                          //敵人_觸發離開代碼
     }
     #region 受傷
-    public void TakeDamage(Attack attacker,float attackDisplaces){
+    public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces){
         if(wasHited)return;
-        if(healthPoint-attacker.attack>0){
+        if(healthPoint-attack>0){
             HurtEffect.RaiseEvent(transform.position);
-            healthPoint-=attacker.attack;
+            healthPoint-=attack;
             wasHited=true;
             isMoveRecovery = true;
             attacking= false;
             //canMove=false;
             moveRecovery = maxMoveRecovery;
             hitCD = maxHitCD;
-            if(attacker.attack>0){
-               onTakeDamage?.Invoke(attacker.transform); 
-               HurtDisplacement(attacker.transform,attackDisplaces);
+            if(attack>0){
+               onTakeDamage?.Invoke(transform); 
+               HurtDisplacement(transform,attackDisplaces);
             }
             
 
@@ -128,9 +128,9 @@ public class Enemy : MonoBehaviour
             Dead();
         }
     }   
-    public void HurtDisplacement(Transform attackTransform, float attackDisplaces){//受擊偏移
+    public void HurtDisplacement(Transform attackTransform, Vector2 attackDisplaces){//受擊偏移
         rb.velocity = Vector2.zero;
-        Vector2 vir = new Vector2(rb.transform.position.x - attackTransform.position.x,0.2f).normalized;
+        Vector2 vir = new Vector2(rb.transform.position.x - attackTransform.position.x,1).normalized;
         rb.AddForce(vir*attackDisplaces,ForceMode2D.Impulse);
     } 
     public void Blocked(float stunTime){

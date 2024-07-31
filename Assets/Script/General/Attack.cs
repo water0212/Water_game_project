@@ -11,7 +11,7 @@ public class Attack : MonoBehaviour
     public float attackMultiplier;
     
     //public float attackRate; //暫時沒用
-    public float attackDisplaces;
+    public Vector2 attackDisplaces;
     private void OnEnable() {
         var atk = GetComponentInParent<Character>()?.attackPower;
         if(atk.HasValue)
@@ -31,22 +31,22 @@ public class Attack : MonoBehaviour
                 PerfectReflectAttack(character, attackDisplaces);
             else if(character.isBlock)
                 ReflectAttack(character, attackDisplaces);
-            else character.TakeDamage(this,attackDisplaces);
+            else character.TakeDamage(transform,attack,attackDisplaces);
         }
         else
         {
             var enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(this,attackDisplaces);
+                enemy.TakeDamage(transform,attack,attackDisplaces);
             }
         }
     }
-    public void ReflectAttack(Character character,float attackDisplaces){
+    public void ReflectAttack(Character character,Vector2 attackDisplaces){
         var attacker = GetComponentInParent<Enemy>();
         character.ReflectEffect(attacker,attackDisplaces);
     }
-    public void PerfectReflectAttack(Character character, float attackDisplaces){
+    public void PerfectReflectAttack(Character character,Vector2 attackDisplaces){
          var attacker = GetComponentInParent<Enemy>();
          character.ReflectEffect(attacker, attackDisplaces);
          attacker.Blocked(character.CounterStunTime);

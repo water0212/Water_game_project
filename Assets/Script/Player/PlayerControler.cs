@@ -209,10 +209,10 @@ public class PlayerControler : MonoBehaviour
             anim.SetInteger("Combo",0);
         }
     }
-    public void HurtDisplacement(Transform attackTransform, float attackDisplaces){//受擊偏移
+    public void HurtDisplacement(Transform attackTransform, Vector2 attackDisplaces){//受擊偏移
         isHurt = true;
         rb2D.velocity = Vector2.zero;
-        Vector2 vir = new Vector2(rb2D.transform.position.x - attackTransform.position.x,0.2f).normalized;
+        Vector2 vir = new Vector2(rb2D.transform.position.x - attackTransform.position.x,1).normalized;
         rb2D.AddForce(vir*attackDisplaces,ForceMode2D.Impulse);
     }
     private void Unblock(InputAction.CallbackContext context)

@@ -4,8 +4,11 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - animator: {fileID: 7400000, guid: 81e5ecccf640d3a42842bb180269179c, type: 2}
-  - summonPrefab: {fileID: 7898485827300230914, guid: 46f88bd8c2f78c0409ff25a563853bb3, type: 3}
+  - animator: {instanceID: 0}
+  - animClip: {fileID: 7400000, guid: 81e5ecccf640d3a42842bb180269179c, type: 2}
+  - summonPrefab: {fileID: 84057804891094169, guid: 5bf9baafe854b424aafea3ff48ee991e, type: 3}
+  - summonedObject: {instanceID: 0}
+  - skillSummon: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

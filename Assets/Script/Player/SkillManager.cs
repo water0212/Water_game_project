@@ -25,8 +25,9 @@ public class SkillManager : MonoBehaviour
 
     private void LoadSkill_TEST()
     {
-        LoadSkill_E(testSkillLoad);
         Debug.Log("skill_Load");
+        LoadSkill_E(testSkillLoad);
+        
     }
 
     private void ActiveSkill_Q()
@@ -48,12 +49,12 @@ public class SkillManager : MonoBehaviour
     public void LoadSkill_E(Skill sklnum){
         
         currentSkill_E = sklnum;
-        currentSkill_E.OnLoad();
+        currentSkill_E.OnLoad(Player);
     }
     public void LoadSkill_Q(Skill sklnum){
         
         currentSkill_Q = sklnum;
-        currentSkill_Q.OnLoad();
+        currentSkill_Q.OnLoad(Player);
     }
     public void ActiveSkill(Skill currrentSkilluse, GameObject Player){
         if(currrentSkilluse != null){

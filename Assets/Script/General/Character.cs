@@ -8,7 +8,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     public FloatEventSO ExperienceGived;
     public FloatEventSO ExperienceChange;
-    public UnityEvent<Transform,float> onTakeDamage;
+    public UnityEvent<Transform,Vector2> onTakeDamage;
     public UnityEvent<Character> onHealthChange;
     public UnityEvent onperfectBlock;
     [Header("數值")]
@@ -75,16 +75,16 @@ public class Character : MonoBehaviour
         }
     }
     #region 受傷與死亡
-    public void TakeDamage(Attack attacker,float attackDisplaces){
+    public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces){
             if(wasHited|| isInvincible)
         return;
-            if(healthPoint-attacker.attack>0){
-            healthPoint-=attacker.attack;
+            if(healthPoint-attack>0){
+            healthPoint-=attack;
             wasHited=true;
             hitCD = maxHitCD;
             //受傷
-            if(attacker.attack>0)
-            onTakeDamage?.Invoke(attacker.transform,attackDisplaces);
+            if(attack>0)
+            onTakeDamage?.Invoke(transform,attackDisplaces);
         }else{
             healthPoint = 0;
             DeadEvent.RaiseEvent();
@@ -94,11 +94,11 @@ public class Character : MonoBehaviour
         onHealthChange?.Invoke(this);
         
     }
-    public void ReflectEffect(Enemy attacker, float attackDisplaces){
+    public void ReflectEffect(Enemy attacker, Vector2 attackDisplaces){
         var revise = attackDisplaces/2;
         attacker.healthPoint-=1;
         if(!isPerfectBlock){
-        Vector2 vir = new Vector2(rb.transform.position.x - attacker.transform.position.x,0).normalized;
+        Vector2 vir = new Vector2(rb.transform.position.x - attacker.transform.position.x,1).normalized;
         rb.AddForce(vir*revise,ForceMode2D.Impulse);    
         }else{
             onperfectBlock?.Invoke();
