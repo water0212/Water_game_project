@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
     public float chaseTime;
     public float attackDelay;
     public int ExperiencePoint;
+    public float MoveforceMultplier;
     [Header("計時器")]
     public float moveRecovery;
     public float maxMoveRecovery;

@@ -2805,8 +2805,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 1.8383, y: -0.09184998, z: 0}
-    m_Extent: {x: 2.7098, y: 0.79925, z: 0}
+    m_Center: {x: 1.8396502, y: -0.09224999, z: 0}
+    m_Extent: {x: 2.70965, y: 0.79985, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -2872,8 +2872,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.000050008297, y: 0, z: 0}
-    m_Extent: {x: 1.6150501, y: 1.6204, z: 0}
+    m_Center: {x: -0.002649963, y: 0.0029500127, z: 0}
+    m_Extent: {x: 1.61795, y: 1.61765, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -8084,6 +8084,10 @@ PrefabInstance:
       value: 196
       objectReference: {fileID: 0}
     - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
+      propertyPath: maxSpeed
+      value: 240
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: DeadEffect
       value: 
       objectReference: {fileID: 11400000, guid: 9f8628f2088bb244c88fa04a1bba6e63, type: 2}
@@ -8097,7 +8101,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 7c606dd4559b26a459ec21d3250cdd9d, type: 2}
     - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: chaseSpeed
-      value: 240
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: attackDelay
@@ -8118,6 +8122,10 @@ PrefabInstance:
     - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: ExperiencePoint
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
+      propertyPath: MoveforceMultplier
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: onTakeDamage.m_PersistentCalls.m_Calls.Array.size
@@ -8197,11 +8205,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6609610285914352865, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: attackDisplaces.x
-      value: 100
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6609610285914352865, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: attackDisplaces.y
-      value: 100
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7172617846547706890, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: attack
@@ -8213,11 +8221,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7172617846547706890, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: attackDisplaces.x
-      value: 100
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7172617846547706890, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: attackDisplaces.y
-      value: 100
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

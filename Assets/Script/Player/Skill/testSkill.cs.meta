@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - animator: {instanceID: 0}
-  - animClip: {fileID: 7400000, guid: 81e5ecccf640d3a42842bb180269179c, type: 2}
+  - animClip: {fileID: 7400000, guid: 5f2c693384fe83c439958b01584f99b2, type: 2}
   - summonPrefab: {fileID: 84057804891094169, guid: 5bf9baafe854b424aafea3ff48ee991e, type: 3}
   - summonedObject: {instanceID: 0}
   - skillSummon: {instanceID: 0}

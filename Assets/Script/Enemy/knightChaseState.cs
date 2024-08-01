@@ -53,7 +53,10 @@ public class knightChaseState : BaseState
     private void ChaseMove()
     {
         if(!currentEnemy.attacking)CheckAndFaceOn();
-        currentEnemy.rb.velocity = new Vector2(currentEnemy.currentSpeed*chaseFaceOn*Time.deltaTime,currentEnemy.rb.velocity.y) ; //武士_在地上時移動
+        float currentSpeedX = currentEnemy.rb.velocity.x;
+        float desiredSpeedX = chaseFaceOn * currentEnemy.currentSpeed;
+        float forceX = (desiredSpeedX - currentSpeedX) * currentEnemy.MoveforceMultplier;
+        currentEnemy.rb.AddForce(new Vector2(forceX , 0)); //武士_在地上時移動
         
     }
     public void CheckAndFaceOn(){
