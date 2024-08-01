@@ -23,4 +23,4 @@ MonoBehaviour:
   summonPrefab: {fileID: 84057804891094169, guid: 5bf9baafe854b424aafea3ff48ee991e, type: 3}
   summonedObject: {fileID: 0}
   skillSummon: {fileID: 0}
-  attackDisplaces: {x: 2, y: 100}
+  attackDisplaces: {x: 3, y: 20}

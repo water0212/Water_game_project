@@ -50,6 +50,7 @@ public class PlayerControler : MonoBehaviour
     public float lineDownEndOffset;
     public float hangOffsetx;
     public float hangOffsety;
+    public int  faceOn;
     //[Header("廣播")]
     //public CharacterEventSO AttackValueEvent;
     
@@ -103,13 +104,27 @@ public class PlayerControler : MonoBehaviour
        TimeCount();
        CheckPreviousIsBlock();
        LedgeCrab();
+       
        anim.SetBool("EdgeCarb",isHanging);
       // Debug.DrawLine(Vector3.zero, Vector3.right * 10, Color.red);
     }
+
+    private void FaceOnCheck()
+    {
+        if(inputDirection.x >0){
+        transform.localScale = new Vector3(1,1,1);   
+        faceOn = 1; 
+        }else if(inputDirection.x <0) {
+            transform.localScale = new Vector3(-1,1,1);
+            faceOn = -1; 
+        }
+    }
+
     private void FixedUpdate() {
         if(!isAttacking&&!isHurt&&!character.isBlock&&!character.isDead&&!isRolling&&!isAttacking&&!isHanging) {
         Move();    
         }
+        FaceOnCheck();
         if(jump>0){
             jumpDelay-=Time.deltaTime;
             if(jumpDelay < 0){jump=0;}
@@ -153,14 +168,13 @@ public class PlayerControler : MonoBehaviour
     #endregion
     
     private void Move(){
+        
         float currentSpeedX = rb2D.velocity.x;
         float desiredSpeedX = inputDirection.x * maxSpeedX;
         float forceX = (desiredSpeedX - currentSpeedX) * forceMultiplier;
         rb2D.AddForce(new Vector2(forceX, 0));
-        if(inputDirection.x >0)
-        transform.localScale = new Vector3(1,1,1);
-        else if (inputDirection.x <0)
-        transform.localScale = new Vector3(-1,1,1);
+        
+        
     }
     private void Jump(InputAction.CallbackContext context)
     {
@@ -177,6 +191,7 @@ public class PlayerControler : MonoBehaviour
     {
         if(isRolling)
         return;
+        transform.localScale=new Vector3(faceOn,1,1);
         anim.SetBool("isAttack", true);
         anim.SetTrigger("Attack");
         attackTimecount = maxAttackTime;
@@ -191,30 +206,31 @@ public class PlayerControler : MonoBehaviour
         RollingChangeEvent.OnEventRaised(character);
         character.RollTimes--;
         anim.SetTrigger("RollActive");
-    rb2D.velocity = new Vector2(transform.localScale.x * RollForce, rb2D.velocity.y);
-    }
-    public void EnableRolling(){
-        isRolling = true;
-    }
-    public void DisabledRolling(){
-        isRolling = false;
+    rb2D.velocity = new Vector2(faceOn * RollForce, rb2D.velocity.y);
     }
     private void CheckState(){
         rb2D.sharedMaterial = physicCheck.isGround?normalPhysicsState:jumpPhysicsState;
     }
-    public void AttackCombo(){//攻擊時間計算
+    #region 攻擊時間計算
+    public void AttackCombo(){
         if(anim.GetInteger("Combo") < 2){
             anim.SetInteger("Combo",anim.GetInteger("Combo")+1);
         }else{
             anim.SetInteger("Combo",0);
         }
-    }
-    public void HurtDisplacement(Transform attackTransform, Vector2 attackDisplaces){//受擊偏移
+    }    
+    #endregion
+    
+    #region 受擊偏移
+    public void HurtDisplacement(Transform attackTransform, Vector2 attackDisplaces){
         isHurt = true;
         rb2D.velocity = Vector2.zero;
         Vector2 vir = new Vector2(rb2D.transform.position.x - attackTransform.position.x,1).normalized;
         rb2D.AddForce(vir*attackDisplaces,ForceMode2D.Impulse);
-    }
+    }    
+    #endregion
+    
+    #region 格檔
     private void Unblock(InputAction.CallbackContext context)
     {
         character.isBlock = false;
@@ -233,8 +249,12 @@ public class PlayerControler : MonoBehaviour
         }
         // 更新 previousIsBlock
         character.wasBlocking = character.isBlock;
-    }
-    private void LedgeCrab(){
+    }    
+    #endregion
+    
+    #region 邊緣攀爬
+        
+        private void LedgeCrab(){
         if(rb2D.velocity.y<0&&!isHanging/*true*/){
             
             Vector2 lineDownStart = new Vector2(transform.position.x,transform.position.y) + Vector2.up*lineDownStartOffset+new Vector2(transform.localScale.x*0.35f,0);
@@ -259,4 +279,16 @@ public class PlayerControler : MonoBehaviour
         }
         
     }
+    #endregion
+    #region 事件函式
+    public void EnableRolling(){
+        isRolling = true;
+    }
+    public void DisabledRolling(){
+        isRolling = false;
+    }
+    public void Velocity_X_zero(){
+        rb2D.velocity = new Vector2 (0,rb2D.velocity.y);
+    }
+    #endregion
 }

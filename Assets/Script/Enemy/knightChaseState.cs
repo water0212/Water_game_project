@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO.Ports;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class knightChaseState : BaseState
@@ -38,7 +39,7 @@ public class knightChaseState : BaseState
     public override void PhysicUpdate()
     {
        if(currentEnemy.physicCheck.isGround&&currentEnemy.physicCheck.isOnTheFloor&&currentEnemy.canMove&&!currentEnemy.attacking&&!currentEnemy.Stuning&&!currentEnemy.readyToattack&&!currentEnemy.wasHited) ChaseMove();
-       else if(!currentEnemy.physicCheck.isOnTheFloor) currentEnemy.rb.velocity =Vector2.zero;
+       else if(!currentEnemy.physicCheck.isOnTheFloor&&currentEnemy.physicCheck.isGround) currentEnemy.rb.velocity =Vector2.zero;
        //if(!currentEnemy.Stuning&&!currentEnemy.attacking)CheckAndFaceOn();
         if(currentEnemy.physicCheck.touchWall)Jump();
     }
@@ -78,7 +79,7 @@ public class knightChaseState : BaseState
             
             if(hit1.collider!=null&&hit1.collider.CompareTag("Player")&&!currentEnemy.attacking){
                 Debug.Log(hit1);
-                currentEnemy.rb.velocity = Vector3.zero;
+                if(currentEnemy.physicCheck.isGround)currentEnemy.rb.velocity = currentEnemy.rb.velocity * new Vector2(0,1);
                return true;
             }
             else return false;

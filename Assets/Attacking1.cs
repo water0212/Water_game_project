@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Attacking1 : StateMachineBehaviour
 {
     private PlayerControler playerControler;
     private Rigidbody2D rb2D;
+    private float G;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -16,7 +18,7 @@ public class Attacking1 : StateMachineBehaviour
             playerControler.isAttacking = true;
         }
         if(rb2D != null){
-            rb2D.velocity = Vector2.zero;
+            rb2D.velocity = new Vector2(rb2D.velocity.x,0.3f);
         }
     }
 
