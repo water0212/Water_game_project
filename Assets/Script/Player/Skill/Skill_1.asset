@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: Skill_1
   m_EditorClassIdentifier: 
   skillName: test
+  skillDescription: 
   id: 0
   cooldown: 2
-  duration: 5
+  duration: 0.5
   animator: {fileID: 0}
   animClip: {fileID: 7400000, guid: 5f2c693384fe83c439958b01584f99b2, type: 2}
-  damage: 30
+  count_storage_capability: 0
+  useCount: 2
+  MaxUseCount: 2
+  attack: 10
   attackMultiplier: 3
   summonPrefab: {fileID: 84057804891094169, guid: 5bf9baafe854b424aafea3ff48ee991e, type: 3}
   summonedObject: {fileID: 0}

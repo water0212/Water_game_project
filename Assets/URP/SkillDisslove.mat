@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: playerpoint
-  m_Shader: {fileID: -6465566751694194690, guid: 76b3b767014de2e42a42819ab7619009, type: 3}
+  m_Name: SkillDisslove
+  m_Shader: {fileID: -6465566751694194690, guid: ea5a64b67b28e2b48ba62597925d45e7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,12 +23,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Emisson:
-        m_Texture: {fileID: 0}
+    - _DissloveTex:
+        m_Texture: {fileID: 2800000, guid: 4e0fc7cde14ecc846b417aceac4ebf3c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 4e0fc7cde14ecc846b417aceac4ebf3c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -44,11 +44,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _Fade: 1
+    - _Scale: 15
     m_Colors:
-    - _Color: {r: 2.3698115, g: 0.049184717, b: 0.049184717, a: 0.54509807}
+    - _EdgeColor: {r: 59.017693, g: 17.73651, b: 0, a: 0.8509804}
+    - _TexColor: {r: 0.97735846, g: 0.97735846, b: 0.97735846, a: 0.7372549}
   m_BuildTextureStacks: []
---- !u!114 &376460049511285952
+--- !u!114 &8538185201457444881
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

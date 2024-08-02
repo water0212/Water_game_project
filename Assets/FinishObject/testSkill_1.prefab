@@ -57,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: b71b469cb82fa9842b553469dd07c47e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -184,9 +184,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4aa9c40b35fc143a8583c3bba5c4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material: {fileID: 0}
+  user: {fileID: 0}
   attack: 10
   attackDisplaces: {x: 0, y: 0}
-  duration: 5
+  isSummon: 0
+  duration: 0.5
+  durationTimeCount: 0
+  isDissolving: 0
+  fade: 0
 --- !u!1 &1204106833592990537
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,5 +293,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attack: 0
-  attackMultiplier: 1.8
+  attackMultiplier: 1
   attackDisplaces: {x: 2, y: 2}

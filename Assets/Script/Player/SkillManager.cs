@@ -22,6 +22,10 @@ public class SkillManager : MonoBehaviour
         Q_SkillActiveEvent.OnEventRaised += ActiveSkill_Q;
         SkillLoadEvent.OnEventRaised += LoadSkill_TEST;
     }
+    private void Update() {
+        if(currentSkill_E!=null)currentSkill_E.Update();
+        if(currentSkill_Q!=null)currentSkill_Q.Update();
+    }
 
     private void LoadSkill_TEST()
     {

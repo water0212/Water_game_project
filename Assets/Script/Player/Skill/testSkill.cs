@@ -1,10 +1,16 @@
 using System.Configuration;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [CreateAssetMenu(fileName = "Skill", menuName = "SkillSystem/Skills/test")]
 public class testSkill : Skill
 {
-    public float damage;
+    public bool count_storage_capability;
+    public float cooldownCount;
+    public int useCount;
+    public int MaxUseCount;
+    public float attack;
     public float attackMultiplier;
     public GameObject summonPrefab;
    [HideInInspector] public GameObject summonedObject;
@@ -12,27 +18,45 @@ public class testSkill : Skill
     public Vector2 attackDisplaces;
     public override void OnLoad(GameObject user)
     {
-        summonedObject = Instantiate(summonPrefab,new Vector3 (9,-3,0), Quaternion.identity);
+        useCount = MaxUseCount;
+        summonedObject = Instantiate(summonPrefab,Constants.SkillObjectPoolPosition, Quaternion.identity);
         animator = summonedObject.GetComponent<Animator>();
-        damage = user.GetComponent<Character>().attackPower;
-        damage*=attackMultiplier;
-        InitializeSkillData(user);
+        skillSummon = summonedObject.GetComponent<SkillSummon>();
+        attack = user.GetComponent<Character>().attackPower;
         Debug.Log("技能加載完畢");
     }
     public override void Activate(GameObject user)
     {
+        if(useCount <= 0)return;
+        useCount-=1;
+        var damage = attack * attackMultiplier;
+        InitializeSkillData(user,damage);
+        skillSummon.fade = 1;
+        skillSummon.isSummon = true;
+        skillSummon.isDissolving = false;
+        skillSummon.durationTimeCount = duration;
         summonedObject.transform.position =user.transform.position+ new Vector3(user.transform.localScale.x,0,0);
         summonedObject.transform.localScale = user.transform.localScale;
         animator.SetTrigger("Attack");
+        
     }
 
-
+    public override void Update()
+    {
+        if(useCount < MaxUseCount){
+            cooldownCount -= Time.deltaTime;
+            if(cooldownCount < 0){
+                useCount ++;
+                cooldownCount = cooldown;
+            }
+        }
+    }
 
     public override void OnExit()
     {
         
     }
-    public void InitializeSkillData(GameObject user){
+    public void InitializeSkillData(GameObject user,float damage){
         ISummonedObject summonComponent = summonedObject.GetComponent<ISummonedObject>();
         summonComponent.Initialize(user, damage,attackDisplaces,duration);
     }

@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
     public bool Stuning;
     public bool ishit;
     public bool readyToattack;
-    public bool isHurted;
+    public bool isknockback;
 
     [Header("階段狀態")]
     protected BaseState patrolState;                 //敵人_巡邏狀態
@@ -263,6 +263,14 @@ public class Enemy : MonoBehaviour
         StartCoroutine(DelaySwitchState(2.0f,NPCstate.Patrol));
         canMove = false;
     }
-    public virtual  void EnemyOnTakeDamage(Transform transform) {}
+    public void CheckKnockback(){
+        if(wasHited&&!physicCheck.isGround){
+            isknockback = true;
+        }
+    }
+    public void CancelKnockback(){
+        isknockback = false;
+    }
+        public virtual void EnemyOnTakeDamage(Transform transform){}
    
 }

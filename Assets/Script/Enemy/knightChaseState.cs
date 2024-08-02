@@ -32,7 +32,7 @@ public class knightChaseState : BaseState
             currentEnemy.SwitchState(NPCstate.Patrol);
         }
         if(!currentEnemy.readyToattack&&FoundEnemyAndAttack()&&!currentEnemy.Stuning) currentEnemy.readyToattack = true;
-        if(currentEnemy.readyToattack&&!currentEnemy.Stuning&&!currentEnemy.isDead){
+        if(currentEnemy.readyToattack&&!currentEnemy.Stuning&&!currentEnemy.isDead&&currentEnemy.physicCheck.isGround){
             AttackDelayCount();
         }
     }
@@ -78,7 +78,7 @@ public class knightChaseState : BaseState
             var hit1 = Physics2D.BoxCast(currentEnemy.transform.position + (Vector3)Offset,checkSize,0,new Vector2(chaseFaceOn,0),checkDistance,currentEnemy.enemyLayer);
             
             if(hit1.collider!=null&&hit1.collider.CompareTag("Player")&&!currentEnemy.attacking){
-                Debug.Log(hit1);
+            //    Debug.Log(hit1);
                 if(currentEnemy.physicCheck.isGround)currentEnemy.rb.velocity = currentEnemy.rb.velocity * new Vector2(0,1);
                return true;
             }
