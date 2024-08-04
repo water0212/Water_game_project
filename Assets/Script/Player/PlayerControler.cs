@@ -89,6 +89,7 @@ public class PlayerControler : MonoBehaviour
     private void OnEnable() {
         inputAction.Enable();
         attackTimecount = maxAttackTime;
+        faceOn = 1;
     }
     private void OnDisable() {
         inputAction.Disable();
@@ -124,6 +125,7 @@ public class PlayerControler : MonoBehaviour
         if(!isAttacking&&!isHurt&&!character.isBlock&&!character.isDead&&!isRolling&&!isAttacking&&!isHanging) {
         Move();    
         }
+        if(!isHanging)
         FaceOnCheck();
         if(jump>0){
             jumpDelay-=Time.deltaTime;
@@ -238,7 +240,7 @@ public class PlayerControler : MonoBehaviour
 
     private void Block(InputAction.CallbackContext context)
     {   
-        if(isRolling)
+        if(isRolling||isHanging)
         return;
         character.isBlock = true;
     }

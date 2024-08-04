@@ -78,6 +78,10 @@ public class Character : MonoBehaviour
     public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces){
             if(wasHited|| isInvincible)
         return;
+            if(playerController.isHanging){
+            rb.gravityScale = 2.3f;
+            playerController.isHanging = false;
+        }
             if(healthPoint-attack>0){
             healthPoint-=attack;
             wasHited=true;

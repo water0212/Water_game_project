@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class SkillManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Start is called before the first frame updatezz
     public GameObject Player;
     public Skill testSkillLoad;
     public Skill currentSkill_E;
@@ -30,6 +30,7 @@ public class SkillManager : MonoBehaviour
     private void LoadSkill_TEST()
     {
         Debug.Log("skill_Load");
+        testSkillLoad.cooldown += 2f;
         LoadSkill_E(testSkillLoad);
         
     }

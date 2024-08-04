@@ -17,9 +17,11 @@ MonoBehaviour:
   id: 0
   cooldown: 2
   duration: 0.5
+  skillImage: {fileID: 21300000, guid: 3a3fc6ce9e53287498e1b7be8432dbfd, type: 3}
   animator: {fileID: 0}
   animClip: {fileID: 7400000, guid: 5f2c693384fe83c439958b01584f99b2, type: 2}
-  count_storage_capability: 0
+  count_storage_capability: 1
+  cooldownCount: 0
   useCount: 2
   MaxUseCount: 2
   attack: 10

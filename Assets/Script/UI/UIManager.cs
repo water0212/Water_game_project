@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public CharacterEventSO HealthChangeEvent;
     public CharacterEventSO RollingChangeEvent;
     public FloatEventSO ExperienceChangeEvent;
+    
     private void OnEnable() {
         HealthChangeEvent.OnEventRaised += OnHealthEvent;
         RollingChangeEvent.OnEventRaised += RollingEvent;
@@ -44,4 +45,5 @@ public class UIManager : MonoBehaviour
         float persentage = character.healthPoint/character.maxHealth;
         playerStateBar.OnHealthChange(persentage);
     }
+    
 }

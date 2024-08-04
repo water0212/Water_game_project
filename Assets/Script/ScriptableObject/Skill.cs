@@ -1,6 +1,6 @@
-using System.Drawing;
+//using System.Drawing;
 using UnityEngine;
-
+using UnityEngine.UI;
 public abstract class Skill : ScriptableObject
 {
     
@@ -9,7 +9,7 @@ public abstract class Skill : ScriptableObject
     public int id;
     public float cooldown;
     public float duration;
-    public Image image;
+    public Sprite skillImage;
     [HideInInspector] public Animator animator;
     public AnimationClip animClip;
     public abstract void OnLoad(GameObject user);
