@@ -80,33 +80,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Skill_Q"",
-                    ""type"": ""Button"",
-                    ""id"": ""eea5e01a-f233-41fe-b3b3-c2c84de12156"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Skill_E"",
-                    ""type"": ""Button"",
-                    ""id"": ""2f50979c-3973-47a1-be37-c4af98d87a33"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Skill_Load"",
-                    ""type"": ""Button"",
-                    ""id"": ""7cdc06b6-0ab1-4e44-9004-ecacb4aafc80"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -318,39 +291,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""be4906c3-abfd-4245-8008-c5cb6f08437d"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Skill_Q"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3550054c-cb86-4c2d-a930-907020e99ea2"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Skill_E"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""99db1ee4-de16-458d-ac46-9e6677fa3e49"",
-                    ""path"": ""<Keyboard>/u"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skill_Load"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -444,6 +384,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""016bf858-bf1d-4153-b0d9-665132cb9e15"",
                     ""expectedControlType"": ""Quaternion"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkillUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""0155f824-bc52-4c4e-9d33-8b12de8af33c"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -867,6 +816,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d995dc05-768a-413a-9ebd-f7cf9cf3105a"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SkillUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -942,9 +902,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_GamePlayer_NormalAttack = m_GamePlayer.FindAction("NormalAttack", throwIfNotFound: true);
         m_GamePlayer_Block = m_GamePlayer.FindAction("Block", throwIfNotFound: true);
         m_GamePlayer_Roll = m_GamePlayer.FindAction("Roll", throwIfNotFound: true);
-        m_GamePlayer_Skill_Q = m_GamePlayer.FindAction("Skill_Q", throwIfNotFound: true);
-        m_GamePlayer_Skill_E = m_GamePlayer.FindAction("Skill_E", throwIfNotFound: true);
-        m_GamePlayer_Skill_Load = m_GamePlayer.FindAction("Skill_Load", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -957,6 +914,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        m_UI_SkillUI = m_UI.FindAction("SkillUI", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1024,9 +982,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlayer_NormalAttack;
     private readonly InputAction m_GamePlayer_Block;
     private readonly InputAction m_GamePlayer_Roll;
-    private readonly InputAction m_GamePlayer_Skill_Q;
-    private readonly InputAction m_GamePlayer_Skill_E;
-    private readonly InputAction m_GamePlayer_Skill_Load;
     public struct GamePlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -1037,9 +992,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @NormalAttack => m_Wrapper.m_GamePlayer_NormalAttack;
         public InputAction @Block => m_Wrapper.m_GamePlayer_Block;
         public InputAction @Roll => m_Wrapper.m_GamePlayer_Roll;
-        public InputAction @Skill_Q => m_Wrapper.m_GamePlayer_Skill_Q;
-        public InputAction @Skill_E => m_Wrapper.m_GamePlayer_Skill_E;
-        public InputAction @Skill_Load => m_Wrapper.m_GamePlayer_Skill_Load;
         public InputActionMap Get() { return m_Wrapper.m_GamePlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1067,15 +1019,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Roll.started += instance.OnRoll;
             @Roll.performed += instance.OnRoll;
             @Roll.canceled += instance.OnRoll;
-            @Skill_Q.started += instance.OnSkill_Q;
-            @Skill_Q.performed += instance.OnSkill_Q;
-            @Skill_Q.canceled += instance.OnSkill_Q;
-            @Skill_E.started += instance.OnSkill_E;
-            @Skill_E.performed += instance.OnSkill_E;
-            @Skill_E.canceled += instance.OnSkill_E;
-            @Skill_Load.started += instance.OnSkill_Load;
-            @Skill_Load.performed += instance.OnSkill_Load;
-            @Skill_Load.canceled += instance.OnSkill_Load;
         }
 
         private void UnregisterCallbacks(IGamePlayerActions instance)
@@ -1098,15 +1041,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Roll.started -= instance.OnRoll;
             @Roll.performed -= instance.OnRoll;
             @Roll.canceled -= instance.OnRoll;
-            @Skill_Q.started -= instance.OnSkill_Q;
-            @Skill_Q.performed -= instance.OnSkill_Q;
-            @Skill_Q.canceled -= instance.OnSkill_Q;
-            @Skill_E.started -= instance.OnSkill_E;
-            @Skill_E.performed -= instance.OnSkill_E;
-            @Skill_E.canceled -= instance.OnSkill_E;
-            @Skill_Load.started -= instance.OnSkill_Load;
-            @Skill_Load.performed -= instance.OnSkill_Load;
-            @Skill_Load.canceled -= instance.OnSkill_Load;
         }
 
         public void RemoveCallbacks(IGamePlayerActions instance)
@@ -1138,6 +1072,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
+    private readonly InputAction m_UI_SkillUI;
     public struct UIActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -1152,6 +1087,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+        public InputAction @SkillUI => m_Wrapper.m_UI_SkillUI;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1191,6 +1127,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+            @SkillUI.started += instance.OnSkillUI;
+            @SkillUI.performed += instance.OnSkillUI;
+            @SkillUI.canceled += instance.OnSkillUI;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1225,6 +1164,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
+            @SkillUI.started -= instance.OnSkillUI;
+            @SkillUI.performed -= instance.OnSkillUI;
+            @SkillUI.canceled -= instance.OnSkillUI;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1295,9 +1237,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnNormalAttack(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
         void OnRoll(InputAction.CallbackContext context);
-        void OnSkill_Q(InputAction.CallbackContext context);
-        void OnSkill_E(InputAction.CallbackContext context);
-        void OnSkill_Load(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -1311,5 +1250,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        void OnSkillUI(InputAction.CallbackContext context);
     }
 }

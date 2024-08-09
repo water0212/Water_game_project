@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SkillManager : MonoBehaviour
 {
@@ -12,42 +13,47 @@ public class SkillManager : MonoBehaviour
     public Skill testSkillLoad;
     public Skill currentSkill_E;
     public Skill currentSkill_Q;
-    public VoidEventSO E_SkillActiveEvent;
-    public VoidEventSO Q_SkillActiveEvent;
-    public VoidEventSO SkillLoadEvent;
+    [Header("測試用")]
+    public SkillDatabase skillDatabase;
+    public SkillUIManager skillUIManager;
     private void OnEnable() {
         currentSkill_E = null;
         currentSkill_Q = null;
-        E_SkillActiveEvent.OnEventRaised += ActiveSkill_E;
-        Q_SkillActiveEvent.OnEventRaised += ActiveSkill_Q;
-        SkillLoadEvent.OnEventRaised += LoadSkill_TEST;
     }
     private void Update() {
         if(currentSkill_E!=null)currentSkill_E.Update();
         if(currentSkill_Q!=null)currentSkill_Q.Update();
     }
-
-    private void LoadSkill_TEST()
+    public void TestAddSkill(InputAction.CallbackContext context){
+        if(context.started)
+        skillUIManager.SkillAdd(testSkillLoad);
+    }
+    public void LoadSkill_TEST(InputAction.CallbackContext context)
     {
         Debug.Log("skill_Load");
-        testSkillLoad.cooldown += 2f;
+        if(context.started)
         LoadSkill_E(testSkillLoad);
         
     }
 
-    private void ActiveSkill_Q()
+    public void ActiveSkill_Q(InputAction.CallbackContext context)
     {
+        
         if(currentSkill_Q == null){
             Debug.Log("qwq");
+            return;
         }
-       ActiveSkill(currentSkill_Q,Player);
+        if(context.started)
+        ActiveSkill(currentSkill_Q,Player);
     }
 
-    private void ActiveSkill_E()
+    public void ActiveSkill_E(InputAction.CallbackContext context)
     {
         if(currentSkill_E == null){
             Debug.Log("qeq");
+            return;
         }
+        if(context.started)
         ActiveSkill(currentSkill_E,Player);
     }
 

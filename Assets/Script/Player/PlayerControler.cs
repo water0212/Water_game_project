@@ -65,13 +65,13 @@ public class PlayerControler : MonoBehaviour
         inputAction.GamePlayer.Jump.started += Jump;
         inputAction.GamePlayer.NormalAttack.started += NormalAttack;
         inputAction.GamePlayer.Roll.started += Roll;
-        inputAction.GamePlayer.Skill_E.started += ActiveSkill_E;
-        inputAction.GamePlayer.Skill_Q.started += ActiveSkill_Q;
-        inputAction.GamePlayer.Skill_Load.started += LoadSkill_TEST;
+        // inputAction.GamePlayer.Skill_E.started += ActiveSkill_E;
+        // inputAction.GamePlayer.Skill_Q.started += ActiveSkill_Q;
+        // inputAction.GamePlayer.Skill_Load.started += LoadSkill_TEST;
         anim = GetComponent<Animator> ();
     }
 
-    private void LoadSkill_TEST(InputAction.CallbackContext context)
+    /*private void LoadSkill_TEST(InputAction.CallbackContext context)
     {
         SkilllLoad.RaiseEvent();
     }
@@ -84,7 +84,7 @@ public class PlayerControler : MonoBehaviour
     private void ActiveSkill_E(InputAction.CallbackContext context)
     {
         SkillActive_E.RaiseEvent();
-    }
+    }*/
 
     private void OnEnable() {
         inputAction.Enable();

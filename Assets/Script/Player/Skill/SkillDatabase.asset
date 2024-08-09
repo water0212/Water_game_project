@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: SkillDatabase
   m_EditorClassIdentifier: 
   skills:
-  - {fileID: 11400000, guid: 5a7402aee70e9634081799ed8606d917, type: 2}
+  - {fileID: 11400000, guid: 5bf0124107202da4fa7cd501501c3d1e, type: 2}
+  - {fileID: 11400000, guid: 5bf0124107202da4fa7cd501501c3d1e, type: 2}
+  - {fileID: 11400000, guid: 5bf0124107202da4fa7cd501501c3d1e, type: 2}
+  - {fileID: 11400000, guid: 5bf0124107202da4fa7cd501501c3d1e, type: 2}
+  - {fileID: 11400000, guid: 5bf0124107202da4fa7cd501501c3d1e, type: 2}
+  MaximumSkillCapacity: 5

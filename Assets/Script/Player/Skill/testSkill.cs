@@ -18,6 +18,7 @@ public class testSkill : Skill
     public Vector2 attackDisplaces;
     public override void OnLoad(GameObject user)
     {
+        cooldownCount = cooldown;
         useCount = MaxUseCount;
         summonedObject = Instantiate(summonPrefab,Constants.SkillObjectPoolPosition, Quaternion.identity);
         animator = summonedObject.GetComponent<Animator>();

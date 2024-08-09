@@ -6,6 +6,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public PlayerStateBar playerStateBar;
+    public SkillUIManager skillUIManager;
     [Header("監聽")]
     public CharacterEventSO HealthChangeEvent;
     public CharacterEventSO RollingChangeEvent;

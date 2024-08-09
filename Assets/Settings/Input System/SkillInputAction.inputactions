@@ -1,0 +1,74 @@
+{
+    "name": "SkillInputAction",
+    "maps": [
+        {
+            "name": "Skill",
+            "id": "5e0fd0b6-1019-4ccb-bee6-26bc694e1ce4",
+            "actions": [
+                {
+                    "name": "Skill_Q",
+                    "type": "Button",
+                    "id": "cb5d0721-ebe8-42aa-9aab-1f715a308fa2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skill_E",
+                    "type": "Button",
+                    "id": "59025331-f87f-49d1-9d09-d9485c25b0ce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skill_Load",
+                    "type": "Button",
+                    "id": "ba301360-e3d1-45bb-a1de-e60b11a535ce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "aed384aa-6f7e-4548-a116-4aa876f4b93c",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill_Q",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f955e17e-0bf8-4733-8a22-8ccc7931d07b",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill_E",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9335e187-c7f8-46fa-ab1e-0298963fffe3",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill_Load",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
