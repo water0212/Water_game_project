@@ -24,7 +24,7 @@ public class testSkill : Skill
         animator = summonedObject.GetComponent<Animator>();
         skillSummon = summonedObject.GetComponent<SkillSummon>();
         attack = user.GetComponent<Character>().attackPower;
-        Debug.Log("技能加載完畢");
+        Debug.Log(skillName + "技能加載完畢");
     }
     public override void Activate(GameObject user)
     {

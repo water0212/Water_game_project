@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using JetBrains.Annotations;
 using TMPro;
+using Unity.VisualScripting;
 
 public class SkillUIManager : MonoBehaviour
 {
@@ -42,6 +43,10 @@ public class SkillUIManager : MonoBehaviour
     }
     public void OpenSkillChooseUI()
     {
+        if(Skill_Canvas.gameObject.activeSelf == true){
+            CloseSkillChooseUI();
+            return;
+        }
         Skill_Canvas.gameObject.SetActive(true);
         EnterSkillUI_icon.gameObject.SetActive(false);
         Debug.Log ("www");
