@@ -16,6 +16,12 @@ public class SkillUIManager : MonoBehaviour
     public SkillManager skillManager;
     public TextMeshProUGUI SkillDescription;
     public StringEventSO skillDescriptionUpdateEvent;
+    public Button activeButtonE;
+    public Button activeButtonQ;
+    public Image lockE;
+    public Image lockQ;
+    public Sprite lockItem;
+    public Skill currentSkill;
     private void Start() {
         UpdateSkillSlots();
     }
@@ -34,13 +40,13 @@ public class SkillUIManager : MonoBehaviour
                 }
             } 
     }
-    public void OpenSkillChoose()
+    public void OpenSkillChooseUI()
     {
         Skill_Canvas.gameObject.SetActive(true);
         EnterSkillUI_icon.gameObject.SetActive(false);
         Debug.Log ("www");
     }
-    public void CloseSkillChoose(){
+    public void CloseSkillChooseUI(){
         Skill_Canvas.gameObject.SetActive(false);
         EnterSkillUI_icon.gameObject.SetActive(true);
     }
@@ -51,6 +57,34 @@ public class SkillUIManager : MonoBehaviour
     {
         SkillDescription.text = TEXT;
     }
-
-    
+    public void OpenSkillChoose(Skill skill){
+        currentSkill = skill;
+        if(lockE.sprite != lockItem||lockE.gameObject.activeSelf == false){
+            activeButtonE.gameObject.SetActive(true);
+        }
+        if(lockQ.sprite != lockItem||lockQ.gameObject.activeSelf == false){
+           activeButtonQ.gameObject.SetActive(true);
+        }
+        if(lockE.sprite==lockItem||lockQ.sprite==lockItem){
+            Debug.Log("你尚未學會施放技能");
+        }
+    }
+    public void CloseSkillChoose(){
+        if(activeButtonE.gameObject.activeSelf == true){
+            activeButtonE.gameObject.SetActive(false);
+        }
+        if(activeButtonQ.gameObject.activeSelf == true){
+            activeButtonQ.gameObject.SetActive(false);
+        }
+    }
+    public void CheckE(){
+        if(lockE.gameObject.activeSelf==false) lockE.gameObject.SetActive(true);
+        lockE.sprite = currentSkill.skillImage;
+        skillManager.LoadSkill_E(currentSkill);
+    }
+    public void CheckQ(){
+        if(lockQ.gameObject.activeSelf==false) lockE.gameObject.SetActive(true);
+        lockQ.sprite = currentSkill.skillImage;
+        skillManager.LoadSkill_Q(currentSkill);
+    }
 }

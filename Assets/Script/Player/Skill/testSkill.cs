@@ -35,7 +35,7 @@ public class testSkill : Skill
         skillSummon.fade = 1;
         skillSummon.isSummon = true;
         skillSummon.isDissolving = false;
-        skillSummon.durationTimeCount = duration;
+        skillSummon.durationTimeCount = skillSummon.duration;
         summonedObject.transform.position =user.transform.position+ new Vector3(user.transform.localScale.x,0,0);
         summonedObject.transform.localScale = user.transform.localScale;
         animator.SetTrigger("Attack");
