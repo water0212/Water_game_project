@@ -14,7 +14,7 @@ public class testSkill : Skill
     public float attackMultiplier;
     public GameObject summonPrefab;
    [HideInInspector] public GameObject summonedObject;
-   [HideInInspector] public SkillSummon skillSummon;
+   [HideInInspector] public SkillSummonAndDamage skillSummon;
     public Vector2 attackDisplaces;
     public override void OnLoad(GameObject user)
     {
@@ -22,7 +22,7 @@ public class testSkill : Skill
         useCount = MaxUseCount;
         summonedObject = Instantiate(summonPrefab,Constants.SkillObjectPoolPosition, Quaternion.identity);
         animator = summonedObject.GetComponent<Animator>();
-        skillSummon = summonedObject.GetComponent<SkillSummon>();
+        skillSummon = summonedObject.GetComponent<SkillSummonAndDamage>();
         attack = user.GetComponent<Character>().attackPower;
         Debug.Log(skillName + "技能加載完畢");
     }
@@ -33,7 +33,7 @@ public class testSkill : Skill
         var damage = attack * attackMultiplier;
         InitializeSkillData(user,damage);
         skillSummon.fade = 1;
-        skillSummon.isSummon = true;
+        skillSummon.isSummoned = true;
         skillSummon.isDissolving = false;
         skillSummon.durationTimeCount = skillSummon.duration;
         summonedObject.transform.position =user.transform.position+ new Vector3(user.transform.localScale.x,0,0);
@@ -58,7 +58,7 @@ public class testSkill : Skill
         
     }
     public void InitializeSkillData(GameObject user,float damage){
-        ISummonedObject summonComponent = summonedObject.GetComponent<ISummonedObject>();
+        ISummonedAndDamageObject summonComponent = summonedObject.GetComponent<ISummonedAndDamageObject>();
         summonComponent.Initialize(user, damage,attackDisplaces,duration);
     }
 }

@@ -12,7 +12,7 @@ public class SkillAttack : MonoBehaviour
     public Vector2 attackDisplaces;
 
     private void OnEnable(){
-        var Summon = GetComponentInParent<SkillSummon>();
+        var Summon = GetComponentInParent<SkillSummonAndDamage>();
         var atk = Summon.attack;
         attackDisplaces = Summon.attackDisplaces;
         if(atk>0)

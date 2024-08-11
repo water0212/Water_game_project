@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillSummon : MonoBehaviour, ISummonedObject
+public class SkillSummonAndDamage : MonoBehaviour, ISummonedAndDamageObject
 {
     public Material material;
     public GameObject user;
     public float attack;
     public Vector2 attackDisplaces;
-    public bool isSummon;
+    public bool isSummoned;
     public float duration;
     public float durationTimeCount;
     public bool isDissolving;
@@ -27,10 +27,10 @@ public class SkillSummon : MonoBehaviour, ISummonedObject
         material = GetComponent<SpriteRenderer>().material;
     }
     private void Update() {
-        if (isSummon){
+        if (isSummoned){
             durationTimeCount -= Time.deltaTime;
             if(durationTimeCount <=0){
-                isSummon = false;
+                isSummoned = false;
                 isDissolving = true;
             }
         }

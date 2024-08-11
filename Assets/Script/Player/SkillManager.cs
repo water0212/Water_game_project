@@ -26,7 +26,8 @@ public class SkillManager : MonoBehaviour
     }
     public void TestAddSkill(InputAction.CallbackContext context){
         if(context.started)
-        skillUIManager.SkillAdd(testSkillLoad);
+        //skillUIManager.SkillAdd(testSkillLoad);
+        LoadSkill_Q(testSkillLoad);
     }
     public void LoadSkill_TEST(InputAction.CallbackContext context)
     {

@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sprite 1
+  m_Name: Skill_Tp
   m_Shader: {fileID: -6465566751694194690, guid: 91df010d65c2a574b83c366f0daeef24, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

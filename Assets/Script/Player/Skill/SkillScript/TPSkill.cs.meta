@@ -3,7 +3,14 @@ guid: d2951d8de5814eb498d084845abdec85
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - skillImage: {instanceID: 0}
+  - animator: {instanceID: 0}
+  - animClip: {instanceID: 0}
+  - enemy: {instanceID: 0}
+  - summonPrefab: {fileID: 5454132533851109227, guid: 432b9ad49499fcc47af309beb24518a5, type: 3}
+  - summonedObject: {instanceID: 0}
+  - skillSummon: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
