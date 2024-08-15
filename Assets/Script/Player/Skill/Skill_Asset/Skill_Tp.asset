@@ -17,7 +17,7 @@ MonoBehaviour:
   id: 1
   cooldown: 5
   duration: 0.5
-  skillImage: {fileID: 0}
+  skillImage: {fileID: -164947489, guid: 05e0567213a58c840a3ea79a4409bdfd, type: 3}
   animator: {fileID: 0}
   animClip: {fileID: 0}
   count_storage_capability: 0

@@ -80,6 +80,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""0be5dfdd-d431-4f07-881b-2ac0c9238a54"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -289,6 +298,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Roll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6cf93d19-b892-42f1-a19f-e495bd52ebdf"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -902,6 +922,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_GamePlayer_NormalAttack = m_GamePlayer.FindAction("NormalAttack", throwIfNotFound: true);
         m_GamePlayer_Block = m_GamePlayer.FindAction("Block", throwIfNotFound: true);
         m_GamePlayer_Roll = m_GamePlayer.FindAction("Roll", throwIfNotFound: true);
+        m_GamePlayer_Interact = m_GamePlayer.FindAction("Interact", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -982,6 +1003,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlayer_NormalAttack;
     private readonly InputAction m_GamePlayer_Block;
     private readonly InputAction m_GamePlayer_Roll;
+    private readonly InputAction m_GamePlayer_Interact;
     public struct GamePlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -992,6 +1014,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @NormalAttack => m_Wrapper.m_GamePlayer_NormalAttack;
         public InputAction @Block => m_Wrapper.m_GamePlayer_Block;
         public InputAction @Roll => m_Wrapper.m_GamePlayer_Roll;
+        public InputAction @Interact => m_Wrapper.m_GamePlayer_Interact;
         public InputActionMap Get() { return m_Wrapper.m_GamePlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1019,6 +1042,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Roll.started += instance.OnRoll;
             @Roll.performed += instance.OnRoll;
             @Roll.canceled += instance.OnRoll;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IGamePlayerActions instance)
@@ -1041,6 +1067,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Roll.started -= instance.OnRoll;
             @Roll.performed -= instance.OnRoll;
             @Roll.canceled -= instance.OnRoll;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IGamePlayerActions instance)
@@ -1237,6 +1266,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnNormalAttack(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
         void OnRoll(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

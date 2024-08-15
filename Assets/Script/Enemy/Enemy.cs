@@ -11,7 +11,7 @@ using Unity.Mathematics;
 
 public class Enemy : MonoBehaviour
 {
-    public FloatEventSO ExperienceGive;
+
  //   public ParticleSystem HurtEffect;
  //   public ParticleSystem DeadEffect;
     [HideInInspector]public Rigidbody2D rb;
@@ -70,8 +70,10 @@ public class Enemy : MonoBehaviour
     [Header("廣播")]
     public PositionEventSO HurtEffect;
     public PositionEventSO DeadEffect;
+    public FloatEventSO ExperienceGive;
     [Header("接收")]
     public VoidEventSO PlayerDead;
+
     protected virtual void Awake() {
         rb = GetComponent<Rigidbody2D> ();
         physicCheck = GetComponent<PhysicCheck> ();
@@ -111,7 +113,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces){
         if(wasHited)return;
         if(healthPoint-attack>0){
-            HurtEffect.RaiseEvent(transform.position);
+            HurtEffect.RaiseEvent(this.transform.position+new Vector3(0,1.5f,0));
             healthPoint-=attack;
             wasHited=true;
             isMoveRecovery = true;
@@ -119,6 +121,7 @@ public class Enemy : MonoBehaviour
             //canMove=false;
             moveRecovery = maxMoveRecovery;
             hitCD = maxHitCD;
+            
             if(attack>0){
                onTakeDamage?.Invoke(transform); 
                HurtDisplacement(transform,attackDisplaces);
@@ -174,7 +177,7 @@ public class Enemy : MonoBehaviour
     }  
     public void Deadeffect(){
         //ParticleSystem deadEffect = Instantiate(DeadEffect,transform.position,quaternion.identity);
-        DeadEffect.OnEventRaised(transform.position);
+        DeadEffect.RaiseEvent(transform.position+new Vector3(0,1.5f,0));
     }
 #endregion
 #region 計時器

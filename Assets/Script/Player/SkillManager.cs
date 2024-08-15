@@ -16,18 +16,24 @@ public class SkillManager : MonoBehaviour
     [Header("測試用")]
     public SkillDatabase skillDatabase;
     public SkillUIManager skillUIManager;
+    [Header("監聽")]
+    public FloatEventSO GainSkillEvent;
+    
     private void OnEnable() {
         currentSkill_E = null;
         currentSkill_Q = null;
+        GainSkillEvent.OnEventRaised += AddSkill;
+    }
+    private void OnDisable() {
+        GainSkillEvent.OnEventRaised -= AddSkill;
     }
     private void Update() {
         if(currentSkill_E!=null)currentSkill_E.Update();
         if(currentSkill_Q!=null)currentSkill_Q.Update();
     }
-    public void TestAddSkill(InputAction.CallbackContext context){
-        if(context.started)
-        //skillUIManager.SkillAdd(testSkillLoad);
-        LoadSkill_Q(testSkillLoad);
+    public void AddSkill(float num){
+        skillUIManager.SkillAdd(skillDatabase.GetSkillByID((int)num));
+        //LoadSkill_Q(testSkillLoad);
     }
     public void LoadSkill_TEST(InputAction.CallbackContext context)
     {

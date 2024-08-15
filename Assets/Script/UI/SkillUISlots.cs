@@ -15,13 +15,16 @@ public class SkillUISlots : MonoBehaviour
     public Button button;
     public StringEventSO stringEventSO;
     public SkillUIManager skillUIManager;
-    private void Start() {
+    private void Awake() {
         skillName = GetComponentInChildren<TextMeshProUGUI>();
         skillImage = GetComponentInChildren<UnityEngine.UI.Image>();
         button = GetComponentInChildren<Button>();
         button.onClick.AddListener(OnButtonClick);
         skillDescription = new TextMeshProUGUI();
         skillUIManager = GetComponentInParent<SkillUIManager>();
+    }
+    private void Start() {
+        
     }
     public void UpdateSkillUI(Skill ski){
         skill = ski;

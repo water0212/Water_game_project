@@ -96,7 +96,7 @@ public class PlayerControler : MonoBehaviour
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        Debug.Log(other.name + "");
+    //    Debug.Log(other.name + "");
     }
     void Update()
     {
@@ -262,12 +262,12 @@ public class PlayerControler : MonoBehaviour
             Vector2 lineDownStart = new Vector2(transform.position.x,transform.position.y) + Vector2.up*lineDownStartOffset+new Vector2(transform.localScale.x*0.35f,0);
             Vector2 lineEndStart = new Vector2(transform.position.x,transform.position.y) + Vector2.up*lineDownEndOffset+new Vector2(transform.localScale.x*0.35f,0);
             RaycastHit2D downHit2D = Physics2D.Linecast(lineDownStart, lineEndStart,LayerMask.GetMask("Ground"));
-            Debug.DrawLine(lineDownStart,lineEndStart, Color.red);
+        //    Debug.DrawLine(lineDownStart,lineEndStart, Color.red);
             if(downHit2D.collider !=null){
                 Vector2 linefwdStart = new Vector2(transform.position.x,downHit2D.point.y-0.5f);
                 Vector2 lineEndfwd = new Vector2(transform.position.x,downHit2D.point.y-0.5f)+new Vector2(transform.localScale.x,0);
                 RaycastHit2D fwdHit2D = Physics2D.Linecast(linefwdStart, lineEndfwd,LayerMask.GetMask("Ground"));
-                  Debug.DrawLine(linefwdStart,lineEndfwd, Color.blue);
+                //  Debug.DrawLine(linefwdStart,lineEndfwd, Color.blue);
                 if(fwdHit2D.collider!=null){
                     rb2D.gravityScale = 0;
                     rb2D.velocity = Vector2.zero;

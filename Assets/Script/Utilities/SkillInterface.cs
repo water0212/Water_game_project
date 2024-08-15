@@ -17,3 +17,13 @@ public interface ISummonedAndEffectObject
 
        void Initialize(GameObject user, float duration); 
     }
+
+    public interface IInteractable
+    {
+    // Start is called before the first frame update
+    /// <summary>
+    /// 下方選入要執行的指令碼
+    /// </summary>
+    void TriggerAction();
+}
+

@@ -86,6 +86,7 @@ public class Character : MonoBehaviour
             healthPoint-=attack;
             wasHited=true;
             hitCD = maxHitCD;
+            
             //受傷
             if(attack>0)
             onTakeDamage?.Invoke(transform,attackDisplaces);

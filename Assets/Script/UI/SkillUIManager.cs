@@ -25,6 +25,7 @@ public class SkillUIManager : MonoBehaviour
     public Skill currentSkill;
     private void Start() {
         UpdateSkillSlots();
+        CloseSkillChooseUI();
     }
     private void OnEnable() {
         skillDescriptionUpdateEvent.OnEventRaised += UpdateSkillDescription; 
@@ -70,7 +71,7 @@ public class SkillUIManager : MonoBehaviour
         if(lockQ.sprite != lockItem||lockQ.gameObject.activeSelf == false){
            activeButtonQ.gameObject.SetActive(true);
         }
-        if(lockE.sprite==lockItem||lockQ.sprite==lockItem){
+        if(lockE.sprite==lockItem&&lockQ.sprite==lockItem){
             Debug.Log("你尚未學會施放技能");
         }
     }
@@ -88,7 +89,7 @@ public class SkillUIManager : MonoBehaviour
         skillManager.LoadSkill_E(currentSkill);
     }
     public void CheckQ(){
-        if(lockQ.gameObject.activeSelf==false) lockE.gameObject.SetActive(true);
+        if(lockQ.gameObject.activeSelf==false) lockQ.gameObject.SetActive(true);
         lockQ.sprite = currentSkill.skillImage;
         skillManager.LoadSkill_Q(currentSkill);
     }

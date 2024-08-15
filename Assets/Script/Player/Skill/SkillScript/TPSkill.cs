@@ -1,4 +1,5 @@
 using System.Configuration;
+using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,7 +27,7 @@ public class TPSkill : Skill
 
     public override void OnLoad(GameObject user)
     {
-        TpMarkCount = MaxTpMarkCount;
+        TpMarkCount =0;
         cooldownCount = cooldown;
         summonedObject = Instantiate(summonPrefab,Constants.SkillObjectPoolPosition, Quaternion.identity);
         animator = summonedObject.GetComponent<Animator>();
@@ -38,7 +39,8 @@ public class TPSkill : Skill
 
     public override void Activate(GameObject user)
     {
-        if(enemy == null|| skillSummon.isSummoned == false&&canUse){
+        if(canUse && (enemy == null || skillSummon.isSummoned == false)){
+            Debug.Log("break");
             InitializeSkillData(user);
             canUse = false;
             skillSummon.isSummoned = true;
@@ -66,6 +68,7 @@ public class TPSkill : Skill
             enemy = skillSummon.Target.GetComponent<Enemy>();
             canTp = true;
             TpMarkCount = MaxTpMarkCount;
+            Debug.Log("目標命中"+enemy.gameObject.name);
         }
         if(enemy){
             TpMarkCount -= Time.deltaTime;

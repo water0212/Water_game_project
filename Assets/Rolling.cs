@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D.IK;
 
 public class Rolling : StateMachineBehaviour
 {
+   CapsuleCollider2D CC2D;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        animator.GetComponent<PlayerControler>().isRolling = true;
+       CC2D = animator.GetComponent<CapsuleCollider2D>();
+       CC2D.size /=2;
+       CC2D.offset /=2; 
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -20,6 +25,8 @@ public class Rolling : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        animator.GetComponent<PlayerControler>().isRolling = false;
+       CC2D.size *=2;
+       CC2D.offset *=2; 
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
