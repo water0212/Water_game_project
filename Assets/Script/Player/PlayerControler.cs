@@ -100,6 +100,7 @@ public class PlayerControler : MonoBehaviour
     }
     void Update()
     {
+        if(DialogManager.GetInstance().dialogueIsPlaying) return;
        inputDirection = inputAction.GamePlayer.Move.ReadValue<Vector2>();
        CheckState();
        TimeCount();
@@ -189,9 +190,12 @@ public class PlayerControler : MonoBehaviour
         jumpDelay = maxJumpDelay;
         
     }
+    #region "攻擊"
+        
+    #endregion
     private void NormalAttack(InputAction.CallbackContext context)
     {
-        if(isRolling)
+        if(isRolling||DialogManager.GetInstance().dialogueIsPlaying)
         return;
         transform.localScale=new Vector3(faceOn,1,1);
         anim.SetBool("isAttack", true);

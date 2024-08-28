@@ -7,7 +7,7 @@ public class SignSpriteF : MonoBehaviour
     protected string pressKey;
     public PlayerInputAction inputActions;
     public Transform playerTrans;
-    protected IInteractable targetItem;
+    [SerializeField]protected IInteractable targetItem;
     //private PlayerInputAction inputActions;
     [SerializeField]protected bool canPress;
     protected Animator anim;
@@ -35,8 +35,9 @@ public class SignSpriteF : MonoBehaviour
     // Start is called before the first frame update
     public void OnComfirm(InputAction.CallbackContext context)
     {
-        Debug.Log("swswswsw");
+        //Debug.Log("swswswsw");
         if(canPress&&targetItem!=null&&context.control.displayName=="F"){
+         //   Debug.LogWarning("weqweq");
             targetItem.TriggerAction();
             
         }
