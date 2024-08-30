@@ -13,13 +13,15 @@ public class SkillSummonAndDamage : MonoBehaviour, ISummonedAndDamageObject
     public float durationTimeCount;
     public bool isDissolving;
     public float fade;
+    public int attackStrength;
     
-    public void Initialize(GameObject user, float damage,Vector2 attackDisplaces, float duration)
+    public void Initialize(GameObject user, float damage,Vector2 attackDisplaces, float duration,int attackStrength)
     {
         this.user = user;
         this.attack = damage;
         this.attackDisplaces = attackDisplaces;
         this.duration = duration;
+        this.attackStrength = attackStrength;
     }
     private void OnEnable() {
         durationTimeCount = duration;

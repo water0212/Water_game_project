@@ -21,11 +21,12 @@ MonoBehaviour:
   animator: {fileID: 0}
   animClip: {fileID: 7400000, guid: 5f2c693384fe83c439958b01584f99b2, type: 2}
   count_storage_capability: 1
-  cooldownCount: 5.810231
-  useCount: 1
+  cooldownCount: 8
+  useCount: 2
   MaxUseCount: 2
   attack: 10
   attackMultiplier: 3
+  AttackStrength: 10
   summonPrefab: {fileID: 84057804891094169, guid: 5bf9baafe854b424aafea3ff48ee991e, type: 3}
   summonedObject: {fileID: 0}
   skillSummon: {fileID: 0}

@@ -1,14 +1,13 @@
 -> main
 
 ===main ===
-Which pokemon do you choose?
-    +[水箭龜]
-        -> chosen("水箭龜")
-    +[妙蛙種子]
-        -> chosen("妙蛙種子")
-    +[噴火龍]
-        ->chosen("噴火龍")
-        
-=== chosen(pokemon) ===
-你選擇了{pokemon}!
-->END
+按下方向鍵或WASD可以選擇選項，按下Enter確認
+    +[好]
+        (笑
+        ->END
+    +[我知道了]
+        (點頭
+        ->END
+    +[......]
+         看來你不愛說話呢
+         ->END

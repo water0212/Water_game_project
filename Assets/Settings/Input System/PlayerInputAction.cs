@@ -89,6 +89,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenSkillUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c208e97-1fbc-47fc-9c51-db0dc1ced72c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -309,6 +318,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""509e7237-aa8f-49e8-9f4e-624ae5c1e05c"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenSkillUI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -923,6 +943,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_GamePlayer_Block = m_GamePlayer.FindAction("Block", throwIfNotFound: true);
         m_GamePlayer_Roll = m_GamePlayer.FindAction("Roll", throwIfNotFound: true);
         m_GamePlayer_Interact = m_GamePlayer.FindAction("Interact", throwIfNotFound: true);
+        m_GamePlayer_OpenSkillUI = m_GamePlayer.FindAction("OpenSkillUI", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1004,6 +1025,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlayer_Block;
     private readonly InputAction m_GamePlayer_Roll;
     private readonly InputAction m_GamePlayer_Interact;
+    private readonly InputAction m_GamePlayer_OpenSkillUI;
     public struct GamePlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -1015,6 +1037,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @Block => m_Wrapper.m_GamePlayer_Block;
         public InputAction @Roll => m_Wrapper.m_GamePlayer_Roll;
         public InputAction @Interact => m_Wrapper.m_GamePlayer_Interact;
+        public InputAction @OpenSkillUI => m_Wrapper.m_GamePlayer_OpenSkillUI;
         public InputActionMap Get() { return m_Wrapper.m_GamePlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1045,6 +1068,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @OpenSkillUI.started += instance.OnOpenSkillUI;
+            @OpenSkillUI.performed += instance.OnOpenSkillUI;
+            @OpenSkillUI.canceled += instance.OnOpenSkillUI;
         }
 
         private void UnregisterCallbacks(IGamePlayerActions instance)
@@ -1070,6 +1096,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @OpenSkillUI.started -= instance.OnOpenSkillUI;
+            @OpenSkillUI.performed -= instance.OnOpenSkillUI;
+            @OpenSkillUI.canceled -= instance.OnOpenSkillUI;
         }
 
         public void RemoveCallbacks(IGamePlayerActions instance)
@@ -1267,6 +1296,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnBlock(InputAction.CallbackContext context);
         void OnRoll(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnOpenSkillUI(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

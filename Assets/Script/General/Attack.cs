@@ -8,7 +8,10 @@ public class Attack : MonoBehaviour
 {
     [Header("攻擊力")]
     public float attack;
+    [Header("攻擊倍數")]
     public float attackMultiplier;
+    [Header("力道")]
+    public int AttackStrength;
     
     //public float attackRate; //暫時沒用
     public Vector2 attackDisplaces;
@@ -31,14 +34,16 @@ public class Attack : MonoBehaviour
                 PerfectReflectAttack(character, attackDisplaces);
             else if(character.isBlock)
                 ReflectAttack(character, attackDisplaces);
-            else character.TakeDamage(transform,attack,attackDisplaces);
+            else {
+                character.TakeDamage(transform,attack,attackDisplaces,AttackStrength);
+            }
         }
         else
         {
             var enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(transform,attack,attackDisplaces);
+                enemy.TakeDamage(transform,attack,attackDisplaces,AttackStrength);
             }
         }
     }

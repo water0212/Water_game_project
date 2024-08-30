@@ -12,6 +12,7 @@ public class testSkill : Skill
     public int MaxUseCount;
     public float attack;
     public float attackMultiplier;
+    public int AttackStrength;
     public GameObject summonPrefab;
    [HideInInspector] public GameObject summonedObject;
    [HideInInspector] public SkillSummonAndDamage skillSummon;
@@ -59,6 +60,6 @@ public class testSkill : Skill
     }
     public void InitializeSkillData(GameObject user,float damage){
         ISummonedAndDamageObject summonComponent = summonedObject.GetComponent<ISummonedAndDamageObject>();
-        summonComponent.Initialize(user, damage,attackDisplaces,duration);
+        summonComponent.Initialize(user, damage,attackDisplaces,duration,AttackStrength);
     }
 }

@@ -75,7 +75,7 @@ public class Character : MonoBehaviour
         }
     }
     #region 受傷與死亡
-    public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces){
+    public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength){
             if(wasHited|| isInvincible)
         return;
             if(playerController.isHanging){
@@ -86,7 +86,9 @@ public class Character : MonoBehaviour
             healthPoint-=attack;
             wasHited=true;
             hitCD = maxHitCD;
-            
+            Debug.Log("www");
+            AttackScene.GetInstance().HitPause(AttackStrength);
+            CamaeraControl.GetInstance().CameraShake(attackDisplaces);
             //受傷
             if(attack>0)
             onTakeDamage?.Invoke(transform,attackDisplaces);
@@ -104,8 +106,11 @@ public class Character : MonoBehaviour
         attacker.healthPoint-=1;
         if(!isPerfectBlock){
         Vector2 vir = new Vector2(rb.transform.position.x - attacker.transform.position.x,1).normalized;
-        rb.AddForce(vir*revise,ForceMode2D.Impulse);    
+        var AttackStrength = vir*revise;
+        rb.AddForce(AttackStrength,ForceMode2D.Impulse); 
+        CamaeraControl.GetInstance().CameraShake(AttackStrength);    
         }else{
+            AttackScene.GetInstance().HitPause(6);
             onperfectBlock?.Invoke();
         }
         

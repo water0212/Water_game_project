@@ -10,10 +10,13 @@ public class SkillAttack : MonoBehaviour
 
     //public float attackRate; //暫時沒用
     public Vector2 attackDisplaces;
+    [Header("力道")]
+    public int AttackStrength;
 
     private void OnEnable(){
         var Summon = GetComponentInParent<SkillSummonAndDamage>();
         var atk = Summon.attack;
+        AttackStrength = Summon.attackStrength;
         attackDisplaces = Summon.attackDisplaces;
         if(atk>0)
         attack=(float)atk*attackMultiplier;
@@ -22,7 +25,7 @@ public class SkillAttack : MonoBehaviour
             var enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(transform,attack,attackDisplaces);
+                enemy.TakeDamage(transform,attack,attackDisplaces,AttackStrength);
             }
         
     }

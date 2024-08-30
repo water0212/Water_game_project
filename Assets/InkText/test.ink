@@ -1,2 +1,2 @@
-This is a test!
-中文測試
+按下Enter繼續
+按下F鍵可以與我們對話

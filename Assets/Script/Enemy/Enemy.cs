@@ -110,10 +110,12 @@ public class Enemy : MonoBehaviour
         currentState.OnExit();                          //敵人_觸發離開代碼
     }
     #region 受傷
-    public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces){
+    public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength){
         if(wasHited)return;
         if(healthPoint-attack>0){
             HurtEffect.RaiseEvent(this.transform.position+new Vector3(0,1.5f,0));
+            AttackScene.GetInstance().HitPause(AttackStrength);
+            CamaeraControl.GetInstance().CameraShake(attackDisplaces);
             healthPoint-=attack;
             wasHited=true;
             isMoveRecovery = true;

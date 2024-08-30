@@ -8,6 +8,8 @@ public class Chest : MonoBehaviour, IInteractable
     public Sprite OpenSprite;
     public Sprite CloseSprite;
     public bool isDone;
+    [Header("技能編號")]
+    public int SkillID;
     public FloatEventSO GainSkillEvent;
 
     private void Awake() {
@@ -22,7 +24,7 @@ public class Chest : MonoBehaviour, IInteractable
         if(!isDone)
         {
             Debug.Log("開啟這王八蛋箱子");
-            GainSkillEvent.RaiseEvent(1);
+            GainSkillEvent.RaiseEvent(SkillID);
             OpenTheChest();
         }
     }

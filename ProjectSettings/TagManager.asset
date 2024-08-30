@@ -8,6 +8,7 @@ TagManager:
   - dialogue
   - unknown
   - exit
+  - Bounds
   layers:
   - Default
   - TransparentFX

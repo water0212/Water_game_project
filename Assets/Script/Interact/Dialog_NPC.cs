@@ -12,8 +12,7 @@ public class Dialog_NPC : MonoBehaviour, IInteractable
     }
     public void TriggerAction()
     {
-        //Debug.Log("wqeeqwe");
-        dialogTrigger.PlayDialog();
+        //dialogTrigger.PlayDialog();
     }
 
 }
