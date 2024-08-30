@@ -10,6 +10,8 @@ using UnityEngine.VFX;
 public class TPSkill : Skill
 {
     public bool count_storage_capability;
+    [Header("氣力加成")]
+    public float TenacityDamageRateBoost;
     public float cooldownCount;
     public float TpMarkCount;
     public float MaxTpMarkCount;
@@ -53,6 +55,7 @@ public class TPSkill : Skill
             Vector3 targetOffset = new Vector3(-enemy.transform.localScale.x* distanceBehide,0,0);
             user.gameObject.transform.position = enemy.transform.position + targetOffset + new Vector3 ( 0, verticaloffset, 0);
             canTp = false;
+            //氣力倍率增加
         }
     }
     public override void Update()

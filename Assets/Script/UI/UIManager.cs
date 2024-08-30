@@ -11,17 +11,26 @@ public class UIManager : MonoBehaviour
     public CharacterEventSO HealthChangeEvent;
     public CharacterEventSO RollingChangeEvent;
     public FloatEventSO ExperienceChangeEvent;
+    public FloatFloatEventSO TenacityChangeEvent;
     
     private void OnEnable() {
         HealthChangeEvent.OnEventRaised += OnHealthEvent;
         RollingChangeEvent.OnEventRaised += RollingEvent;
         ExperienceChangeEvent.OnEventRaised += ExperienceEvent;
+        TenacityChangeEvent.OnEventRaised += TenacityEvent;
         
     }
     private void OnDisable() {
         HealthChangeEvent.OnEventRaised -= OnHealthEvent;
         RollingChangeEvent.OnEventRaised -= RollingEvent;
         ExperienceChangeEvent.OnEventRaised -= ExperienceEvent;
+        TenacityChangeEvent.OnEventRaised -= TenacityEvent;
+    }
+
+    private void TenacityEvent(float arg0,float arg1)
+    {
+        float persentage = arg0/arg1;
+        playerStateBar.OnTenacityChange(persentage);
     }
 
     private void ExperienceEvent(float ExperiencePoint)

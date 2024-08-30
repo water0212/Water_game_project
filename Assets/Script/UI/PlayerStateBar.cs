@@ -8,6 +8,7 @@ public class PlayerStateBar : MonoBehaviour
     public Image HealthImage;
     public Image HealthDelayImage;
     public Image RollingTimesImage;
+    public Image TenacityImage;
     public Image ExperienceImage;
     public float HealthDelayRate;
     private void Update() {
@@ -27,5 +28,8 @@ public class PlayerStateBar : MonoBehaviour
     }
     public void OnExperienceChange(float persentage){
         ExperienceImage.fillAmount  = persentage;
+    }
+    public void OnTenacityChange(float persentage){
+        TenacityImage.fillAmount = persentage;
     }
 }

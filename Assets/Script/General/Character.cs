@@ -12,19 +12,34 @@ public class Character : MonoBehaviour
     public UnityEvent<Character> onHealthChange;
     public UnityEvent onperfectBlock;
     [Header("數值")]
+    [Header("血量")]
     public float maxHealth;
     public float healthPoint;
-    public float maxMana;
-    public float manaPoint;
+    [Header("氣力")]
+    public float maxTenacity;
+    public float tenacityPoint;
+    public float TenacityBlockRate;
+    [Header("氣力倍率")]
+    public float TenacityDamageRate;
+    [Header("破氣後氣力被攻擊倍率")]
+    public float TenacityWasDamageRate;
+    [Header("被攻擊後CD")]
     public float maxHitCD;
     public float hitCD;
+    [Header("攻擊力")]
     public float attackPower;
+    [Header("敵人暈眩時間(韌性)")]
     public float CounterStunTime;
+
     public int MaxRollTimes;
+    [Header("可滾動次數")]
     public int RollTimes;
-    public float Rollrecovery;
+    private float Rollrecovery;
+    [Header("滾動冷卻時間")]
     public float MaxRollrecovery;
+    [Header("被擊殺後掉落經驗值")]
     public float ExperiencePoint;
+    [Header("最大經驗值")]
     public float MaxExperience;
     [Header("狀態")]
     public bool wasHited;
@@ -37,13 +52,13 @@ public class Character : MonoBehaviour
     [Header("廣播")]
     public VoidEventSO DeadEvent;
     public CharacterEventSO HealthChangeEvent;
+    public FloatFloatEventSO TenacityChangeEvent;
     private void Awake() {
         playerController = GetComponent<PlayerControler>();    
         rb = GetComponent<Rigidbody2D>();
     }
     private void Start() {
         healthPoint= maxHealth;
-        manaPoint = maxMana;
         Rollrecovery = MaxRollrecovery;
         onHealthChange?.Invoke(this);
         ExperienceProgress(0);
@@ -56,7 +71,6 @@ public class Character : MonoBehaviour
     }
     private void NewGame() {
         healthPoint= maxHealth;
-        manaPoint = maxMana;
     }
     private void Update() {
         if(wasHited){
@@ -64,6 +78,9 @@ public class Character : MonoBehaviour
             if(hitCD<0){
                 wasHited=false;
             }
+        }
+        if(tenacityPoint!= maxTenacity){
+            TenacityChangeEvent.RaiseEvent(tenacityPoint,maxTenacity);
         }
         if(RollTimes<MaxRollTimes){       
             Rollrecovery-=Time.deltaTime;
@@ -75,13 +92,14 @@ public class Character : MonoBehaviour
         }
     }
     #region 受傷與死亡
-    public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength){
+    public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength,float TenacityDamage){
             if(wasHited|| isInvincible)
         return;
             if(playerController.isHanging){
             rb.gravityScale = 2.3f;
             playerController.isHanging = false;
         }
+            TakeTenacityDamage(TenacityDamage);
             if(healthPoint-attack>0){
             healthPoint-=attack;
             wasHited=true;
@@ -99,7 +117,16 @@ public class Character : MonoBehaviour
             gameObject.layer = 2; 
         }
         onHealthChange?.Invoke(this);
-        
+    }
+    public void TakeTenacityDamage(float TenacityDamage){
+        if(tenacityPoint - TenacityDamage >0 ){
+            tenacityPoint -= TenacityDamage;
+        }else {
+            tenacityPoint = 0; 
+            var Damage = TenacityDamage*TenacityWasDamageRate;
+            //TODO:減去內功防禦
+            healthPoint -=Damage;
+        }
     }
     public void ReflectEffect(Enemy attacker, Vector2 attackDisplaces){
         var revise = attackDisplaces/2;

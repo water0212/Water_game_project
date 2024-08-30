@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -12,16 +13,24 @@ public class Attack : MonoBehaviour
     public float attackMultiplier;
     [Header("力道")]
     public int AttackStrength;
+    [Header("氣力傷害")]
+    public float TenacityDamage;
+    private float TenacityDamageRate;
     
     //public float attackRate; //暫時沒用
     public Vector2 attackDisplaces;
     private void OnEnable() {
-        var atk = GetComponentInParent<Character>()?.attackPower;
-        if(atk.HasValue)
+        Character cc = GetComponentInParent<Character>();
+        
+        if(cc!=null){
+        var atk = cc.attackPower;
+        TenacityDamageRate = cc.TenacityDamageRate;
         attack=(float)atk*attackMultiplier;
+        }
         else{
-         atk = GetComponentInParent<Enemy>()?.attackPower;
-         attack=(float)atk*attackMultiplier;
+        Enemy ee = GetComponentInParent<Enemy>();
+        var atk = ee.attackPower;
+        attack=(float)atk*attackMultiplier;
         }
     }
     // Start is called before the first frame update
@@ -35,7 +44,7 @@ public class Attack : MonoBehaviour
             else if(character.isBlock)
                 ReflectAttack(character, attackDisplaces);
             else {
-                character.TakeDamage(transform,attack,attackDisplaces,AttackStrength);
+                character.TakeDamage(transform,attack,attackDisplaces,AttackStrength,TenacityDamage);
             }
         }
         else
@@ -43,7 +52,7 @@ public class Attack : MonoBehaviour
             var enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(transform,attack,attackDisplaces,AttackStrength);
+                enemy.TakeDamage(transform,attack,attackDisplaces,AttackStrength,TenacityDamage,TenacityDamageRate);
             }
         }
     }

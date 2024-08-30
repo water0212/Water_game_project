@@ -14,14 +14,19 @@ public class SkillSummonAndDamage : MonoBehaviour, ISummonedAndDamageObject
     public bool isDissolving;
     public float fade;
     public int attackStrength;
+    [Header("氣力傷害")]
+    public float TenacityDamage;
+    [HideInInspector]public float TenacityDamageRate;
     
-    public void Initialize(GameObject user, float damage,Vector2 attackDisplaces, float duration,int attackStrength)
+    public void Initialize(GameObject user, float damage,Vector2 attackDisplaces, float duration,int attackStrength,float TenacityDamageRate,float TenacityDamage)
     {
         this.user = user;
         this.attack = damage;
         this.attackDisplaces = attackDisplaces;
         this.duration = duration;
         this.attackStrength = attackStrength;
+        this.TenacityDamageRate = TenacityDamageRate;
+        this.TenacityDamage = TenacityDamage;
     }
     private void OnEnable() {
         durationTimeCount = duration;

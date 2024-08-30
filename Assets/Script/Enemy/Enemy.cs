@@ -43,6 +43,9 @@ public class Enemy : MonoBehaviour
     public float attackDelay;
     public int ExperiencePoint;
     public float MoveforceMultplier;
+        [Header("氣力")]
+    public float maxTenacity;
+    public float tenacityPoint;
     [Header("計時器")]
     public float moveRecovery;
     public float maxMoveRecovery;
@@ -110,8 +113,9 @@ public class Enemy : MonoBehaviour
         currentState.OnExit();                          //敵人_觸發離開代碼
     }
     #region 受傷
-    public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength){
+    public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength,float TenacityDamage,float TenacityDamageRate){
         if(wasHited)return;
+        TakeTenacityDamage(TenacityDamage,TenacityDamageRate);
         if(healthPoint-attack>0){
             HurtEffect.RaiseEvent(this.transform.position+new Vector3(0,1.5f,0));
             AttackScene.GetInstance().HitPause(AttackStrength);
@@ -131,9 +135,22 @@ public class Enemy : MonoBehaviour
             
 
         }else{
+            AttackScene.GetInstance().HitPause(AttackStrength+20f);
+            CamaeraControl.GetInstance().CameraShake(attackDisplaces);
             Dead();
+            
         }
     }   
+    public void TakeTenacityDamage(float TenacityDamage,float TenacityDamageRateBoost){
+        if(tenacityPoint - TenacityDamage >0 ){
+            tenacityPoint -= TenacityDamage;
+        }else {
+            tenacityPoint = 0; 
+            var Damage = TenacityDamage*TenacityDamageRateBoost;
+            //TODO:減去內功防禦
+            healthPoint -=Damage;
+        }
+    }
     public void HurtDisplacement(Transform attackTransform, Vector2 attackDisplaces){//受擊偏移
         rb.velocity = Vector2.zero;
         Vector2 vir = new Vector2(rb.transform.position.x - attackTransform.position.x,1).normalized;
@@ -167,7 +184,7 @@ public class Enemy : MonoBehaviour
     
 #region 死亡與清除
   private void Dead()
-    {
+    {   
         isDead = true;
         anim.SetTrigger("Die");
         this.gameObject.layer = 2;

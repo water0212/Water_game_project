@@ -1467,15 +1467,17 @@ MonoBehaviour:
         m_CallState: 2
   maxHealth: 1000
   healthPoint: 20
-  maxMana: 50
-  manaPoint: 0
+  maxTenacity: 30
+  tenacityPoint: 30
+  TenacityBlockRate: 5
+  TenacityDamageRate: 1
+  TenacityWasDamageRate: 0
   maxHitCD: 0.3
   hitCD: 0
   attackPower: 10
-  CounterStunTime: 1
+  CounterStunTime: 100
   MaxRollTimes: 2
   RollTimes: 0
-  Rollrecovery: 0
   MaxRollrecovery: 2
   ExperiencePoint: 0
   MaxExperience: 80
@@ -1487,6 +1489,7 @@ MonoBehaviour:
   isPerfectBlock: 0
   DeadEvent: {fileID: 11400000, guid: 7c606dd4559b26a459ec21d3250cdd9d, type: 2}
   HealthChangeEvent: {fileID: 11400000, guid: 4b537f33c57d225439300ad4b6cebc93, type: 2}
+  TenacityChangeEvent: {fileID: 11400000, guid: 1b3e37531df88e34c9d197a46fa1827f, type: 2}
 --- !u!1 &339512710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1652,6 +1655,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 405540334}
   m_CullTransparentMesh: 1
+--- !u!1 &418599456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 418599457}
+  m_Layer: 5
+  m_Name: Tenacity
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &418599457
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418599456}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.16, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1258583880}
+  - {fileID: 827080764}
+  m_Father: {fileID: 1513650357}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -3, y: 345}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &429603468
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,6 +2416,7 @@ MonoBehaviour:
   attack: 0
   attackMultiplier: 1.2
   AttackStrength: 10
+  TenacityDamage: 5
   attackDisplaces: {x: 5, y: 7}
 --- !u!60 &568284846
 PolygonCollider2D:
@@ -4128,6 +4169,7 @@ MonoBehaviour:
   attack: 0
   attackMultiplier: 1
   AttackStrength: 3
+  TenacityDamage: 2
   attackDisplaces: {x: 2, y: 3}
 --- !u!60 &720335913
 PolygonCollider2D:
@@ -4651,6 +4693,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 739044281}
   m_CullTransparentMesh: 1
+--- !u!1 &827080763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 827080764}
+  - component: {fileID: 827080766}
+  - component: {fileID: 827080765}
+  m_Layer: 5
+  m_Name: HealthEdge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &827080764
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827080763}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 418599457}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -710, y: 420}
+  m_SizeDelta: {x: 400, y: 50}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &827080765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827080763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -214468878, guid: 14a00cb43abe2fd4ba48c45441c0e696, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &827080766
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827080763}
+  m_CullTransparentMesh: 1
 --- !u!1 &866461052
 GameObject:
   m_ObjectHideFlags: 0
@@ -5120,6 +5237,7 @@ MonoBehaviour:
   attack: 0
   attackMultiplier: 1.1
   AttackStrength: 0
+  TenacityDamage: 0
   attackDisplaces: {x: 2, y: 5}
 --- !u!60 &951950329
 PolygonCollider2D:
@@ -5713,7 +5831,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0.05, y: 0.075, z: 0}
+  m_DefaultVelocity: {x: 0.125, y: 0.175, z: 0}
 --- !u!4 &1118940561
 Transform:
   m_ObjectHideFlags: 0
@@ -6253,6 +6371,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1218914104}
   m_CullTransparentMesh: 1
+--- !u!1 &1258583879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1258583880}
+  - component: {fileID: 1258583882}
+  - component: {fileID: 1258583881}
+  m_Layer: 5
+  m_Name: Health HP (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1258583880
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258583879}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.73, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 418599457}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -702.5, y: 414}
+  m_SizeDelta: {x: 386.3, y: 50}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &1258583881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258583879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 9c18d498f968f814183bcd31c8c90cd5, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1258583882
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258583879}
+  m_CullTransparentMesh: 1
 --- !u!1 &1271549690
 GameObject:
   m_ObjectHideFlags: 3
@@ -6392,8 +6585,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.0026999712, y: 0.00055003166, z: 0}
-    m_Extent: {x: 1.6178, y: 1.62025, z: 0}
+    m_Center: {x: 0.003450036, y: 0, z: 0}
+    m_Extent: {x: 1.61735, y: 1.6155, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -6499,6 +6692,7 @@ MonoBehaviour:
   attack: 0
   attackMultiplier: 1.5
   AttackStrength: 0
+  TenacityDamage: 0
   attackDisplaces: {x: 5, y: 10}
 --- !u!60 &1319414839
 PolygonCollider2D:
@@ -7098,6 +7292,7 @@ MonoBehaviour:
   attack: 0
   attackMultiplier: 1.1
   AttackStrength: 5
+  TenacityDamage: 3
   attackDisplaces: {x: 2, y: 5}
 --- !u!60 &1452433562
 PolygonCollider2D:
@@ -7187,6 +7382,7 @@ MonoBehaviour:
   HealthChangeEvent: {fileID: 11400000, guid: 4b537f33c57d225439300ad4b6cebc93, type: 2}
   RollingChangeEvent: {fileID: 11400000, guid: b738658c73b07194982af2177ec57fe9, type: 2}
   ExperienceChangeEvent: {fileID: 11400000, guid: 492ad7e4c3080c344b8829c658d5dd95, type: 2}
+  TenacityChangeEvent: {fileID: 11400000, guid: 1b3e37531df88e34c9d197a46fa1827f, type: 2}
 --- !u!4 &1471525112
 Transform:
   m_ObjectHideFlags: 0
@@ -7351,6 +7547,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0be5dfdd-d431-4f07-881b-2ac0c9238a54
     m_ActionName: GamePlayer/Interact[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4c208e97-1fbc-47fc-9c51-db0dc1ced72c
+    m_ActionName: GamePlayer/OpenSkillUI[/Keyboard/u]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: GamePlayer
@@ -7733,6 +7933,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1628690833}
+  - {fileID: 418599457}
   - {fileID: 1716201945}
   - {fileID: 1491203183}
   - {fileID: 2008479587}
@@ -7758,6 +7959,7 @@ MonoBehaviour:
   HealthImage: {fileID: 1421735341}
   HealthDelayImage: {fileID: 906365372}
   RollingTimesImage: {fileID: 180404741}
+  TenacityImage: {fileID: 1258583881}
   ExperienceImage: {fileID: 461710263}
   HealthDelayRate: 1
 --- !u!1 &1568870119

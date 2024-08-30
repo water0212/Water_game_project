@@ -10,7 +10,7 @@ public interface ISummonedAndDamageObject
     /// <param name="attack">傷害</param>
     /// <param name="attackDisplaces">擊退效果</param>
     /// <param name="duration">持續時間</param>
-    void Initialize(GameObject user, float attack, Vector2 attackDisplaces, float duration,int AttackStrength);
+    void Initialize(GameObject user, float attack, Vector2 attackDisplaces, float duration,int AttackStrength,float TenacityBlockRate,float TenacityDamage);
 }
 public interface ISummonedAndEffectObject
     {

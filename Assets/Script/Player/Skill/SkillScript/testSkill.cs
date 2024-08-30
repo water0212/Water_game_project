@@ -2,6 +2,7 @@ using System.Configuration;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.U2D.IK;
 
 [CreateAssetMenu(fileName = "Skill", menuName = "SkillSystem/Skills/test")]
 public class testSkill : Skill
@@ -12,7 +13,11 @@ public class testSkill : Skill
     public int MaxUseCount;
     public float attack;
     public float attackMultiplier;
+    [Header("力道")]
     public int AttackStrength;
+    
+    [Header("氣力傷害")]
+    public float TenacityDamage;
     public GameObject summonPrefab;
    [HideInInspector] public GameObject summonedObject;
    [HideInInspector] public SkillSummonAndDamage skillSummon;
@@ -31,8 +36,7 @@ public class testSkill : Skill
     {
         if(useCount <= 0)return;
         useCount-=1;
-        var damage = attack * attackMultiplier;
-        InitializeSkillData(user,damage);
+        InitializeSkillData(user);
         skillSummon.fade = 1;
         skillSummon.isSummoned = true;
         skillSummon.isDissolving = false;
@@ -58,8 +62,10 @@ public class testSkill : Skill
     {
         
     }
-    public void InitializeSkillData(GameObject user,float damage){
+    public void InitializeSkillData(GameObject user){
+        Character cc = user.GetComponent<Character>();
+        var damage = cc.attackPower*attackMultiplier;
         ISummonedAndDamageObject summonComponent = summonedObject.GetComponent<ISummonedAndDamageObject>();
-        summonComponent.Initialize(user, damage,attackDisplaces,duration,AttackStrength);
+        summonComponent.Initialize(user, damage,attackDisplaces,duration,AttackStrength,cc.TenacityDamageRate,TenacityDamage);
     }
 }
