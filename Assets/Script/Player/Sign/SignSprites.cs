@@ -42,7 +42,7 @@ public class SignSprites : MonoBehaviour
     protected virtual void OnComfirm(InputAction.CallbackContext context)
     {
         pressKey= context.control.displayName;
-        Debug.Log("wwww" + pressKey);
+    //    Debug.Log("wwww" + pressKey);
     }
 
     protected virtual void OnSignEvent(GameObject obj)

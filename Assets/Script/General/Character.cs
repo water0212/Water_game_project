@@ -128,15 +128,18 @@ public class Character : MonoBehaviour
             healthPoint -=Damage;
         }
     }
-    public void ReflectEffect(Enemy attacker, Vector2 attackDisplaces){
+    public void ReflectEffect(Enemy attacker, Vector2 attackDisplaces, float TenacityDamage){
         var revise = attackDisplaces/2;
         attacker.healthPoint-=1;
         if(!isPerfectBlock){
         Vector2 vir = new Vector2(rb.transform.position.x - attacker.transform.position.x,1).normalized;
         var AttackStrength = vir*revise;
+        TakeTenacityDamage(TenacityDamage*TenacityBlockRate);
         rb.AddForce(AttackStrength,ForceMode2D.Impulse); 
         CamaeraControl.GetInstance().CameraShake(AttackStrength);    
         }else{
+            TakeTenacityDamage(TenacityDamage*0.1f);
+            attacker.TakeTenacityDamage(TenacityDamage*(1-TenacityBlockRate),1);    
             AttackScene.GetInstance().HitPause(6);
             onperfectBlock?.Invoke();
         }

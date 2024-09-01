@@ -11,9 +11,14 @@ public class PlayerStateBar : MonoBehaviour
     public Image TenacityImage;
     public Image ExperienceImage;
     public float HealthDelayRate;
+    public float ExperienceDelayRate;
+    private float ExperienceHide = 0;
     private void Update() {
         if(HealthDelayImage.fillAmount>HealthImage.fillAmount){
             HealthDelayImage.fillAmount-=Time.deltaTime*HealthDelayRate;
+        }
+        if(ExperienceImage.fillAmount<ExperienceHide){
+            ExperienceImage.fillAmount += Time.deltaTime*ExperienceDelayRate;
         }
     }
     /// <summary>
@@ -27,7 +32,7 @@ public class PlayerStateBar : MonoBehaviour
         RollingTimesImage.fillAmount = persentage;
     }
     public void OnExperienceChange(float persentage){
-        ExperienceImage.fillAmount  = persentage;
+        ExperienceHide += persentage;
     }
     public void OnTenacityChange(float persentage){
         TenacityImage.fillAmount = persentage;

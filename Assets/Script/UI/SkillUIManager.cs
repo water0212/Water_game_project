@@ -64,7 +64,8 @@ public class SkillUIManager : MonoBehaviour
         SkillDescription.text = TEXT;
     }
     public void OpenSkillChoose(Skill skill){
-        currentSkill = skill;
+        if(skill == null) return;
+        currentSkill = skill; 
         if(lockE.sprite != lockItem||lockE.gameObject.activeSelf == false){
             activeButtonE.gameObject.SetActive(true);
         }

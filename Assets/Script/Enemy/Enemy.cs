@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Accessibility;
 using UnityEngine.InputSystem.iOS;
 using UnityEngine.Scripting.APIUpdating;
@@ -43,6 +44,8 @@ public class Enemy : MonoBehaviour
     public float attackDelay;
     public int ExperiencePoint;
     public float MoveforceMultplier;
+    [Header("暈眩時間")]
+    public float stunTime;
         [Header("氣力")]
     public float maxTenacity;
     public float tenacityPoint;
@@ -76,7 +79,10 @@ public class Enemy : MonoBehaviour
     public FloatEventSO ExperienceGive;
     [Header("接收")]
     public VoidEventSO PlayerDead;
-
+    [Header("狀態欄")]
+    [SerializeField]private GameObject StateBar;
+    [SerializeField]private Image healthBar;
+    [SerializeField]private Image tenacityBar;
     protected virtual void Awake() {
         rb = GetComponent<Rigidbody2D> ();
         physicCheck = GetComponent<PhysicCheck> ();
@@ -84,11 +90,22 @@ public class Enemy : MonoBehaviour
     }
     private void Start() {
         //currentSpeed = normalSpeed;                    //敵人_初始化目前速度
+        StateBar = transform.Find ("Health bar").gameObject;
+        GameObject healthBarGO = transform.Find ("Health bar/HealthBAR").gameObject;
+        if(healthBarGO == null) {Debug.Log("沒找到血量條"); return; }
+        healthBar = healthBarGO.GetComponent<Image>(); 
+        if(healthBar == null) {Debug.Log("沒找到血量image"); return; }
+        GameObject TenacityBarGO = transform.Find ("Health bar/TenacityBAR").gameObject;
+        tenacityBar = TenacityBarGO.GetComponent<Image>();
+        HealthUIChange();
+        TenacityUIChange();
     }
     private void OnEnable() {
         PlayerDead.OnEventRaised += OnPlayerDeadEvent;
         canMove = true; 
         healthPoint= maxHealth;
+        tenacityPoint = maxTenacity;
+        
         currentState = patrolState;                     //敵人_初始化狀態->巡邏
         currentState.OnEnter(this);                     //敵人_觸發進入代碼
     }
@@ -101,7 +118,9 @@ public class Enemy : MonoBehaviour
         StunRecover();
         }    
         #endregion
-        
+        if(inCombat){
+            StateBar.SetActive(true);
+        }else StateBar.SetActive(false);
         
         faceOn = new Vector2((int)transform.localScale.x,transform.localScale.y);           //敵人_面向
         currentState.LogicUpdate();                     //敵人_觸發邏輯持續代碼
@@ -135,34 +154,38 @@ public class Enemy : MonoBehaviour
             
 
         }else{
-            AttackScene.GetInstance().HitPause(AttackStrength+20f);
+            healthPoint = 0;
             CamaeraControl.GetInstance().CameraShake(attackDisplaces);
             Dead();
-            
+        //    AttackScene.GetInstance().HitPause(AttackStrength+10f);
         }
+        HealthUIChange();
     }   
     public void TakeTenacityDamage(float TenacityDamage,float TenacityDamageRateBoost){
         if(tenacityPoint - TenacityDamage >0 ){
             tenacityPoint -= TenacityDamage;
+            
         }else {
             tenacityPoint = 0; 
             var Damage = TenacityDamage*TenacityDamageRateBoost;
+            Blocked(stunTime);
             //TODO:減去內功防禦
             healthPoint -=Damage;
         }
+        TenacityUIChange();
     }
     public void HurtDisplacement(Transform attackTransform, Vector2 attackDisplaces){//受擊偏移
         rb.velocity = Vector2.zero;
         Vector2 vir = new Vector2(rb.transform.position.x - attackTransform.position.x,1).normalized;
         rb.AddForce(vir*attackDisplaces,ForceMode2D.Impulse);
     } 
-    public void Blocked(float stunTime){
+    public void Blocked(float stunTimeCount){
         anim.SetBool("Stuning", true);
         attacking = false;
         readyToattack = false;
         ishit = false;
         Stuning = true;
-        StuningTimeCount = stunTime;
+        StuningTimeCount = stunTimeCount;
     }
     #endregion
     #region 切換狀態
@@ -194,7 +217,8 @@ public class Enemy : MonoBehaviour
     public void DestoryGB(){
         Destroy(gameObject);
     }  
-    public void Deadeffect(){
+    private void Deadeffect(){
+        //在動畫中表現
         //ParticleSystem deadEffect = Instantiate(DeadEffect,transform.position,quaternion.identity);
         DeadEffect.RaiseEvent(transform.position+new Vector3(0,1.5f,0));
     }
@@ -235,7 +259,18 @@ public class Enemy : MonoBehaviour
         }
     }
     #endregion
-#region 檢測敵人
+    #region 狀態欄計算與更新
+    private void   HealthUIChange(){
+        var persentage = healthPoint/maxHealth;
+        healthBar.fillAmount = persentage; 
+    }
+    private void TenacityUIChange(){
+        var persentage = tenacityPoint/maxTenacity;
+        tenacityBar.fillAmount = persentage;
+    }
+
+    #endregion
+    #region 檢測敵人
         public bool FoundEnemy(){
             var hit = Physics2D.BoxCast(transform.position + (Vector3)Offset,checkSize,0,new Vector2(faceOn.x,0),checkDistance,enemyLayer);
             if(hit.collider!=null&&hit.collider.CompareTag("Player")){
@@ -246,7 +281,7 @@ public class Enemy : MonoBehaviour
         }
         private void OnDrawGizmos()//描繪圖案
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = UnityEngine.Color.red;
         Vector3 boxCastOrigin = transform.position + (Vector3)Offset;
         Vector3 boxCastEnd = boxCastOrigin + new Vector3(faceOn.x,0,0).normalized * checkDistance;
         Gizmos.DrawWireCube(boxCastOrigin, checkSize);

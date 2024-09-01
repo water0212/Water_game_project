@@ -40,9 +40,9 @@ public class Attack : MonoBehaviour
         {
             
             if(character.isPerfectBlock)
-                PerfectReflectAttack(character, attackDisplaces);
+                PerfectReflectAttack(character, attackDisplaces,TenacityDamage);
             else if(character.isBlock)
-                ReflectAttack(character, attackDisplaces);
+                ReflectAttack(character, attackDisplaces,TenacityDamage);
             else {
                 character.TakeDamage(transform,attack,attackDisplaces,AttackStrength,TenacityDamage);
             }
@@ -56,13 +56,13 @@ public class Attack : MonoBehaviour
             }
         }
     }
-    public void ReflectAttack(Character character,Vector2 attackDisplaces){
+    public void ReflectAttack(Character character,Vector2 attackDisplaces, float TenacityDamage){
         var attacker = GetComponentInParent<Enemy>();
-        character.ReflectEffect(attacker,attackDisplaces);
+        character.ReflectEffect(attacker,attackDisplaces,TenacityDamage);
     }
-    public void PerfectReflectAttack(Character character,Vector2 attackDisplaces){
+    public void PerfectReflectAttack(Character character,Vector2 attackDisplaces, float TenacityDamage){
          var attacker = GetComponentInParent<Enemy>();
-         character.ReflectEffect(attacker, attackDisplaces);
-         attacker.Blocked(character.CounterStunTime);
+         character.ReflectEffect(attacker, attackDisplaces,TenacityDamage);
+        // attacker.Blocked(character.CounterStunTime);
     }
 }

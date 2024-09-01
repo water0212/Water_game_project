@@ -9,6 +9,8 @@ TagManager:
   - unknown
   - exit
   - Bounds
+  - EnemyHealthBar
+  - EnemyTenacityBar
   layers:
   - Default
   - TransparentFX
