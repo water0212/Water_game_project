@@ -25,13 +25,17 @@ public class PlayerControler : MonoBehaviour
     [Header("基本參數")]
     public float maxSpeedX;
     public float forceMultiplier;
-    public float jumpForce;
+    public float jumpForce;  
+    [Header("連擊持續時間")]
     public float maxAttackTime;
     public float attackTimecount;
-    public float hurtForce;
+    [Header("受傷無敵")]
+    //public float hurtForce;
     public float hurtTime;
     public float maxHurtTime;
+    [Header("滾動力量(距離)")]
     public float RollForce;
+    [Header("跳躍有關")]
     public int canJumpTimes;
     public int MaxJumpTimes;
     public float jumpDelay;
@@ -41,6 +45,7 @@ public class PlayerControler : MonoBehaviour
    // public float JumpRecoverTime;
     [Header("狀態")]
     public bool isRolling;
+    [Tooltip("攻擊動畫開始至結束")]
     public bool isAttacking;
     public bool isHurt;
     public bool isHanging;
@@ -70,22 +75,6 @@ public class PlayerControler : MonoBehaviour
         // inputAction.GamePlayer.Skill_Load.started += LoadSkill_TEST;
         anim = GetComponent<Animator> ();
     }
-
-    /*private void LoadSkill_TEST(InputAction.CallbackContext context)
-    {
-        SkilllLoad.RaiseEvent();
-    }
-
-    private void ActiveSkill_Q(InputAction.CallbackContext context)
-    {
-        SkillActive_Q.RaiseEvent();
-    }
-
-    private void ActiveSkill_E(InputAction.CallbackContext context)
-    {
-        SkillActive_E.RaiseEvent();
-    }*/
-
     private void OnEnable() {
         inputAction.Enable();
         attackTimecount = maxAttackTime;
@@ -126,7 +115,7 @@ public class PlayerControler : MonoBehaviour
         if(!isAttacking&&!isHurt&&!character.isBlock&&!character.isDead&&!isRolling&&!isAttacking&&!isHanging) {
         Move();    
         }
-        if(!isHanging)
+        if(!isHanging&&!isAttacking)
         FaceOnCheck();
         if(jump>0){
             jumpDelay-=Time.deltaTime;

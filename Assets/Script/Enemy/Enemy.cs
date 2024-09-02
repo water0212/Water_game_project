@@ -8,7 +8,6 @@ using UnityEngine.Accessibility;
 using UnityEngine.InputSystem.iOS;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.Events;
-using Unity.Mathematics;
 
 public class Enemy : MonoBehaviour
 {
@@ -34,15 +33,23 @@ public class Enemy : MonoBehaviour
     public float patrolSpeed;                        //敵人_巡邏速度
     public float normalSpeed;                       //敵人_一般速度
     [Header("身體數值")]  
+    [Header("最大血量")]
     public float maxHealth;
     public float healthPoint;
+    [Header("受擊冷卻")]
     public float maxHitCD;
-    public float hitCD;
+    private float hitCD;
+    [Header("攻擊力")]
     public float attackPower;
-    public float hurtForce;
+    [Header("防禦力")]
+    private float defense;
+    [Header("追擊時間")]
     public float chaseTime;
+    [Header("攻擊延遲")]
     public float attackDelay;
+    [Header("經驗值給予")]
     public int ExperiencePoint;
+    [Header("移動力")]
     public float MoveforceMultplier;
     [Header("暈眩時間")]
     public float stunTime;
@@ -50,13 +57,14 @@ public class Enemy : MonoBehaviour
     public float maxTenacity;
     public float tenacityPoint;
     [Header("計時器")]
-    public float moveRecovery;
+    [HideInInspector]public float moveRecovery;
     public float maxMoveRecovery;
+    [Tooltip("是否正在回復移動")]
     public bool isMoveRecovery;
+    [Header("追擊時間")]
     public float ChasingTime;
-    public float StuningRecovery;
-    public float StuningTimeCount;
-    public float attackDelayCount;
+    [HideInInspector]public float StuningTimeCount;
+    [HideInInspector]public float attackDelayCount;
 
     [Header("狀態")]
     public bool wasHited;
@@ -81,16 +89,18 @@ public class Enemy : MonoBehaviour
     public VoidEventSO PlayerDead;
     [Header("狀態欄")]
     [SerializeField]private GameObject StateBar;
+    [SerializeField]private RectTransform StateBarRectTransform;
     [SerializeField]private Image healthBar;
     [SerializeField]private Image tenacityBar;
     protected virtual void Awake() {
         rb = GetComponent<Rigidbody2D> ();
         physicCheck = GetComponent<PhysicCheck> ();
         anim = GetComponent<Animator> ();
+        StateBar = transform.Find ("Health bar").gameObject;
+        StateBarRectTransform = StateBar.GetComponent<RectTransform>();
     }
     private void Start() {
         //currentSpeed = normalSpeed;                    //敵人_初始化目前速度
-        StateBar = transform.Find ("Health bar").gameObject;
         GameObject healthBarGO = transform.Find ("Health bar/HealthBAR").gameObject;
         if(healthBarGO == null) {Debug.Log("沒找到血量條"); return; }
         healthBar = healthBarGO.GetComponent<Image>(); 
@@ -166,6 +176,7 @@ public class Enemy : MonoBehaviour
             tenacityPoint -= TenacityDamage;
             
         }else {
+            StartCoroutine(StateBarShake(0.3f , 0.2f));
             tenacityPoint = 0; 
             var Damage = TenacityDamage*TenacityDamageRateBoost;
             Blocked(stunTime);
@@ -268,7 +279,16 @@ public class Enemy : MonoBehaviour
         var persentage = tenacityPoint/maxTenacity;
         tenacityBar.fillAmount = persentage;
     }
-
+    IEnumerator StateBarShake(float duration , float ShakePower){
+        Vector3 startPosition = StateBarRectTransform.anchoredPosition;
+        while (duration > 0 )
+        {
+            StateBarRectTransform.anchoredPosition = UnityEngine.Random.insideUnitSphere* ShakePower + startPosition;
+            duration-= Time.deltaTime;
+            yield return null;
+        }
+        StateBarRectTransform.anchoredPosition = startPosition;
+    }
     #endregion
     #region 檢測敵人
         public bool FoundEnemy(){

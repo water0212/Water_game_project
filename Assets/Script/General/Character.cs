@@ -62,6 +62,7 @@ public class Character : MonoBehaviour
         Rollrecovery = MaxRollrecovery;
         onHealthChange?.Invoke(this);
         ExperienceProgress(0);
+        TakeTenacityDamage(0);
     }
     private void OnEnable() {
         ExperienceGived.OnEventRaised += ExperienceProgress;
