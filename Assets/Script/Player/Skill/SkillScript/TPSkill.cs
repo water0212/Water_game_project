@@ -12,7 +12,6 @@ public class TPSkill : Skill
     public bool count_storage_capability;
     [Header("氣力加成")]
     public float TenacityDamageRateBoost;
-    public float cooldownCount;
     public float TpMarkCount;
     public float MaxTpMarkCount;
     public float speed;
@@ -29,8 +28,9 @@ public class TPSkill : Skill
 
     public override void OnLoad(GameObject user)
     {
-        TpMarkCount =0;
-        cooldownCount = cooldown;
+        TpMarkCount = 0 ;
+        cooldownCount = 0;
+        useCount = 0;
         summonedObject = Instantiate(summonPrefab,Constants.SkillObjectPoolPosition, Quaternion.identity);
         animator = summonedObject.GetComponent<Animator>();
         skillSummon = summonedObject.GetComponent<SkillSummonAndEffect>();
@@ -41,10 +41,10 @@ public class TPSkill : Skill
 
     public override void Activate(GameObject user)
     {
-        if(canUse && (enemy == null || skillSummon.isSummoned == false)){
+        if(useCount == 1 && (enemy == null || skillSummon.isSummoned == false)){
             Debug.Log("break");
             InitializeSkillData(user);
-            canUse = false;
+            useCount = 0;
             skillSummon.isSummoned = true;
             summonedObject.transform.position =user.transform.position+ new Vector3(user.transform.localScale.x,1,0);
             summonedObject.transform.localScale = -user.transform.localScale;
@@ -60,18 +60,18 @@ public class TPSkill : Skill
     }
     public override void Update()
     {
-        if(!canUse){
-            cooldownCount -= Time.deltaTime;
-            if(cooldownCount <= 0){
-                canUse = true;
-                cooldownCount = cooldown;
+        if(useCount == 0){
+            cooldownCount += Time.deltaTime;
+            if(cooldownCount > cooldown){
+                useCount = 1;
+                cooldownCount = 0;
             }
         }
         if(skillSummon.Target != null&&enemy == null){
             enemy = skillSummon.Target.GetComponent<Enemy>();
             canTp = true;
             TpMarkCount = MaxTpMarkCount;
-            Debug.Log("目標命中"+enemy.gameObject.name);
+         //   Debug.Log("目標命中"+enemy.gameObject.name);
         }
         if(enemy){
             TpMarkCount -= Time.deltaTime;

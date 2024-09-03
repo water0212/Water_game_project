@@ -8,9 +8,6 @@ using UnityEngine.U2D.IK;
 public class testSkill : Skill
 {
     public bool count_storage_capability;
-    public float cooldownCount;
-    public int useCount;
-    public int MaxUseCount;
     public float attack;
     public float attackMultiplier;
     [Header("力道")]
@@ -24,8 +21,8 @@ public class testSkill : Skill
     public Vector2 attackDisplaces;
     public override void OnLoad(GameObject user)
     {
-        cooldownCount =0;
-        useCount = MaxUseCount;
+        cooldownCount =  0;
+        useCount = MaxUseCount -1;
         summonedObject = Instantiate(summonPrefab,Constants.SkillObjectPoolPosition, Quaternion.identity);
         animator = summonedObject.GetComponent<Animator>();
         skillSummon = summonedObject.GetComponent<SkillSummonAndDamage>();
@@ -35,7 +32,7 @@ public class testSkill : Skill
     public override void Activate(GameObject user)
     {
         if(useCount <= 0)return;
-        useCount-=1;
+        useCount--;
         InitializeSkillData(user);
         skillSummon.fade = 1;
         skillSummon.isSummoned = true;
@@ -50,10 +47,10 @@ public class testSkill : Skill
     public override void Update()
     {
         if(useCount < MaxUseCount){
-            cooldownCount -= Time.deltaTime;
-            if(cooldownCount < 0){
+            cooldownCount += Time.deltaTime;
+            if(cooldownCount > cooldown){
                 useCount ++;
-                cooldownCount = cooldown;
+                cooldownCount = 0;
             }
         }
     }

@@ -23,6 +23,13 @@ public class SkillUIManager : MonoBehaviour
     public Image lockQ;
     public Sprite lockItem;
     public Skill currentSkill;
+    [Header("技能冷卻UI")]
+    public Image skillE_CD_Icon;
+    public Image skillE_CD_BackIcon;
+    public Image skillQ_CD_Icon;
+    public Image skillQ_CD_BackIcon;
+    public TextMeshProUGUI E_TimeOfUse;
+    public TextMeshProUGUI Q_TimeOfUse;
     private void Start() {
         UpdateSkillSlots();
         CloseSkillChooseUI();
@@ -93,5 +100,25 @@ public class SkillUIManager : MonoBehaviour
         if(lockQ.gameObject.activeSelf==false) lockQ.gameObject.SetActive(true);
         lockQ.sprite = currentSkill.skillImage;
         skillManager.LoadSkill_Q(currentSkill);
+    }
+    public void UpdateSkillIcon_E(float persentage){
+        skillE_CD_Icon.fillAmount = persentage;
+    }
+    public void UpdateSkillIcon_Q(float persentage){
+        skillQ_CD_Icon.fillAmount = persentage;
+    }
+    public void ChangeTimeOfUse_E(int Times){
+        E_TimeOfUse.text = Times.ToString();
+    }
+    public void ChangeTimeOfUse_Q(int Times){
+        Q_TimeOfUse.text= Times.ToString();
+    }
+    public void ChangeSkillIcon_E(Sprite sprite){
+        skillE_CD_Icon.sprite = sprite;
+        skillE_CD_BackIcon.sprite = sprite;
+    }
+    public void ChangeSkillIcon_Q(Sprite sprite){
+        skillQ_CD_Icon.sprite = sprite;
+        skillQ_CD_BackIcon.sprite = sprite;
     }
 }

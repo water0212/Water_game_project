@@ -16,15 +16,15 @@ MonoBehaviour:
   skillDescription: "\u6B64\u6280\u80FD\u70BA\u6E2C\u8A66\u6280\u80FD \u9020\u62103\u500D\u653B\u64CA\u529B\u7684\u50B7\u5BB3\u4E26\u64CA\u98DB\u76EE\u6A19 "
   id: 0
   cooldown: 8
+  cooldownCount: 0.9969954
+  useCount: 0
+  MaxUseCount: 2
   duration: 0.5
   skillImage: {fileID: 1452074441, guid: 05e0567213a58c840a3ea79a4409bdfd, type: 3}
   animator: {fileID: 0}
   animClip: {fileID: 7400000, guid: 5f2c693384fe83c439958b01584f99b2, type: 2}
   count_storage_capability: 1
-  cooldownCount: 3.0992332
-  useCount: 0
-  MaxUseCount: 2
-  attack: 0
+  attack: 10
   attackMultiplier: 3
   AttackStrength: 10
   TenacityDamage: 100

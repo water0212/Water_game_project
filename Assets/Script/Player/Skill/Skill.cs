@@ -8,6 +8,9 @@ public abstract class Skill : ScriptableObject
     public string skillDescription;
     public int id;
     public float cooldown;
+    public float cooldownCount;
+    public int useCount;
+    public int MaxUseCount;
     public float duration;
     public Sprite skillImage;
     [HideInInspector] public Animator animator;

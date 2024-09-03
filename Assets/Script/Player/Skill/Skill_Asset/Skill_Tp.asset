@@ -16,12 +16,15 @@ MonoBehaviour:
   skillDescription: "\u5411\u524D\u65B9\u64F2\u51FA\u5315\u9996\uFF0C\u6A19\u8A18\u7B2C\u4E00\u500B\u547D\u4E2D\u7684\u6575\u4EBA\u3002"
   id: 1
   cooldown: 5
+  cooldownCount: 5
+  useCount: 0
+  MaxUseCount: 1
   duration: 0.5
   skillImage: {fileID: -164947489, guid: 05e0567213a58c840a3ea79a4409bdfd, type: 3}
   animator: {fileID: 0}
   animClip: {fileID: 0}
   count_storage_capability: 0
-  cooldownCount: 5
+  TenacityDamageRateBoost: 0
   TpMarkCount: 5
   MaxTpMarkCount: 5
   speed: 30
