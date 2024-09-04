@@ -30,6 +30,18 @@ public class SkillUIManager : MonoBehaviour
     public Image skillQ_CD_BackIcon;
     public TextMeshProUGUI E_TimeOfUse;
     public TextMeshProUGUI Q_TimeOfUse;
+    [Header("獲取技能UI通知")]
+    private Queue<Skill> SkillQueue;
+    public GameObject getUIFrame;
+    private Animator getUIAnimation;
+    public TextMeshProUGUI getSkill_Name;
+    public Image getSkill_Image;
+    private Coroutine QueueChecker;
+
+    private void Awake() {
+        getUIAnimation = getUIFrame.GetComponent<Animator>();
+        SkillQueue = new Queue<Skill>();
+    }
     private void Start() {
         UpdateSkillSlots();
         CloseSkillChooseUI();
@@ -42,6 +54,7 @@ public class SkillUIManager : MonoBehaviour
                 if(skillUISlots[i].skill==null){
                 skillUISlots[i].UpdateSkillUI(skill);   
                 Debug.Log("解鎖新第" + i + "技能" + skill.name);   
+                SetSkillNotifyQueue(skill);
                 break;
                 }
                 if(i==skillUISlots.Length-1){
@@ -120,5 +133,28 @@ public class SkillUIManager : MonoBehaviour
     public void ChangeSkillIcon_Q(Sprite sprite){
         skillQ_CD_Icon.sprite = sprite;
         skillQ_CD_BackIcon.sprite = sprite;
+    }
+    private void SetSkillNotifyQueue(Skill skill){
+        SkillQueue.Enqueue(skill);
+        if( QueueChecker == null ){
+            QueueChecker = StartCoroutine(CheckNotifyQueue());
+        }
+    }
+    private void ShowSkillGet(Skill skill){
+        getUIFrame.SetActive(true);
+        getUIAnimation.Play("GetSkillNotify");
+        getSkill_Name.text = skill.name;
+        getSkill_Image.sprite = skill.skillImage;
+        
+    }
+    private IEnumerator CheckNotifyQueue(){
+        do {
+            ShowSkillGet(SkillQueue.Dequeue());
+            do {
+                yield return null;
+            } while (!getUIAnimation.GetCurrentAnimatorStateInfo(0).IsTag("Idle")); 
+        } while (SkillQueue.Count > 0 );
+        getUIFrame.SetActive(false);
+        QueueChecker = null;
     }
 }
