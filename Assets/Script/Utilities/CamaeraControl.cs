@@ -24,7 +24,7 @@ public class CamaeraControl : MonoBehaviour
     private void GetNewBound(){
         var obj = GameObject.FindGameObjectWithTag("Bounds");
         if(obj == null){
-            Debug.Log("沒有找到地形限制"+ obj.name);
+            Debug.Log("沒有找到地形限制");
             return;
         }
         Confiner2D.m_BoundingShape2D = obj.GetComponent<Collider2D>();
