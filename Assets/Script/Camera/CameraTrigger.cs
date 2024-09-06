@@ -7,7 +7,29 @@ using UnityEditor;
 public class CameraTrigger : MonoBehaviour
 {
     public CustomInspectorObjects customInspectorObjects;
-    
+    public Collider2D _coll;
+
+    private void Start() {
+        _coll = GetComponent<Collider2D>();
+    }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.CompareTag("Player")) {
+            if(customInspectorObjects.panCameraOnContact){
+                CameraManager.instence.PanCameraOnContact(customInspectorObjects.panDistance, customInspectorObjects.panTime, customInspectorObjects.panDirection, false);
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other){
+        if(other.CompareTag("Player")) {
+            Vector2 exitDirection = (other.transform.position - _coll.bounds.center).normalized;
+            if(customInspectorObjects.swapCameras && customInspectorObjects.cameraOnLeft != null && customInspectorObjects.cameraOnRight != null)   {
+                CameraManager.instence.SwapCamera(customInspectorObjects.cameraOnLeft, customInspectorObjects.cameraOnRight,exitDirection);
+            }
+            if(customInspectorObjects.panCameraOnContact){
+                CameraManager.instence.PanCameraOnContact(customInspectorObjects.panDistance, customInspectorObjects.panTime, customInspectorObjects.panDirection, true);
+            }
+        }
+    }
 }
 [System.Serializable]
 public class CustomInspectorObjects{
@@ -47,6 +69,6 @@ public class MyScriptEditor : Editor{
         
         if(GUI.changed){
             EditorUtility.SetDirty(cameraTrigger);
-        }
+        }   
     }
 }

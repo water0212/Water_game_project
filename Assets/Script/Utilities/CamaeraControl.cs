@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CamaeraControl : MonoBehaviour
 {
+    public CinemachineVirtualCamera currentCamera;
     private CinemachineConfiner2D Confiner2D;
     public CinemachineImpulseSource impulseSource;
     private static CamaeraControl instance;
@@ -12,8 +13,7 @@ public class CamaeraControl : MonoBehaviour
         if(instance != null) {
             Debug.LogWarning("Found more than one AttackScene in the Scene");
         }
-        instance = this;
-        Confiner2D = GetComponent<CinemachineConfiner2D>();    
+        instance = this;   
     }
     public static CamaeraControl GetInstance() {
         return instance;
@@ -22,13 +22,19 @@ public class CamaeraControl : MonoBehaviour
         GetNewBound();
     }
     private void GetNewBound(){
+        currentCamera = CameraManager.instence.currentCamera;
         var obj = GameObject.FindGameObjectWithTag("Bounds");
         if(obj == null){
             Debug.Log("沒有找到地形限制");
             return;
         }
-        Confiner2D.m_BoundingShape2D = obj.GetComponent<Collider2D>();
-        Confiner2D.InvalidateCache();
+        if(obj.GetComponent<Collider2D>() != null){
+            CinemachineConfiner2D Confiner2D = currentCamera.GetComponent<CinemachineConfiner2D>();
+            Confiner2D.m_BoundingShape2D = obj.GetComponent<Collider2D>();
+            Confiner2D.InvalidateCache();
+        }
+        
+        
     }
     public void CameraShake(Vector2 AttackDisplace){
         impulseSource.m_DefaultVelocity = AttackDisplace/40;
