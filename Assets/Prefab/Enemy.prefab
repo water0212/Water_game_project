@@ -548,8 +548,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.69, y: 2.11, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8368108421092468665}
   - {fileID: 6773383740089655566}
@@ -794,28 +794,22 @@ MonoBehaviour:
   teamLayer:
     serializedVersion: 2
     m_Bits: 64
-  currentSpeed: 0
-  chaseSpeed: 5
-  patrolSpeed: 0
-  normalSpeed: 80
   maxHealth: 30
   healthPoint: 0
   maxHitCD: 0.2
-  hitCD: 0
   attackPower: 5
-  hurtForce: 10
-  chaseTime: 5
   attackDelay: 0.2
   ExperiencePoint: 40
   MoveforceMultplier: 50
+  stunTime: 0
   maxTenacity: 10
   tenacityPoint: 10
   moveRecovery: 0
   maxMoveRecovery: 0.5
   isMoveRecovery: 0
-  ChasingTime: 0
-  StuningRecovery: 0
-  StuningTimeCount: 0
+  chaseTime: 5
+  chasingTimeCount: 0
+  stuningTimeCount: 0
   attackDelayCount: 0
   wasHited: 0
   isDead: 0
@@ -830,8 +824,10 @@ MonoBehaviour:
   DeadEffect: {fileID: 11400000, guid: 9f8628f2088bb244c88fa04a1bba6e63, type: 2}
   ExperienceGive: {fileID: 11400000, guid: 2bec30c6090ab01458fac51bd50ce6da, type: 2}
   PlayerDead: {fileID: 11400000, guid: 7c606dd4559b26a459ec21d3250cdd9d, type: 2}
-  healthBar: {fileID: 0}
-  tenacityBar: {fileID: 0}
+  currentSpeed: 0
+  chaseSpeed: 5
+  patrolSpeed: 0
+  normalSpeed: 80
 --- !u!114 &7530520208093455352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -931,8 +927,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 1.83945, y: -0.091499984, z: 0}
-    m_Extent: {x: 2.71035, y: 0.7989, z: 0}
+    m_Center: {x: 1.83925, y: -0.09265, z: 0}
+    m_Extent: {x: 2.71025, y: 0.79895, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
