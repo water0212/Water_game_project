@@ -10,6 +10,7 @@ public class BossWarriorEnemy : Enemy
     public GameObject Player;
     public float playerDistance_y;
     public float playerDistance_x;
+    public bool canChangeState;
     [Tooltip("被打的次數")]
     public int wasHitedTimesCountInCombat;
     public int wasHitedTimesCountInThisState;
@@ -36,14 +37,18 @@ public class BossWarriorEnemy : Enemy
 
     public void BossStart(){
         Debug.Log("關主啟動");
-        currentState = dashAndDashAttackState;
+        currentState = baseState;
         enemyTransform = Player.transform;
         bossStart = true;
         currentState.OnEnter(this);
     }
     protected override void Awake() {
         base.Awake();
+        baseState = new BossWarrior_BaseState();
         dashAndDashAttackState = new BossWarrior_DashAndDashAttackState();
+        slideState = new BossWarrior_SlideState();
+        followPlayerAndAttackState = new BossWarrior_FollowPlayerAndAttackState();
+        slideAndAttackState = new BossWarrior_SlideAndAttackState();
     }
     protected override void OnEnable()
     {
@@ -83,9 +88,11 @@ public class BossWarriorEnemy : Enemy
             WarriorBossstate.PlayerDeadState => playerDeadState,
             _=> null
         }; 
+        Debug.Log("離開");
         currentState.OnExit();
         currentState = newState;
         currentState.OnEnter(this);
+        Debug.Log("進入");
         
     } 
     /// <summary>
@@ -187,6 +194,9 @@ public class BossWarriorEnemy : Enemy
     }
     }
     #endregion
+    public void CanChangeBossState(){
+        canChangeState = true;
+    }
 }
 
 public enum WarriorBossstate{

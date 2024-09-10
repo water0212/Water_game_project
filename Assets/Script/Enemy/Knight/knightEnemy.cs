@@ -98,7 +98,7 @@ public class knightEnemy : Enemy
      /// <param name="delay">給予延遲秒數</param>
      /// <param name="nPCstate">給予轉換類型</param>
      /// <returns></returns>
-    private IEnumerator DelaySwitchState(float delay,NPCstate nPCstate){
+    public IEnumerator DelaySwitchState(float delay,NPCstate nPCstate){
         yield return new WaitForSeconds (delay);
         SwitchState(nPCstate);
      }

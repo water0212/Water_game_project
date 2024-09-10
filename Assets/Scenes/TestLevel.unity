@@ -145,7 +145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 994411869214482368, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.52
+      value: -10.28
       objectReference: {fileID: 0}
     - target: {fileID: 994411869214482368, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_LocalPosition.y
@@ -197,7 +197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: chaseSpeed
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: attackDelay
@@ -210,6 +210,10 @@ PrefabInstance:
     - target: {fileID: 5380621663860087774, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5380621663860087774, guid: 555d0fae54961b741a617325c64fc332, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8104741686901532056, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_LocalBounds.m_Center.x
@@ -371,7 +375,7 @@ CapsuleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 196
@@ -391,8 +395,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.20173709, y: -0.1308566}
-  m_Size: {x: 0.705925, y: 1.1312087}
+  m_Offset: {x: -0.25293684, y: -0.11378994}
+  m_Size: {x: 0.80832446, y: 1.0970755}
   m_Direction: 0
 --- !u!61 &910961200
 BoxCollider2D:
@@ -500,7 +504,7 @@ Transform:
   m_GameObject: {fileID: 910961197}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.23, y: 14.8, z: 0}
+  m_LocalPosition: {x: -30.03, y: 14.8, z: 0}
   m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -570,7 +574,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   maxHealth: 1000
-  healthPoint: 0
+  healthPoint: 1000
   maxHitCD: 0.1
   attackPower: 30
   attackDelay: 0.3
@@ -602,10 +606,11 @@ MonoBehaviour:
   Player: {fileID: 0}
   playerDistance_y: 0
   playerDistance_x: 0
+  canChangeState: 0
   wasHitedTimesCountInCombat: 0
   wasHitedTimesCountInThisState: 0
-  firstStage: 0
-  lastStage: 1
+  firstStage: 1
+  lastStage: 0
   currnetSpeed: 0
   firstStageSpeed: 0
   lastStageSpeed: 0
@@ -3009,7 +3014,7 @@ Transform:
   m_GameObject: {fileID: 1734346936}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.3600006, y: 15.19, z: 0}
+  m_LocalPosition: {x: -1.77, y: 18.73, z: 0}
   m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3034,6 +3039,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1734346938}
   - {fileID: 910961202}
-  - {fileID: 555344415}
   - {fileID: 1367578856}
+  - {fileID: 555344415}
   - {fileID: 186416948}
