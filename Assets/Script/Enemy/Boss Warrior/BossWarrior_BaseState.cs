@@ -16,8 +16,8 @@ public class BossWarrior_BaseState : BaseState<BossWarriorEnemy>
         currentEnemy = Enemy;
         remainingDamageThreshold = (int)Math.Ceiling(5*(currentEnemy.healthPoint/currentEnemy.maxHealth));
         if(currentEnemy.firstStage){
-            remainingTimeThreshold = 1;
-        }else remainingTimeThreshold = 3;
+            remainingTimeThreshold = 3;
+        }else remainingTimeThreshold = 1;
         currentEnemy.anim.SetBool("Idle", true);
         currentEnemy.wasHitedTimesCountInThisState = 0;
         TimeCount = 0;
@@ -54,19 +54,20 @@ public class BossWarrior_BaseState : BaseState<BossWarriorEnemy>
         TimeCount += Time.deltaTime;
     }
     private WarriorBossstate StateChoose(){
-        if(true/*DashAndDashAttackState()&& currentEnemy.lastStage || currentEnemy.wasHitedTimesCountInThisState< remainingDamageThreshold*0.4f*/){
+        if(true/*SlideStateChoose()&&currentEnemy.wasHitedTimesCountInThisState<2*/){
+            currentEnemy.attackDelay = 1;
+            return WarriorBossstate.SlideState;
+        }
+        if(DashAndDashAttackState()&& currentEnemy.lastStage || currentEnemy.wasHitedTimesCountInThisState< remainingDamageThreshold*0.4f){
             currentEnemy.attackDelay = 1;   
             return WarriorBossstate.DashAndDashAttackState;
-        }
-        if(SlideStateChoose()&&currentEnemy.wasHitedTimesCountInThisState<2){
-            return WarriorBossstate.SlideState;
         }
         if(currentEnemy.lastStage&&SlideStateChoose()){
 
             return WarriorBossstate.SlideAndAttackState;
         }
         if(DashStateChoose()&&currentEnemy.wasHitedTimesCountInThisState == remainingDamageThreshold){
-            return WarriorBossstate.DashState;
+            return WarriorBossstate.Jump;
         }
         return WarriorBossstate.BaseState;
     }

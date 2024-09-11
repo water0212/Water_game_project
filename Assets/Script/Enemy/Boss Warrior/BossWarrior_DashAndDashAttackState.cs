@@ -20,9 +20,9 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
         beginingGravityScale = currentEnemy.rb.gravityScale;
         currentEnemy.anim.SetTrigger("DashAndDashAttack");
         if(currentEnemy.firstStage){
-            dashForce = 40+(currentEnemy.playerDistance_x)*0.5f;
+            dashForce = 50+(currentEnemy.playerDistance_x)*0.5f;
         }else{
-         dashForce = 60+(currentEnemy.playerDistance_x)*0.6f;
+         dashForce = 70+(currentEnemy.playerDistance_x)*0.5f;
         }   
         currentEnemy.wasHitedTimesCountInThisState = 0;
         attackDelay = currentEnemy.attackDelay;
@@ -60,8 +60,8 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
                 }
             }else if (currentEnemy.lastStage){
                 currentEnemy.ChaseEnemy();
-                if(currentEnemy.playerDistance_x<6){
-                    currentEnemy.rb.gravityScale = 25;
+                if(currentEnemy.playerDistance_x<7){
+                    currentEnemy.rb.gravityScale = 45;
                     isAttack = true;
                     currentEnemy.anim.SetTrigger("DashAttack");
                     currentEnemy.ChaseEnemy();

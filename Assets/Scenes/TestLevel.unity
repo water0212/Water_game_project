@@ -609,8 +609,8 @@ MonoBehaviour:
   canChangeState: 0
   wasHitedTimesCountInCombat: 0
   wasHitedTimesCountInThisState: 0
-  firstStage: 1
-  lastStage: 0
+  firstStage: 0
+  lastStage: 1
   currnetSpeed: 0
   firstStageSpeed: 0
   lastStageSpeed: 0

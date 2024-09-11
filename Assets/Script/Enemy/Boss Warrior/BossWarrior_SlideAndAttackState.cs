@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossWarrior_SlideAndAttackState : BaseState<BossWarriorEnemy>
 {
+    private bool isExitThisState;
     private float attackDelay;
     private float SwitchStateDelay;
     private float SlideForce ;
@@ -13,6 +14,7 @@ public class BossWarrior_SlideAndAttackState : BaseState<BossWarriorEnemy>
     private float beginingGravityScale;
     public override void OnEnter(BossWarriorEnemy Enemy)
     {
+        Debug.Log("進入BossWarrior_SlideAndAttackState");
         currentEnemy = Enemy;
         currentEnemy.ChaseEnemy();
         if(currentEnemy.firstStage){
@@ -26,9 +28,17 @@ public class BossWarrior_SlideAndAttackState : BaseState<BossWarriorEnemy>
         Debug.Log(SlideForce+"鏟擊");
          currentEnemy.wasHitedTimesCountInThisState = 0;
         attackDelay = currentEnemy.attackDelay;
+        isExitThisState = false;
+        isAttack = false;
+        ActiveSlide = false;
     }
     public override void LogicUpdate()
     {
+        if(currentEnemy.canChangeState&&isExitThisState){
+            currentEnemy.canChangeState = false; 
+            currentEnemy.SwitchState(StateChoose());
+        }
+        if(isExitThisState) return;
         if(!ActiveSlide){
             attackDelay-= Time.deltaTime;
             if(attackDelay <= 0){
@@ -39,13 +49,13 @@ public class BossWarrior_SlideAndAttackState : BaseState<BossWarriorEnemy>
 
     public override void PhysicUpdate()
     {
+        if(isExitThisState) return;
         if(ActiveSlide)
             if(ChaseEnemy()<1.5){
-                currentEnemy.rb.gravityScale = 80;
+                currentEnemy.rb.gravityScale = 70;
                 if(currentEnemy.rb.velocity.x <1){
                 currentEnemy.anim.SetTrigger("Attack!");
-                currentEnemy.DelaySwitchState(SwitchStateDelay,StateChoose());
-
+                isExitThisState = true;
                 }
             }
         
@@ -68,6 +78,7 @@ public class BossWarrior_SlideAndAttackState : BaseState<BossWarriorEnemy>
         currentEnemy.rb.AddForce(new Vector2(SlideForce*currentEnemy.faceOn.x, 0),ForceMode2D.Impulse);
     }
     private WarriorBossstate StateChoose(){
-        return WarriorBossstate.Jump;
+        return WarriorBossstate.BaseState;
+       // return WarriorBossstate.Jump;
     }
 }

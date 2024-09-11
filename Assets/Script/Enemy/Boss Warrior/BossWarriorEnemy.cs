@@ -37,7 +37,7 @@ public class BossWarriorEnemy : Enemy
 
     public void BossStart(){
         Debug.Log("關主啟動");
-        currentState = baseState;
+        currentState = jumpAndDashAttackState;
         enemyTransform = Player.transform;
         bossStart = true;
         currentState.OnEnter(this);
@@ -49,6 +49,7 @@ public class BossWarriorEnemy : Enemy
         slideState = new BossWarrior_SlideState();
         followPlayerAndAttackState = new BossWarrior_FollowPlayerAndAttackState();
         slideAndAttackState = new BossWarrior_SlideAndAttackState();
+        jumpAndDashAttackState = new BossWarrior_JumpAndDashAttackState();
     }
     protected override void OnEnable()
     {
@@ -77,7 +78,6 @@ public class BossWarriorEnemy : Enemy
         switch 
         {
             WarriorBossstate.DashAndDashAttackState => dashAndDashAttackState,
-            WarriorBossstate.DashState => dashState,
             WarriorBossstate.JumpAndDashAttackState => jumpAndDashAttackState,
             WarriorBossstate.Jump => jumpState,
             WarriorBossstate.CroushAndAttackTwoTimesState => croushAndAttackTwoTimesState,
@@ -201,7 +201,6 @@ public class BossWarriorEnemy : Enemy
 
 public enum WarriorBossstate{
     DashAndDashAttackState,
-    DashState,
     JumpAndDashAttackState,
     Jump,
     CroushAndAttackTwoTimesState,
