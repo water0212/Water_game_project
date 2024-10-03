@@ -123,6 +123,38 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &155922126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 155922127}
+  m_Layer: 0
+  m_Name: BossJumpLeftPos
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &155922127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155922126}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -30, y: 25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 819899308}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &186416948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,18 +163,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 994411869214482368, guid: 555d0fae54961b741a617325c64fc332, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 994411869214482368, guid: 555d0fae54961b741a617325c64fc332, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 994411869214482368, guid: 555d0fae54961b741a617325c64fc332, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 994411869214482368, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.28
@@ -183,30 +203,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
-      propertyPath: maxHitCD
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
-      propertyPath: stunTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
-      propertyPath: maxHealth
-      value: 10000
-      objectReference: {fileID: 0}
-    - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
-      propertyPath: chaseSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
-      propertyPath: attackDelay
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1928590516036119727, guid: 555d0fae54961b741a617325c64fc332, type: 3}
-      propertyPath: attackPower
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5380621663860087774, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -217,15 +213,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8104741686901532056, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_LocalBounds.m_Center.x
-      value: 1.8392501
+      value: 1.83905
       objectReference: {fileID: 0}
     - target: {fileID: 8104741686901532056, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_LocalBounds.m_Center.y
-      value: -0.09195
+      value: -0.09220001
       objectReference: {fileID: 0}
     - target: {fileID: 8104741686901532056, guid: 555d0fae54961b741a617325c64fc332, type: 3}
       propertyPath: m_LocalBounds.m_Extent.x
-      value: 2.70935
+      value: 2.70905
+      objectReference: {fileID: 0}
+    - target: {fileID: 8104741686901532056, guid: 555d0fae54961b741a617325c64fc332, type: 3}
+      propertyPath: m_LocalBounds.m_Extent.y
+      value: 0.7994
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -314,6 +314,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &819899307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 819899308}
+  m_Layer: 0
+  m_Name: BossJumpRightPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &819899308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819899307}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 30, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 155922127}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &910961197
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,12 +354,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 910961202}
+  - component: {fileID: 910961206}
   - component: {fileID: 910961204}
   - component: {fileID: 910961201}
   - component: {fileID: 910961200}
   - component: {fileID: 910961199}
   - component: {fileID: 910961198}
   - component: {fileID: 910961203}
+  - component: {fileID: 910961205}
   m_Layer: 6
   m_Name: Boss
   m_TagString: Boss
@@ -504,9 +537,9 @@ Transform:
   m_GameObject: {fileID: 910961197}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.03, y: 14.8, z: 0}
+  m_LocalPosition: {x: -30.63, y: 14.8, z: 0}
   m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -576,7 +609,8 @@ MonoBehaviour:
   maxHealth: 1000
   healthPoint: 1000
   maxHitCD: 0.1
-  attackPower: 30
+  hitCD: 0.1
+  attackPower: 10
   attackDelay: 0.3
   ExperiencePoint: 0
   MoveforceMultplier: 0
@@ -604,16 +638,65 @@ MonoBehaviour:
   ExperienceGive: {fileID: 11400000, guid: 2bec30c6090ab01458fac51bd50ce6da, type: 2}
   PlayerDead: {fileID: 11400000, guid: 7c606dd4559b26a459ec21d3250cdd9d, type: 2}
   Player: {fileID: 0}
+  Ghost: {fileID: 2999760900956616909, guid: bf95f2d1da5aa314ab6be6821be0deff, type: 3}
   playerDistance_y: 0
   playerDistance_x: 0
   canChangeState: 0
+  leftJumpPos: {fileID: 155922127}
+  rightJumpPos: {fileID: 819899308}
   wasHitedTimesCountInCombat: 0
   wasHitedTimesCountInThisState: 0
-  firstStage: 0
-  lastStage: 1
+  firstStage: 1
+  lastStage: 0
   currnetSpeed: 0
   firstStageSpeed: 0
   lastStageSpeed: 0
+--- !u!114 &910961205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910961197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6ba927721389f42a3579b77f50a84a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkRadious: 0.31
+  flooroffset: {x: 0.08, y: -0.68}
+  bottomOffset: {x: -0.27, y: -0.66}
+  wallOffset: {x: 0.13, y: 0}
+  grabEdgeOffset: {x: 0.12, y: 0.76}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  isGround: 0
+  touchWall: 0
+  isOnTheFloor: 0
+  canGrabTheEdge: 0
+--- !u!114 &910961206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910961197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2187960c7bf901643a2e3f6a7ac5babb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AATD:
+    Attacker: 1
+    TakeOnDamage: 1
+    Unblockable: 1
+    attackDamage: 0
+    attackMultiplier: 1
+    AttackStrength: 2
+    TenacityDamage: 0
+    TenacityDamageRate: 0
+    attackDisplaces: {x: 3, y: 3}
 --- !u!1 &1367578854
 GameObject:
   m_ObjectHideFlags: 0
@@ -3042,3 +3125,4 @@ SceneRoots:
   - {fileID: 1367578856}
   - {fileID: 555344415}
   - {fileID: 186416948}
+  - {fileID: 155922127}

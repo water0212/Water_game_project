@@ -54,7 +54,8 @@ public class BossWarrior_BaseState : BaseState<BossWarriorEnemy>
         TimeCount += Time.deltaTime;
     }
     private WarriorBossstate StateChoose(){
-        if(true/*SlideStateChoose()&&currentEnemy.wasHitedTimesCountInThisState<2*/){
+        currentEnemy.ChaseEnemy();
+        if(SlideStateChoose()&&currentEnemy.wasHitedTimesCountInThisState<2){
             currentEnemy.attackDelay = 1;
             return WarriorBossstate.SlideState;
         }
@@ -72,8 +73,8 @@ public class BossWarrior_BaseState : BaseState<BossWarriorEnemy>
         return WarriorBossstate.BaseState;
     }
     private bool SlideStateChoose(){
-        if(currentEnemy.playerDistance_y< 1){
-            if(currentEnemy.playerDistance_x <10 && currentEnemy.playerDistance_x > 7)
+        if(currentEnemy.playerDistance_y< 3){
+            if(currentEnemy.playerDistance_x <35 && currentEnemy.playerDistance_x > 18)
             return true;
         }
         return false;

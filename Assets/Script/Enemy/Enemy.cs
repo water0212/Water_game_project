@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
     public float healthPoint;
     [Header("受擊冷卻")]
     public float maxHitCD;
-    protected float hitCD;
+    public float hitCD;
     [Header("攻擊力")]
     public float attackPower;
     [Header("防禦力")]
@@ -133,7 +133,7 @@ public class Enemy : MonoBehaviour
         stuningTimeCount = stunTimeCount;
     }
     #endregion
-  protected virtual void Dead()
+    public virtual void Dead()
     {   
     }
     public void DestoryGB(){

@@ -86,7 +86,7 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
         currentEnemy.rb.AddForce(new Vector2(dashForce*currentEnemy.faceOn.x, 0),ForceMode2D.Impulse);
     }
     private WarriorBossstate StateChoose(){
-        if(true/*FollowPlayerAndAttackStateChoose()&&currentEnemy.wasHitedTimesCountInThisState > 2*/){
+        if(FollowPlayerAndAttackStateChoose()&&currentEnemy.wasHitedTimesCountInThisState > 2){
             currentEnemy.attackDelay = 1;
             return WarriorBossstate.FollowPlayerAndAttackState;
         }

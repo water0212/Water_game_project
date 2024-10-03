@@ -19,6 +19,7 @@ public class testSkill : Skill
    [HideInInspector] public GameObject summonedObject;
    [HideInInspector] public SkillSummonAndDamage skillSummon;
     public Vector2 attackDisplaces;
+    private PlayerControler PC;
     public override void OnLoad(GameObject user)
     {
         cooldownCount =  0;
@@ -27,6 +28,7 @@ public class testSkill : Skill
         animator = summonedObject.GetComponent<Animator>();
         skillSummon = summonedObject.GetComponent<SkillSummonAndDamage>();
         attack = user.GetComponent<Character>().attackPower;
+        PC = user.GetComponent<PlayerControler>();
         Debug.Log(skillName + "技能加載完畢");
     }
     public override void Activate(GameObject user)
@@ -38,8 +40,8 @@ public class testSkill : Skill
         skillSummon.isSummoned = true;
         skillSummon.isDissolving = false;
         skillSummon.durationTimeCount = skillSummon.duration;
-        summonedObject.transform.position =user.transform.position+ new Vector3(user.transform.localScale.x,0,0);
-        summonedObject.transform.localScale = user.transform.localScale;
+        summonedObject.transform.position =user.transform.position+ new Vector3(PC.faceOn,0.5f,0);
+        summonedObject.transform.localScale = new Vector3(PC.faceOn,1,1);
         animator.SetTrigger("Attack");
         
     }

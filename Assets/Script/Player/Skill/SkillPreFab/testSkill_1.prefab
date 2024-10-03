@@ -295,8 +295,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 965812994a68b714ea818bf011252880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack: 0
-  attackMultiplier: 1
-  attackDisplaces: {x: 2, y: 2}
-  AttackStrength: 0
-  TenacityDamage: 0
+  AATD:
+    Attacker: 1
+    TakeOnDamage: 0
+    attackDamage: 0
+    attackMultiplier: 3
+    AttackStrength: 6
+    TenacityDamage: 20
+    TenacityDamageRate: 0
+    attackDisplaces: {x: 5, y: 10}

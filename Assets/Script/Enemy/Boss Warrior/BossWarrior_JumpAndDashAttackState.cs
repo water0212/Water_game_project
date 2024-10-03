@@ -65,13 +65,13 @@ public class BossWarrior_JumpAndDashAttackState : BaseState<BossWarriorEnemy>
                 currentEnemy.rb.velocity = Vector2.zero;
                 currentEnemy.rb.AddForce(new Vector2(0,10f),ForceMode2D.Impulse);
                 ActiveJumpToAttack = true;
+                currentEnemy.anim.SetBool("JumpToAttack", true);
             }
             
         }else if (ActiveJump&&ActiveJumpToAttack&&!ActiveAttack&&currentEnemy.rb.velocity.y<0){
-            currentEnemy.anim.SetBool("JumpToAttack", true);
             if(currentEnemy.firstStage){
                 currentEnemy.rb.gravityScale = 25f;
-                if(currentEnemy.playerDistance_y< 3){
+                if(currentEnemy.playerDistance_y< 2){
                     currentEnemy.anim.SetTrigger("JumpAttack");
                     ActiveAttack = true;
                     isExitThisState = true;
@@ -79,7 +79,7 @@ public class BossWarrior_JumpAndDashAttackState : BaseState<BossWarriorEnemy>
                 }
             }else {
                 currentEnemy.rb.gravityScale = 45f;
-                if(currentEnemy.playerDistance_y< 4){
+                if(currentEnemy.playerDistance_y< 2){
                     currentEnemy.anim.SetTrigger("JumpAttack");
                     ActiveAttack = true;
                     isExitThisState = true;

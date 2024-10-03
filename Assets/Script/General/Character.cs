@@ -47,8 +47,8 @@ public class Character : MonoBehaviour
     public bool isInvincible;
     public bool isBlock,wasBlocking;
     public bool isPerfectBlock;
-    private PlayerControler playerController;
-    private Rigidbody2D rb;
+    [HideInInspector]public PlayerControler playerController;
+    [HideInInspector]public Rigidbody2D rb;
     [Header("廣播")]
     public VoidEventSO DeadEvent;
     public CharacterEventSO HealthChangeEvent;

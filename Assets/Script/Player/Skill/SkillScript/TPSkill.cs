@@ -23,6 +23,7 @@ public class TPSkill : Skill
    [HideInInspector] public GameObject summonedObject;
    [HideInInspector] public SkillSummonAndEffect skillSummon;
     public Vector2 attackDisplaces;
+    private PlayerControler PC;
     public  bool canUse;
     public bool canTp;
 
@@ -35,6 +36,7 @@ public class TPSkill : Skill
         animator = summonedObject.GetComponent<Animator>();
         skillSummon = summonedObject.GetComponent<SkillSummonAndEffect>();
         rb = summonedObject.GetComponent<Rigidbody2D>();
+        PC = user.GetComponent<PlayerControler>();
         InitializeSkillData(user);
         Debug.Log( skillName + "技能加載完畢");
     }
@@ -46,8 +48,8 @@ public class TPSkill : Skill
             InitializeSkillData(user);
             useCount = 0;
             skillSummon.isSummoned = true;
-            summonedObject.transform.position =user.transform.position+ new Vector3(user.transform.localScale.x,1,0);
-            summonedObject.transform.localScale = -user.transform.localScale;
+            summonedObject.transform.position =user.transform.position+ new Vector3(PC.faceOn,1,0);
+            summonedObject.transform.localScale = -new Vector3(PC.faceOn,1,1);
             rb.AddForce(new Vector2(speed * -summonedObject.transform.localScale.x,0),ForceMode2D.Impulse);
         }else if (enemy !=null&&canTp){
             //TODO:傳送片段

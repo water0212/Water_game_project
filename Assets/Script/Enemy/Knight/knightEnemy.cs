@@ -126,7 +126,7 @@ public class knightEnemy : Enemy
         Gizmos.DrawWireCube(boxCastEnd, checkSize);
     }
     #endregion
-    public override void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength,float TenacityDamage,float TenacityDamageRate){
+    /*public override void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength,float TenacityDamage,float TenacityDamageRate){
         if(wasHited)return;
         TakeTenacityDamage(TenacityDamage,TenacityDamageRate);
         if(healthPoint-attack>0){
@@ -168,9 +168,9 @@ public class knightEnemy : Enemy
             healthPoint -=Damage;
         }
         TenacityUIChange();
-    }
+    }*/
     #region 死亡與清除
-          protected override void Dead()
+    public override void Dead()
     {   
         isDead = true;
         anim.SetTrigger("Die");
@@ -237,15 +237,15 @@ public class knightEnemy : Enemy
     }
     #endregion
     #region 狀態欄計算與更新
-    private void   HealthUIChange(){
+    public void   HealthUIChange(){
         var persentage = healthPoint/maxHealth;
         healthBar.fillAmount = persentage; 
     }
-    private void TenacityUIChange(){
+    public void TenacityUIChange(){
         var persentage = tenacityPoint/maxTenacity;
         tenacityBar.fillAmount = persentage;
     }
-    private IEnumerator StateBarShake(float duration , float ShakePower){
+    public IEnumerator StateBarShake(float duration , float ShakePower){
         Vector3 startPosition = StateBarRectTransform.anchoredPosition;
         while (duration > 0 )
         {

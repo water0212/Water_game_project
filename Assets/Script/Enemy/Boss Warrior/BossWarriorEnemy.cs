@@ -8,9 +8,12 @@ public class BossWarriorEnemy : Enemy
     [Header("Boss特殊")]
     private bool bossStart;
     public GameObject Player;
+    public GameObject Ghost;
     public float playerDistance_y;
     public float playerDistance_x;
     public bool canChangeState;
+    public Transform leftJumpPos;
+    public Transform rightJumpPos;
     [Tooltip("被打的次數")]
     public int wasHitedTimesCountInCombat;
     public int wasHitedTimesCountInThisState;
@@ -37,7 +40,7 @@ public class BossWarriorEnemy : Enemy
 
     public void BossStart(){
         Debug.Log("關主啟動");
-        currentState = jumpAndDashAttackState;
+        currentState = baseState;
         enemyTransform = Player.transform;
         bossStart = true;
         currentState.OnEnter(this);
@@ -50,6 +53,8 @@ public class BossWarriorEnemy : Enemy
         followPlayerAndAttackState = new BossWarrior_FollowPlayerAndAttackState();
         slideAndAttackState = new BossWarrior_SlideAndAttackState();
         jumpAndDashAttackState = new BossWarrior_JumpAndDashAttackState();
+        jumpState = new BossWarrior_Jump();
+        croushAndAttackTwoTimesState = new BossWarrior_CroushAndAttackTwoTimesState();
     }
     protected override void OnEnable()
     {
@@ -61,6 +66,10 @@ public class BossWarriorEnemy : Enemy
         if(!bossStart)return;
         base.Update();
         currentState.LogicUpdate();
+        if(!isDead){
+             HitTimeCount();
+             StunRecover(); 
+        }
     }
     protected override void FixedUpdate(){ 
         if(!bossStart)return;
@@ -155,7 +164,7 @@ public class BossWarriorEnemy : Enemy
     }
     
     #endregion
-    protected override void Dead()
+    public override void Dead()
     {   
         isDead = true;
         anim.SetTrigger("Die");

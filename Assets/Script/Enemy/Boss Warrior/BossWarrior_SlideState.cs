@@ -98,7 +98,7 @@ public class BossWarrior_SlideState : BaseState<BossWarriorEnemy>
         currentEnemy.rb.AddForce(new Vector2(SlideForce*currentEnemy.faceOn.x, 0),ForceMode2D.Impulse);
     }
     private WarriorBossstate StateChoose(){
-        if(true/*SlideAndAttackState()||currentEnemy.lastStage*/){
+        if(SlideAndAttackState()||currentEnemy.lastStage){
             currentEnemy.attackDelay = 0.2f;
             return WarriorBossstate.SlideAndAttackState;
         }

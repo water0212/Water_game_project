@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 26196963}
   - component: {fileID: 26196965}
   - component: {fileID: 26196964}
+  - component: {fileID: 26196966}
   m_Layer: 0
   m_Name: LockPosCAM(Key/BossRoom) (1)
   m_TagString: Untagged
@@ -353,6 +354,18 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 743593292}
+--- !u!114 &26196966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26196962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &30546641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,6 +1773,7 @@ GameObject:
   - component: {fileID: 331989641}
   - component: {fileID: 331989644}
   - component: {fileID: 331989643}
+  - component: {fileID: 331989651}
   - component: {fileID: 331989645}
   - component: {fileID: 331989646}
   - component: {fileID: 331989647}
@@ -2082,8 +2096,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  maxHealth: 20
-  healthPoint: 20
+  maxHealth: 1000
+  healthPoint: 1000
   maxTenacity: 30
   tenacityPoint: 30
   TenacityBlockRate: 0.8
@@ -2104,9 +2118,32 @@ MonoBehaviour:
   isBlock: 0
   wasBlocking: 0
   isPerfectBlock: 0
+  playerController: {fileID: 0}
+  rb: {fileID: 0}
   DeadEvent: {fileID: 11400000, guid: 7c606dd4559b26a459ec21d3250cdd9d, type: 2}
   HealthChangeEvent: {fileID: 11400000, guid: 4b537f33c57d225439300ad4b6cebc93, type: 2}
   TenacityChangeEvent: {fileID: 11400000, guid: 1b3e37531df88e34c9d197a46fa1827f, type: 2}
+--- !u!114 &331989651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331989640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387a54f65672bac4e935d76d131d6393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AATD:
+    Attacker: 0
+    TakeOnDamage: 1
+    attackDamage: 0
+    attackMultiplier: 0
+    AttackStrength: 0
+    TenacityDamage: 0
+    TenacityDamageRate: 0
+    attackDisplaces: {x: 0, y: 0}
 --- !u!1 &339512710
 GameObject:
   m_ObjectHideFlags: 0
@@ -3355,7 +3392,7 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
+  m_UpdateMethod: 0
   m_BlendUpdateMethod: 0
   m_DefaultBlend:
     m_Style: 1
@@ -3384,6 +3421,7 @@ GameObject:
   - component: {fileID: 534433254}
   - component: {fileID: 534433258}
   - component: {fileID: 534433255}
+  - component: {fileID: 534433259}
   m_Layer: 0
   m_Name: LockPosCAM(Key/BossRoom)
   m_TagString: Untagged
@@ -3469,6 +3507,18 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1462859504}
+--- !u!114 &534433259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534433253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &557660980
 GameObject:
   m_ObjectHideFlags: 0
@@ -3614,6 +3664,7 @@ GameObject:
   - component: {fileID: 568284844}
   - component: {fileID: 568284846}
   - component: {fileID: 568284845}
+  - component: {fileID: 568284847}
   m_Layer: 7
   m_Name: Attack3
   m_TagString: Untagged
@@ -3708,6 +3759,27 @@ PolygonCollider2D:
       - {x: 1.5349728, y: 1.1530125}
       - {x: 0.75654316, y: 1.5860276}
   m_UseDelaunayMesh: 0
+--- !u!114 &568284847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568284843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387a54f65672bac4e935d76d131d6393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AATD:
+    Attacker: 1
+    TakeOnDamage: 0
+    attackDamage: 0
+    attackMultiplier: 1.2
+    AttackStrength: 10
+    TenacityDamage: 5
+    TenacityDamageRate: 0
+    attackDisplaces: {x: 5, y: 7}
 --- !u!1 &592886717
 GameObject:
   m_ObjectHideFlags: 0
@@ -5219,6 +5291,7 @@ GameObject:
   - component: {fileID: 698201488}
   - component: {fileID: 698201492}
   - component: {fileID: 698201493}
+  - component: {fileID: 698201494}
   m_Layer: 0
   m_Name: CenterFollowPlayerCAM(OpenRoom)
   m_TagString: Untagged
@@ -5319,6 +5392,18 @@ MonoBehaviour:
     m_FrequencyGain: 1
     m_Duration: 1
     m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &698201494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698201487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &703768984
 GameObject:
   m_ObjectHideFlags: 0
@@ -5734,6 +5819,7 @@ GameObject:
   - component: {fileID: 720335911}
   - component: {fileID: 720335913}
   - component: {fileID: 720335912}
+  - component: {fileID: 720335914}
   m_Layer: 7
   m_Name: Attack1
   m_TagString: Untagged
@@ -5763,7 +5849,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720335910}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76a6e60854ee57645bb6456ade010a5b, type: 3}
   m_Name: 
@@ -5832,6 +5918,27 @@ PolygonCollider2D:
       - {x: 1.4725876, y: 0.7107744}
       - {x: 1.4851847, y: 1.0535588}
   m_UseDelaunayMesh: 0
+--- !u!114 &720335914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720335910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387a54f65672bac4e935d76d131d6393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AATD:
+    Attacker: 1
+    TakeOnDamage: 0
+    attackDamage: 0
+    attackMultiplier: 2
+    AttackStrength: 3
+    TenacityDamage: 3
+    TenacityDamageRate: 0
+    attackDisplaces: {x: 3, y: 3}
 --- !u!1 &721982664
 GameObject:
   m_ObjectHideFlags: 0
@@ -7071,6 +7178,7 @@ GameObject:
   - component: {fileID: 951950327}
   - component: {fileID: 951950329}
   - component: {fileID: 951950328}
+  - component: {fileID: 951950330}
   m_Layer: 7
   m_Name: Attack2-2
   m_TagString: Untagged
@@ -7164,6 +7272,27 @@ PolygonCollider2D:
       - {x: 1.022213, y: 0.576252}
       - {x: 0.5366621, y: 0.5035286}
   m_UseDelaunayMesh: 0
+--- !u!114 &951950330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951950326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387a54f65672bac4e935d76d131d6393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AATD:
+    Attacker: 1
+    TakeOnDamage: 0
+    attackDamage: 0
+    attackMultiplier: 1.1
+    AttackStrength: 0
+    TenacityDamage: 0
+    TenacityDamageRate: 0
+    attackDisplaces: {x: 2, y: 5}
 --- !u!1 &985194088
 GameObject:
   m_ObjectHideFlags: 0
@@ -7989,6 +8118,7 @@ GameObject:
   - component: {fileID: 1137906318}
   - component: {fileID: 1137906316}
   - component: {fileID: 1137906315}
+  - component: {fileID: 1137906319}
   m_Layer: 0
   m_Name: NoYFollowCAM(TightRoom)
   m_TagString: Untagged
@@ -8089,6 +8219,18 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1745167086}
+--- !u!114 &1137906319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137906313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1139945787
 GameObject:
   m_ObjectHideFlags: 0
@@ -9126,8 +9268,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.00064998865, y: -0.00024998188, z: 0}
-    m_Extent: {x: 1.6198499, y: 1.61525, z: 0}
+    m_Center: {x: 0.00055003166, y: -0.00009995699, z: 0}
+    m_Extent: {x: 1.62025, y: 1.6203, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -9196,6 +9338,7 @@ GameObject:
   - component: {fileID: 1319414837}
   - component: {fileID: 1319414839}
   - component: {fileID: 1319414838}
+  - component: {fileID: 1319414840}
   m_Layer: 7
   m_Name: Attack3 -2
   m_TagString: Untagged
@@ -9291,6 +9434,27 @@ PolygonCollider2D:
       - {x: 1.5349728, y: 1.1530125}
       - {x: 1.0356245, y: 1.3746023}
   m_UseDelaunayMesh: 0
+--- !u!114 &1319414840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319414836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387a54f65672bac4e935d76d131d6393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AATD:
+    Attacker: 1
+    TakeOnDamage: 0
+    attackDamage: 0
+    attackMultiplier: 1.5
+    AttackStrength: 0
+    TenacityDamage: 0
+    TenacityDamageRate: 0
+    attackDisplaces: {x: 5, y: 10}
 --- !u!1 &1321025278
 GameObject:
   m_ObjectHideFlags: 0
@@ -9796,6 +9960,7 @@ GameObject:
   - component: {fileID: 1452433560}
   - component: {fileID: 1452433562}
   - component: {fileID: 1452433561}
+  - component: {fileID: 1452433563}
   m_Layer: 7
   m_Name: Attack2
   m_TagString: Untagged
@@ -9825,7 +9990,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452433559}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76a6e60854ee57645bb6456ade010a5b, type: 3}
   m_Name: 
@@ -9888,6 +10053,27 @@ PolygonCollider2D:
       - {x: 1.4958057, y: 0.9483609}
       - {x: 0.95951366, y: 1.2984886}
   m_UseDelaunayMesh: 0
+--- !u!114 &1452433563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452433559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387a54f65672bac4e935d76d131d6393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AATD:
+    Attacker: 1
+    TakeOnDamage: 0
+    attackDamage: 0
+    attackMultiplier: 101
+    AttackStrength: 5
+    TenacityDamage: 3
+    TenacityDamageRate: 0
+    attackDisplaces: {x: 2, y: 5}
 --- !u!1 &1462859503
 GameObject:
   m_ObjectHideFlags: 3
@@ -11464,7 +11650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 331989640}
-  testSkillLoad: {fileID: 11400000, guid: eef00e069c61fe84ab90b9bf65883728, type: 2}
+  testSkillLoad: {fileID: 11400000, guid: 5bf0124107202da4fa7cd501501c3d1e, type: 2}
   currentSkill_E: {fileID: 0}
   currentSkill_Q: {fileID: 0}
   skillDatabase: {fileID: 11400000, guid: 16ccad8b3bfdc574faa4eaa21185862d, type: 2}
