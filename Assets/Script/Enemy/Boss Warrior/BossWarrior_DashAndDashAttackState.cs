@@ -19,6 +19,7 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
         currentEnemy.ChaseEnemy();
         beginingGravityScale = currentEnemy.rb.gravityScale;
         currentEnemy.anim.SetTrigger("DashAndDashAttack");
+        Debug.Log("蹲下");
         if(currentEnemy.firstStage){
             dashForce = 50+(currentEnemy.playerDistance_x)*0.5f;
         }else{
@@ -86,8 +87,9 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
         currentEnemy.rb.AddForce(new Vector2(dashForce*currentEnemy.faceOn.x, 0),ForceMode2D.Impulse);
     }
     private WarriorBossstate StateChoose(){
+        currentEnemy.ChaseEnemy();
         if(FollowPlayerAndAttackStateChoose()&&currentEnemy.wasHitedTimesCountInThisState > 2){
-            currentEnemy.attackDelay = 1;
+            currentEnemy.attackDelay = 0.5f;
             return WarriorBossstate.FollowPlayerAndAttackState;
         }
         if(JumpChoose()){
@@ -104,9 +106,9 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
         }else return false;
     }
     private bool JumpChoose(){
-        if(currentEnemy.lastStage && currentEnemy.playerDistance_x<3){
+        if(currentEnemy.lastStage && currentEnemy.playerDistance_x<5){
             return true;
-        }else if(currentEnemy.firstStage && currentEnemy.playerDistance_y>1){
+        }else if(currentEnemy.firstStage && currentEnemy.playerDistance_y>1 && currentEnemy.playerDistance_x<7){
             return true;
         }else return false;
     }

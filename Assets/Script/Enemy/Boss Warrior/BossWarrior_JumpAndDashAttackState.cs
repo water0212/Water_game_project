@@ -68,7 +68,7 @@ public class BossWarrior_JumpAndDashAttackState : BaseState<BossWarriorEnemy>
                 currentEnemy.anim.SetBool("JumpToAttack", true);
             }
             
-        }else if (ActiveJump&&ActiveJumpToAttack&&!ActiveAttack&&currentEnemy.rb.velocity.y<0){
+        }else if (ActiveJump&&ActiveJumpToAttack&&!ActiveAttack&&(currentEnemy.rb.velocity.y<0||currentEnemy.physicCheck.isGround)){
             if(currentEnemy.firstStage){
                 currentEnemy.rb.gravityScale = 25f;
                 if(currentEnemy.playerDistance_y< 2){
@@ -103,20 +103,24 @@ public class BossWarrior_JumpAndDashAttackState : BaseState<BossWarriorEnemy>
     }
     private WarriorBossstate StateChoose(){
         currentEnemy.ChaseEnemy();
+        if(currentEnemy.wasHitedTimesCountInThisState > 1 || currentEnemy.playerDistance_x <5){
+            currentEnemy.attackDelay = 2;
+            return WarriorBossstate.Jump;
+        }
         if(DashAttackChoose()||currentEnemy.lastStage){
-            attackDelay = 0;
+             currentEnemy.attackDelay = 0.5f;
             return WarriorBossstate.DashAndDashAttackState;
         }
         if(FollowPlayerAndAttackStateChoose()){
             currentEnemy.attackDelay = 1;
             return WarriorBossstate.FollowPlayerAndAttackState;
         }
-        return WarriorBossstate.Jump;
+        return WarriorBossstate.BaseState;
     }
 
     private bool FollowPlayerAndAttackStateChoose()
     {
-        if(currentEnemy.playerDistance_x<10&&currentEnemy.playerDistance_x>4){
+        if(currentEnemy.playerDistance_x<15&&currentEnemy.playerDistance_x>5){
             return true;
         }
         return false;
@@ -124,7 +128,7 @@ public class BossWarrior_JumpAndDashAttackState : BaseState<BossWarriorEnemy>
 
     private bool DashAttackChoose()
     {
-        if(currentEnemy.playerDistance_x>10){
+        if(currentEnemy.playerDistance_x>15){
             return true;
         }
         return false ;

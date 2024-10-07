@@ -82,6 +82,11 @@ public class BossWarrior_FollowPlayerAndAttackState : BaseState<BossWarriorEnemy
         Debug.Log("離開BossWarrior_FollowPlayerAndAttackState");
     }
     private WarriorBossstate StateChoose(){
+        
+        if(currentEnemy.wasHitedTimesCountInThisState > 0 || currentEnemy.lastStage){
+            currentEnemy.attackDelay = 0.2f;
+            return WarriorBossstate.Jump;
+        }
         currentEnemy.attackDelay = 1;
         return WarriorBossstate.BaseState;
     }

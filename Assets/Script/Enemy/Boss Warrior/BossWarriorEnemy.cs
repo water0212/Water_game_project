@@ -6,6 +6,7 @@ using UnityEngine;
 public class BossWarriorEnemy : Enemy
 {
     [Header("Boss特殊")]
+    public int ChangeTimes;
     private bool bossStart;
     public GameObject Player;
     public GameObject Ghost;
@@ -83,6 +84,7 @@ public class BossWarriorEnemy : Enemy
     #region 切換狀態
     public void SwitchState(WarriorBossstate state) 
     {
+        ChangeTimes++;
         var newState = state 
         switch 
         {

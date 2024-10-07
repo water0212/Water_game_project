@@ -2103,7 +2103,7 @@ MonoBehaviour:
   TenacityBlockRate: 0.8
   TenacityDamageRate: 1
   TenacityWasDamageRate: 0
-  maxHitCD: 0.3
+  maxHitCD: 0.2
   hitCD: 0
   attackPower: 10
   CounterStunTime: 1
@@ -9268,8 +9268,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.00055003166, y: -0.00009995699, z: 0}
-    m_Extent: {x: 1.62025, y: 1.6203, z: 0}
+    m_Center: {x: 0.0024499893, y: 0.0023500323, z: 0}
+    m_Extent: {x: 1.61795, y: 1.6178501, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

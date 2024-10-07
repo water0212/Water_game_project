@@ -45,7 +45,7 @@ public class BossWarrior_Jump : BaseState<BossWarriorEnemy>
             currentEnemy.ChaseEnemy();
             if(JumpEnd&&currentEnemy.playerDistance_y <2){
                 currentEnemy.canChangeState = true;
-                currentEnemy.anim.SetTrigger("Fall");
+                currentEnemy.anim.SetBool("Fall",true);
                 currentEnemy.anim.SetTrigger("JumpEnd!");
                 isExitThisState = true;
             }
@@ -56,13 +56,13 @@ public class BossWarrior_Jump : BaseState<BossWarriorEnemy>
         if(isExitThisState) return;
         if(ActiveJump&&!JumpEnd){
             if(Chase(currentPos)< 2){
-                currentEnemy.anim.SetTrigger("Fall");
+                currentEnemy.anim.SetBool("Fall",true);
                 currentEnemy.rb.velocity = Vector2.zero;
                 currentEnemy.rb.gravityScale = 45f;
                 JumpEnd = true;
             }
             if(currentEnemy.rb.velocity.y<-1){
-                currentEnemy.anim.SetTrigger("Fall");
+                currentEnemy.anim.SetBool("Fall",true);
             }
             else if(currentEnemy.rb.velocity.y<2){
                 currentEnemy.anim.SetTrigger("JumpToFall");
@@ -72,29 +72,45 @@ public class BossWarrior_Jump : BaseState<BossWarriorEnemy>
     public override void OnExit()
     {
         currentEnemy.wasHitedTimesCountInThisState = 0;
+        currentEnemy.anim.SetBool("Fall",false);
         currentEnemy.rb.gravityScale = beginingGravityScale;
         Debug.Log("離開BossWarrior_Jump");
     }
     private WarriorBossstate StateChoose(){
         currentEnemy.ChaseEnemy();
         if(CroushAndAttackTwoTimesState()){
-            currentEnemy.attackDelay = 1;
+            currentEnemy.attackDelay = 2;
             return WarriorBossstate.CroushAndAttackTwoTimesState;
         }
+        if(JumpAndDashAttackState()){
+            currentEnemy.attackDelay = 1.5f;
+            return WarriorBossstate.JumpAndDashAttackState;
+        }
         if(DashAttackChoose()||currentEnemy.lastStage){
-            attackDelay = 0.5f;
+            currentEnemy.attackDelay = 0.5f;
             return WarriorBossstate.DashAndDashAttackState;
         }
         currentEnemy.attackDelay = 1;
         return WarriorBossstate.BaseState;
     }
 
+
     private bool DashAttackChoose()
     {
-        if(currentEnemy.playerDistance_x >10){
+        if(currentEnemy.playerDistance_x >20 || currentEnemy.playerDistance_x <10 && currentEnemy.wasHitedTimesCountInThisState >= 1){
             return true;
         }
         return false;
+    }
+    private bool JumpAndDashAttackState()
+    {
+        if(currentEnemy.playerDistance_x >10 && currentEnemy.playerDistance_x <20 &&currentEnemy.firstStage)
+        return true;
+        else if(currentEnemy.lastStage && currentEnemy.playerDistance_x >10 && currentEnemy.playerDistance_x <30){
+            currentEnemy.attackDelay -= 1f;
+            return true;
+        }
+        return false ;
     }
 
     private bool CroushAndAttackTwoTimesState()

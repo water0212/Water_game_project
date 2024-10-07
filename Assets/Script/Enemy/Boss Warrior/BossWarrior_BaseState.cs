@@ -59,15 +59,20 @@ public class BossWarrior_BaseState : BaseState<BossWarriorEnemy>
             currentEnemy.attackDelay = 1;
             return WarriorBossstate.SlideState;
         }
+        if(currentEnemy.lastStage&&SlideStateChoose()){
+            currentEnemy.attackDelay = 1;
+            return WarriorBossstate.SlideAndAttackState;
+        }
+        if(currentEnemy.playerDistance_x > 30){
+            currentEnemy.attackDelay = 0.2f;
+            return WarriorBossstate.JumpAndDashAttackState;
+        }
         if(DashAndDashAttackState()&& currentEnemy.lastStage || currentEnemy.wasHitedTimesCountInThisState< remainingDamageThreshold*0.4f){
             currentEnemy.attackDelay = 1;   
             return WarriorBossstate.DashAndDashAttackState;
         }
-        if(currentEnemy.lastStage&&SlideStateChoose()){
-
-            return WarriorBossstate.SlideAndAttackState;
-        }
-        if(DashStateChoose()&&currentEnemy.wasHitedTimesCountInThisState == remainingDamageThreshold){
+        if(DashStateChoose()&&currentEnemy.wasHitedTimesCountInThisState >= remainingDamageThreshold){
+            currentEnemy.attackDelay = 0.2f;
             return WarriorBossstate.Jump;
         }
         return WarriorBossstate.BaseState;

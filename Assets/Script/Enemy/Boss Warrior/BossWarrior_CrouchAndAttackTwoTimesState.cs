@@ -24,7 +24,7 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
         currentEnemy.anim.SetTrigger("DashAndDashAttack");
         if(currentEnemy.firstStage){
             dashForce = 50+(currentEnemy.playerDistance_x)*0.5f;
-            DashTimes = 1;
+            DashTimes = 3;
         }else{
             dashForce = 70+(currentEnemy.playerDistance_x)*0.5f;
             DashTimes = 3;
@@ -39,7 +39,8 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
             currentEnemy.ChaseEnemy();
             if (DashTimes>0 && currentEnemy.playerDistance_x >8){
                 currentEnemy.canChangeState = false;
-                currentEnemy.SwitchState(WarriorBossstate.FollowPlayerAndAttackState);
+                currentEnemy.attackDelay = 0.5f;
+                currentEnemy.SwitchState(WarriorBossstate.CroushAndAttackTwoTimesState);
             }else{
             currentEnemy.canChangeState = false; 
             currentEnemy.SwitchState(StateChoose());
@@ -63,7 +64,7 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
         if(isExitThisState) return;
         if(ActiveDash){
             currentEnemy.ChaseEnemy();
-            if(currentEnemy.playerDistance_x <0.5){
+            if(currentEnemy.playerDistance_x < 1){
                 Debug.Log("停止");
                 currentEnemy.rb.gravityScale = 45;
                 currentEnemy.anim.SetTrigger("Stop!");
@@ -75,10 +76,9 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
         } 
     }
     public override void  OnExit(){
-        attackDelay = 0;
         currentEnemy.wasHitedTimesCountInThisState = 0;
         currentEnemy.rb.gravityScale = beginingGravityScale;
-         Debug.Log("離開BossWarrior_DashAndDashAttackState");
+         Debug.Log("離開BossWarrior_CroushAndAttackTwoTimesState");
     }
     private void ActiveStage(){
         orignalPos = currentEnemy.transform.position;
@@ -98,10 +98,19 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
         if (summonedOB != null && Mathf.Abs(summonedOB.transform.position.x - currentEnemy.transform.position.x) < 2){
         UnityEngine.Object.Destroy(summonedOB); 
         isGhostLive = false;
+        currentEnemy.canChangeState = true;
         }
     }
     private WarriorBossstate StateChoose()
-    {
+    {   currentEnemy.ChaseEnemy();
+        if(currentEnemy.playerDistance_x<5 || currentEnemy.playerDistance_y >2){
+        currentEnemy.attackDelay = 2.5f;
         return WarriorBossstate.FollowPlayerAndAttackState;
+        }
+        else if (currentEnemy.playerDistance_x >5 || currentEnemy.playerDistance_x<30){
+            currentEnemy.attackDelay = 3.5f;
+            return WarriorBossstate.DashAndDashAttackState;
+        }
+        return WarriorBossstate.BaseState;
     }
 }
