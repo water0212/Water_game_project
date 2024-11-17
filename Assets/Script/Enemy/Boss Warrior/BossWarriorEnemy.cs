@@ -39,6 +39,10 @@ public class BossWarriorEnemy : Enemy
      public BaseState<BossWarriorEnemy> jumpState;
     //[Header("狀態欄")] TODO:boss血條
 
+    [Header("接收")]
+    public VoidEventSO BossStartEvent;
+
+
     public void BossStart(){
         Debug.Log("關主啟動");
         currentState = baseState;
@@ -61,6 +65,7 @@ public class BossWarriorEnemy : Enemy
     {
         base.OnEnable();
         PlayerDead.OnEventRaised += OnPlayerDeadEvent;
+        BossStartEvent.OnEventRaised += BossStart;
         
     }
     protected override void Update() {
@@ -80,6 +85,8 @@ public class BossWarriorEnemy : Enemy
     protected override void OnDisable()
     {
         currentState.OnExit();
+        PlayerDead.OnEventRaised -= OnPlayerDeadEvent;
+        BossStartEvent.OnEventRaised -= BossStart;
     }
     #region 切換狀態
     public void SwitchState(WarriorBossstate state) 
@@ -103,8 +110,7 @@ public class BossWarriorEnemy : Enemy
         currentState.OnExit();
         currentState = newState;
         currentState.OnEnter(this);
-        Debug.Log("進入");
-        
+        Debug.Log("進入"); 
     } 
     /// <summary>
      /// 關於轉換型態的延遲時間與類型
@@ -126,44 +132,44 @@ public class BossWarriorEnemy : Enemy
     #endregion
     #region 受到傷害
         
-    public override void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength,float TenacityDamage,float TenacityDamageRate){
-        if(wasHited)return;
-        TakeTenacityDamage(TenacityDamage,TenacityDamageRate);
-        if(healthPoint-attack>0){
-            HurtEffect.RaiseEvent(this.transform.position+new Vector3(0,1.5f,0));
-            AttackScene.GetInstance().HitPause(AttackStrength);
-            CamaeraControl.GetInstance().CameraShake(attackDisplaces);
-            healthPoint-=attack;
-            wasHitedTimesCountInCombat++;
-            wasHitedTimesCountInThisState++;
-            wasHited=true;
-            hitCD = maxHitCD;
-            
-            if(attack>0){
-               onTakeDamage?.Invoke(transform); 
-               HurtDisplacement(transform,attackDisplaces);
-            }
+    // public override void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength,float TenacityDamage,float TenacityDamageRate){
+    //     if(wasHited)return;
+    //     TakeTenacityDamage(TenacityDamage,TenacityDamageRate);
+    //     if(healthPoint-attack>0){
+    //         HurtEffect.RaiseEvent(this.transform.position+new Vector3(0,1.5f,0));
+    //         AttackScene.GetInstance().HitPause(AttackStrength);
+    //         CamaeraControl.GetInstance().CameraShake(attackDisplaces);
+    //         healthPoint-=attack;
+    //         wasHitedTimesCountInCombat++;
+    //         wasHitedTimesCountInThisState++;
+    //         wasHited=true;
+    //         hitCD = maxHitCD;
+    //         BossHealthChange.RaiseEvent(maxHealth,healthPoint);
+    //         if(attack>0){
+    //            onTakeDamage?.Invoke(transform); 
+    //            HurtDisplacement(transform,attackDisplaces);
+    //         }
             
 
-        }else{
-            healthPoint = 0;
-            CamaeraControl.GetInstance().CameraShake(attackDisplaces);
-            Dead();
-        //    AttackScene.GetInstance().HitPause(AttackStrength+10f);
-        }
-    }
-    public override void TakeTenacityDamage(float TenacityDamage,float TenacityDamageRateBoost){
-        if(tenacityPoint - TenacityDamage >0 ){
-            tenacityPoint -= TenacityDamage;
+    //     }else{
+    //         healthPoint = 0;
+    //         CamaeraControl.GetInstance().CameraShake(attackDisplaces);
+    //         Dead();
+    //     //    AttackScene.GetInstance().HitPause(AttackStrength+10f);
+    //     }
+    // }
+    // public override void TakeTenacityDamage(float TenacityDamage,float TenacityDamageRateBoost){
+    //     if(tenacityPoint - TenacityDamage >0 ){
+    //         tenacityPoint -= TenacityDamage;
             
-        }else {
-            tenacityPoint = 0; 
-            var Damage = TenacityDamage*TenacityDamageRateBoost;
-            Blocked(stunTime);
-            //TODO:減去內功防禦
-            healthPoint -=Damage;
-        }
-    }
+    //     }else {
+    //         tenacityPoint = 0; 
+    //         var Damage = TenacityDamage*TenacityDamageRateBoost;
+    //         Blocked(stunTime);
+    //         //TODO:減去內功防禦
+    //         healthPoint -=Damage;
+    //     }
+    // }
     
     #endregion
     public override void Dead()

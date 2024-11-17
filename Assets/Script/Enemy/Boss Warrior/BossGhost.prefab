@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7518636059291912419}
   - component: {fileID: 3870421567109033454}
   - component: {fileID: 1406445413707188934}
+  - component: {fileID: -6583654953653727318}
   m_Layer: 0
   m_Name: BossGhost
   m_TagString: Untagged
@@ -194,3 +195,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.99230826, y: 0.8775085}
   m_EdgeRadius: 0
+--- !u!114 &-6583654953653727318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2999760900956616909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cfc306d6f22cf540b1834984922c53f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AATD:
+    Attacker: 1
+    TakeOnDamage: 1
+    Unblockable: 0
+    HP: 1
+    canAttackCounts: 0
+    attackDamage: 50
+    AttackStrength: 3
+    TenacityDamage: 3
+    TenacityDamageRate: 0
+    attackDisplaces: {x: 3, y: 3}
+  MaxHitTime: 0
+  master: {fileID: 0}

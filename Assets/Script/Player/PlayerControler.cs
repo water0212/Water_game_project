@@ -229,7 +229,7 @@ public class PlayerControler : MonoBehaviour
         return;
         //isRolling = true;
         //character.isInvincible = true;
-        RollingChangeEvent.OnEventRaised(character);
+        RollingChangeEvent.RaiseEvent(character);
         character.RollTimes--;
         anim.SetTrigger("RollActive");
         if(inputDirection.x !=0)

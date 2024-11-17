@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Accessibility;
 public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
 {
     // Start is called before the first frame update
     BossWarriorEnemy enemy;
     public BossWarriorCustomAttackAndTakeOnDamage AATD;
+    [Header("廣播")]
+    public FloatFloatEventSO BossHealthChange;
+    public FloatFloatEventSO BossTenacityChange;
     public void OnEnable() {
         enemy = GetComponentInParent<BossWarriorEnemy>();
         var atk = enemy.attackPower;
@@ -29,7 +33,7 @@ public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
             //canMove=false;
             enemy.moveRecovery = enemy.maxMoveRecovery;
             enemy.hitCD = enemy.maxHitCD;
-            
+            BossHealthChange.RaiseEvent(enemy.maxHealth,enemy.healthPoint);
             if(attack>0){
                enemy.onTakeDamage?.Invoke(transform); 
                enemy.HurtDisplacement(transform,attackDisplaces);
@@ -50,12 +54,13 @@ public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
         base.TakeTenacityDamage(TenacityDamage, TenacityDamageRateBoost);
         if(enemy.tenacityPoint - TenacityDamage >0 ){
             enemy.tenacityPoint -= TenacityDamage;
+            BossTenacityChange.RaiseEvent(enemy.maxTenacity,enemy.tenacityPoint);
             
         }else {
             //enemy.StartCoroutine(enemy.StateBarShake(0.3f , 0.2f));
             enemy.tenacityPoint = 0; 
+            BossTenacityChange.RaiseEvent(enemy.maxTenacity,enemy.tenacityPoint);
             var Damage = TenacityDamage*TenacityDamageRateBoost;
-            enemy.Blocked(enemy.stunTime);
             //TODO:減去內功防禦
             enemy.healthPoint -=Damage;
         }

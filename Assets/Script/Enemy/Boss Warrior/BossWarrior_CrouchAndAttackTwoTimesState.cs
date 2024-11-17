@@ -88,15 +88,15 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
         currentEnemy.rb.AddForce(new Vector2(dashForce*currentEnemy.faceOn.x, 0),ForceMode2D.Impulse);
     }
     private void SummonGhost(){
-        isGhostLive = true;
         Debug.Log("召喚GHOST");
         summonedOB = UnityEngine.Object.Instantiate(currentEnemy.Ghost,orignalPos+new Vector3(0,0.5f,0), Quaternion.identity);
-        summonedOB.GetComponent<Rigidbody2D>().AddForce(new Vector2(dashForce*currentEnemy.faceOn.x, 0),ForceMode2D.Impulse);
-
+        summonedOB.GetComponent<Rigidbody2D>().AddForce(new Vector2(dashForce*0.7f*currentEnemy.faceOn.x, 0),ForceMode2D.Impulse);
+        summonedOB.GetComponent<BossSummonItemAttackAndOnTakeDamage>().Initialize(currentEnemy);
+        isGhostLive = true;
     }
     private void CheckGhost(){
-        if (summonedOB != null && Mathf.Abs(summonedOB.transform.position.x - currentEnemy.transform.position.x) < 2){
-        UnityEngine.Object.Destroy(summonedOB); 
+        if (Mathf.Abs(summonedOB.transform.position.x - currentEnemy.transform.position.x) < 2 ||summonedOB == null){
+        if(summonedOB !=null)summonedOB.GetComponent<BossSummonItemAttackAndOnTakeDamage>().Dead();
         isGhostLive = false;
         currentEnemy.canChangeState = true;
         }

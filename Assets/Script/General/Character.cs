@@ -89,7 +89,7 @@ public class Character : MonoBehaviour
                 RollTimes++;
                 Rollrecovery = MaxRollrecovery;
             }
-            playerController.RollingChangeEvent.OnEventRaised(this);
+            playerController.RollingChangeEvent.RaiseEvent(this);
         }
     }
     #region 受傷與死亡

@@ -39,6 +39,7 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
             currentEnemy.SwitchState(StateChoose());
         }
         if(isExitThisState) return;
+
         if(!ActiveDash){
             attackDelay-= Time.deltaTime;
             if(attackDelay <= 0){
@@ -80,6 +81,7 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
          Debug.Log("離開BossWarrior_DashAndDashAttackState");
     }
     private void ActiveStage(){
+        currentEnemy.ChaseEnemy();
         ActiveDash = true;
         playerPosition =  currentEnemy.enemyPosition;
         currentEnemy.anim.SetTrigger("Attack!");
