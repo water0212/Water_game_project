@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector]public Rigidbody2D rb;
     [HideInInspector]public PhysicCheck physicCheck;
     [HideInInspector]public Animator anim;
-    [HideInInspector]public Vector2 faceOn;
+    public Vector2 faceOn;
     public UnityEvent<Transform> onTakeDamage;
     [Header("辨別敵友")]
     public Vector2 checkSize;

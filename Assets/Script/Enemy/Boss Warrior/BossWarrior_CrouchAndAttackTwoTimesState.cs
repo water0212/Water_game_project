@@ -64,7 +64,7 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
         if(isExitThisState) return;
         if(ActiveDash){
             currentEnemy.ChaseEnemy();
-            if(currentEnemy.playerDistance_x < 1){
+            if(currentEnemy.playerDistance_x < 1 || currentEnemy.IFAwayTarger()){
                 Debug.Log("停止");
                 currentEnemy.rb.gravityScale = 45;
                 currentEnemy.anim.SetTrigger("Stop!");

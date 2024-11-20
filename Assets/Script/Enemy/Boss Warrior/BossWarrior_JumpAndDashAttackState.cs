@@ -59,7 +59,7 @@ public class BossWarrior_JumpAndDashAttackState : BaseState<BossWarriorEnemy>
         if(isExitThisState) return;
         currentEnemy.ChaseEnemy();
         if(ActiveJump&&!ActiveJumpToAttack){
-            if(currentEnemy.playerDistance_x< 2){
+            if(currentEnemy.playerDistance_x< 2 || currentEnemy.IFAwayTarger()){
                 Debug.Log("準備Jump攻擊");
                 currentEnemy.anim.SetTrigger("JumpToFall");
                 currentEnemy.rb.velocity = Vector2.zero;

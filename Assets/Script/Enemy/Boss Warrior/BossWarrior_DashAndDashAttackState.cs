@@ -53,7 +53,7 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
         if(isExitThisState) return;
         if(ActiveDash&&!isAttack){
             if(currentEnemy.firstStage){
-                if(ChaseEnemy()<6){
+                if(ChaseEnemy()<6|| currentEnemy.IFAwayTarger()){
                     Debug.Log("dash攻擊");
                     currentEnemy.rb.gravityScale = 25;
                     currentEnemy.anim.SetTrigger("DashAttack");
@@ -62,7 +62,7 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
                 }
             }else if (currentEnemy.lastStage){
                 currentEnemy.ChaseEnemy();
-                if(currentEnemy.playerDistance_x<7){
+                if(currentEnemy.playerDistance_x<7 || currentEnemy.IFAwayTarger()){
                     currentEnemy.rb.gravityScale = 45;
                     isAttack = true;
                     currentEnemy.anim.SetTrigger("DashAttack");

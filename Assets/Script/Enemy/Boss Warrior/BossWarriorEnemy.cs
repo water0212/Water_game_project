@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class BossWarriorEnemy : Enemy
     public float playerDistance_y;
     public float playerDistance_x;
     public bool canChangeState;
+    public float lastDistance;
     public Transform leftJumpPos;
     public Transform rightJumpPos;
     [Tooltip("被打的次數")]
@@ -210,6 +212,23 @@ public class BossWarriorEnemy : Enemy
         transform.localScale = new Vector3(-1*Mathf.Abs(transform.localScale.x),transform.localScale.y,transform.localScale.z);
     }
     }
+    public bool IFAwayTarger()
+{
+    // 計算當前距離
+    float currentDistance = playerDistance_x;
+
+    // 定義 Lambda 表達式來檢查方向
+    int enemyInfront = (enemyPosition.x - transform.position.x) > 0? 2 : -2;
+
+    // 檢查距離和方向
+    if (currentDistance > lastDistance && faceOn.x != enemyInfront)
+    {
+        Debug.LogWarning("正在遠離");
+        return true;
+    }
+    lastDistance = currentDistance;
+    return false;
+}
     #endregion
     public void CanChangeBossState(){
         canChangeState = true;

@@ -85,11 +85,9 @@ public class BossWarrior_FollowPlayerAndAttackState : BaseState<BossWarriorEnemy
         currentEnemy.ChaseEnemy();
         if(currentEnemy.wasHitedTimesCountInThisState > 0 || currentEnemy.lastStage){
             currentEnemy.attackDelay = 0.5f;
-            Debug.LogWarning("bug是在這嗎? ->Jump");
             return WarriorBossstate.Jump;
         }
         currentEnemy.attackDelay = 1;
-        Debug.LogWarning("bug是在這嗎? ->BaseState");
         return WarriorBossstate.BaseState;
     }
 }

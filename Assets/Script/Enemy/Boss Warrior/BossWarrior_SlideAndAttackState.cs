@@ -51,7 +51,7 @@ public class BossWarrior_SlideAndAttackState : BaseState<BossWarriorEnemy>
     {
         if(isExitThisState) return;
         if(ActiveSlide)
-            if(ChaseEnemy()<1.5){
+            if(ChaseEnemy()<1.5 || currentEnemy.IFAwayTarger()){
                 currentEnemy.rb.gravityScale = 70;
                 if(currentEnemy.rb.velocity.x <1){
                 currentEnemy.anim.SetTrigger("Attack!");
