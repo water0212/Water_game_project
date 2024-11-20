@@ -201,21 +201,25 @@ public class BossWarriorEnemy : Enemy
     }
     #endregion
     #region 追蹤敵人
-    public void ChaseEnemy()
+    public void ChaseEnemy(bool faceOnLock = false)
     {
     enemyPosition = enemyTransform.position; // 获取敌人位置
     playerDistance_y = Mathf.Abs(enemyPosition.y-transform.position.y) ;
     playerDistance_x = Mathf.Abs(enemyPosition.x-transform.position.x) ;
-    if(enemyPosition.x-transform.position.x >=0.2){
+    if(enemyPosition.x-transform.position.x >=0.2 && !faceOnLock){
+        Debug.Log("轉頭");
+        //Debug.Log("TargetFunction called", this);
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x),transform.localScale.y,transform.localScale.z);
-    }else if(enemyPosition.x-transform.position.x<=0.2){
+    }else if(enemyPosition.x-transform.position.x<=0.2 && !faceOnLock){
+        Debug.Log("轉頭");
+        //Debug.Log("TargetFunction called", this);
         transform.localScale = new Vector3(-1*Mathf.Abs(transform.localScale.x),transform.localScale.y,transform.localScale.z);
     }
     }
     public bool IFAwayTarger()
 {
     // 計算當前距離
-    float currentDistance = playerDistance_x;
+    float currentDistance = Mathf.Abs(enemyPosition.x-transform.position.x);
 
     // 定義 Lambda 表達式來檢查方向
     int enemyInfront = (enemyPosition.x - transform.position.x) > 0? 2 : -2;
@@ -224,6 +228,7 @@ public class BossWarriorEnemy : Enemy
     if (currentDistance > lastDistance && faceOn.x != enemyInfront)
     {
         Debug.LogWarning("正在遠離");
+        lastDistance = currentDistance;
         return true;
     }
     lastDistance = currentDistance;

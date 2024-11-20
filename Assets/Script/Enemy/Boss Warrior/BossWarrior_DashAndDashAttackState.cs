@@ -61,7 +61,7 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
                     isExitThisState = true;
                 }
             }else if (currentEnemy.lastStage){
-                currentEnemy.ChaseEnemy();
+                currentEnemy.ChaseEnemy(true);
                 if(currentEnemy.playerDistance_x<7 || currentEnemy.IFAwayTarger()){
                     currentEnemy.rb.gravityScale = 45;
                     isAttack = true;
@@ -81,7 +81,7 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
          Debug.Log("離開BossWarrior_DashAndDashAttackState");
     }
     private void ActiveStage(){
-        currentEnemy.ChaseEnemy();
+        currentEnemy.ChaseEnemy(true);
         ActiveDash = true;
         playerPosition =  currentEnemy.enemyPosition;
         currentEnemy.anim.SetTrigger("Attack!");

@@ -36,7 +36,7 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
     }
     public override void LogicUpdate(){
         if(currentEnemy.canChangeState&&isExitThisState) {
-            currentEnemy.ChaseEnemy();
+            currentEnemy.ChaseEnemy(true);
             if (DashTimes>0 && currentEnemy.playerDistance_x >8){
                 currentEnemy.canChangeState = false;
                 currentEnemy.attackDelay = 0.5f;
@@ -63,8 +63,8 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
     public override void PhysicUpdate(){
         if(isExitThisState) return;
         if(ActiveDash){
-            currentEnemy.ChaseEnemy();
-            if(currentEnemy.playerDistance_x < 1 || currentEnemy.IFAwayTarger()){
+            currentEnemy.ChaseEnemy(true);
+            if(currentEnemy.playerDistance_x < 1 || currentEnemy.physicCheck.touchWall == true){
                 Debug.Log("停止");
                 currentEnemy.rb.gravityScale = 45;
                 currentEnemy.anim.SetTrigger("Stop!");
@@ -101,6 +101,7 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
         currentEnemy.canChangeState = true;
         }
     }
+
     private WarriorBossstate StateChoose()
     {   currentEnemy.ChaseEnemy();
         if(currentEnemy.playerDistance_x<5 || currentEnemy.playerDistance_y >2){
