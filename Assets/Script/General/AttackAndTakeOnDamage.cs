@@ -9,7 +9,7 @@ public class AttackAndTakeOnDamage : MonoBehaviour
         public virtual void OnTakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength,float TenacityDamage,float TenacityDamageRate){
 
         }
-        public virtual void TakeTenacityDamage(float TenacityDamage,float TenacityDamageRateBoost){
+        public virtual void TakeTenacityDamage(float attack ,float TenacityDamage ,float TenacityDamageRateBoost){
            
         }
         public virtual void  OnTriggerEnter2D(Collider2D other) {

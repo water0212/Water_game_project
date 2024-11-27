@@ -41,6 +41,7 @@ public class BossWarriorEnemy : Enemy
      public BaseState<BossWarriorEnemy> playerDeadState;
      public BaseState<BossWarriorEnemy> jumpState;
      public BaseState<BossWarriorEnemy> BossDeadState;
+     public BaseState<BossWarriorEnemy> BossStuningState;
     //[Header("狀態欄")] TODO:boss血條
 
     [Header("接收")]
@@ -110,6 +111,7 @@ public class BossWarriorEnemy : Enemy
             WarriorBossstate.BaseState => baseState,
             WarriorBossstate.PlayerDeadState => playerDeadState,
             WarriorBossstate.BossDeadState => BossDeadState,
+            WarriorBossstate.BossStuningState => BossStuningState,
             _=> null
         }; 
         Debug.Log("離開");
@@ -178,6 +180,7 @@ public class BossWarriorEnemy : Enemy
     // }
     
     #endregion
+    
     public override void Dead()
     {   
         isDead = true;
@@ -185,6 +188,16 @@ public class BossWarriorEnemy : Enemy
         this.gameObject.layer = 2;
         ExperienceGive.RaiseEvent(ExperiencePoint);
     }
+    #region 暈眩
+        public override void Blocked(float stunTimeCount){
+        anim.SetBool("Stuning", true);
+        attacking = false;
+        SwitchState(WarriorBossstate.BossStuningState);
+        ishit = false;
+        Stuning = true;
+        stuningTimeCount = stunTimeCount;
+    }
+    #endregion
     public void CanDisslove(){
         canDisslove = true;
     }
@@ -258,5 +271,6 @@ public enum WarriorBossstate{
     BaseState,
     PlayerDeadState,
     BossDeadState,
-    BossChangeState
+    BossChangeState,
+    BossStuningState
 }

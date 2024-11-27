@@ -21,7 +21,7 @@ public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
         if(!AATD.TakeOnDamage) return;
         base.OnTakeDamage(transform, attack, attackDisplaces, AttackStrength, TenacityDamage, TenacityDamageRate);
         if(enemy.wasHited)return;
-        TakeTenacityDamage(TenacityDamage,TenacityDamageRate);
+        TakeTenacityDamage(attack,TenacityDamage,TenacityDamageRate);
         if(enemy.healthPoint-attack>0){
             enemy.HurtEffect.RaiseEvent(enemy.transform.position+new Vector3(0,1.5f,0));
             AttackScene.GetInstance().HitPause(AttackStrength);
@@ -50,10 +50,10 @@ public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
         }
         //enemy.HealthUIChange();
     }
-    public override void TakeTenacityDamage(float TenacityDamage, float TenacityDamageRateBoost)
+    public override void TakeTenacityDamage(float attack,float TenacityDamage, float TenacityDamageRateBoost)
     {
         if(!AATD.TakeOnDamage) return;
-        base.TakeTenacityDamage(TenacityDamage, TenacityDamageRateBoost);
+        base.TakeTenacityDamage(attack, TenacityDamage, TenacityDamageRateBoost);
         if(enemy.tenacityPoint - TenacityDamage >0 ){
             enemy.tenacityPoint -= TenacityDamage;
             BossTenacityChange.RaiseEvent(enemy.maxTenacity,enemy.tenacityPoint);
@@ -61,8 +61,9 @@ public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
         }else {
             //enemy.StartCoroutine(enemy.StateBarShake(0.3f , 0.2f));
             enemy.tenacityPoint = 0; 
+            enemy.Blocked(TenacityDamageRateBoost);
             BossTenacityChange.RaiseEvent(enemy.maxTenacity,enemy.tenacityPoint);
-            var Damage = TenacityDamage*TenacityDamageRateBoost;
+            var Damage = attack*TenacityDamageRateBoost;
             //TODO:減去內功防禦
             enemy.healthPoint -=Damage;
         }

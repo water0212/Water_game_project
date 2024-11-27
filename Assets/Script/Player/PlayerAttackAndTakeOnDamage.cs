@@ -41,15 +41,15 @@ public class PlayerAttackAndTakeOnDamage : AttackAndTakeOnDamage
         }
         cc.onHealthChange?.Invoke(cc);
     }
-    public override void TakeTenacityDamage(float TenacityDamage, float TenacityDamageRateBoost)
+    public override void TakeTenacityDamage(float attack ,float TenacityDamage, float TenacityDamageRateBoost)
     {
         if(!AATD.TakeOnDamage) return;
-        base.TakeTenacityDamage(TenacityDamage, TenacityDamageRateBoost);
+        base.TakeTenacityDamage(attack, TenacityDamage, TenacityDamageRateBoost);
         if(cc.tenacityPoint - TenacityDamage >0 ){
             cc.tenacityPoint -= TenacityDamage;
         }else {
             cc.tenacityPoint = 0; 
-            var Damage = TenacityDamage*cc.TenacityWasDamageRate;
+            var Damage = attack*cc.TenacityWasDamageRate;
             //TODO:減去內功防禦
             cc.healthPoint -=Damage;
         }
