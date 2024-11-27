@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SkillSummonAndDamage : MonoBehaviour, ISummonedAndDamageObject
 {
-    public Material material;
+    private Material material;
     public GameObject user;
     public float attack;
     public Vector2 attackDisplaces;

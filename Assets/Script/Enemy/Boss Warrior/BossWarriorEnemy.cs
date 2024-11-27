@@ -17,6 +17,7 @@ public class BossWarriorEnemy : Enemy
     public float lastDistance;
     public Transform leftJumpPos;
     public Transform rightJumpPos;
+    public bool canDisslove;
     [Tooltip("被打的次數")]
     public int wasHitedTimesCountInCombat;
     public int wasHitedTimesCountInThisState;
@@ -39,6 +40,7 @@ public class BossWarriorEnemy : Enemy
      public BaseState<BossWarriorEnemy> baseState;
      public BaseState<BossWarriorEnemy> playerDeadState;
      public BaseState<BossWarriorEnemy> jumpState;
+     public BaseState<BossWarriorEnemy> BossDeadState;
     //[Header("狀態欄")] TODO:boss血條
 
     [Header("接收")]
@@ -62,6 +64,7 @@ public class BossWarriorEnemy : Enemy
         jumpAndDashAttackState = new BossWarrior_JumpAndDashAttackState();
         jumpState = new BossWarrior_Jump();
         croushAndAttackTwoTimesState = new BossWarrior_CroushAndAttackTwoTimesState();
+        BossDeadState = new BossWarriorBossDeadState();
     }
     protected override void OnEnable()
     {
@@ -106,6 +109,7 @@ public class BossWarriorEnemy : Enemy
             WarriorBossstate.SlideState => slideState,
             WarriorBossstate.BaseState => baseState,
             WarriorBossstate.PlayerDeadState => playerDeadState,
+            WarriorBossstate.BossDeadState => BossDeadState,
             _=> null
         }; 
         Debug.Log("離開");
@@ -177,9 +181,12 @@ public class BossWarriorEnemy : Enemy
     public override void Dead()
     {   
         isDead = true;
-        anim.SetTrigger("Die");
+        SwitchState(WarriorBossstate.BossDeadState);
         this.gameObject.layer = 2;
         ExperienceGive.RaiseEvent(ExperiencePoint);
+    }
+    public void CanDisslove(){
+        canDisslove = true;
     }
     #region 計時器
     public void HitTimeCount(){
@@ -249,5 +256,7 @@ public enum WarriorBossstate{
     SlideAndAttackState,
     SlideState,
     BaseState,
-    PlayerDeadState
+    PlayerDeadState,
+    BossDeadState,
+    BossChangeState
 }

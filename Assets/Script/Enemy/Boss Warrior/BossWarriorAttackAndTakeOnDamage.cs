@@ -26,6 +26,7 @@ public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
             enemy.HurtEffect.RaiseEvent(enemy.transform.position+new Vector3(0,1.5f,0));
             AttackScene.GetInstance().HitPause(AttackStrength);
             CamaeraControl.GetInstance().CameraShake(attackDisplaces);
+            enemy.anim.SetTrigger("Hurt");
             enemy.healthPoint-=attack;
             enemy.wasHited=true;
             enemy.isMoveRecovery = true;
@@ -43,6 +44,7 @@ public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
         }else{
             enemy.healthPoint = 0;
             CamaeraControl.GetInstance().CameraShake(attackDisplaces);
+            BossHealthChange.RaiseEvent(enemy.maxHealth,enemy.healthPoint);
             enemy.Dead();
         //    AttackScene.GetInstance().HitPause(AttackStrength+10f);
         }
