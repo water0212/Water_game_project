@@ -22,12 +22,12 @@ public class PlayerAttackAndTakeOnDamage : AttackAndTakeOnDamage
             cc.rb.gravityScale = 2.3f;
             cc.playerController.isHanging = false;
         }
-            cc.TakeTenacityDamage(TenacityDamage);
+            TakeTenacityDamage(attack,TenacityDamage,TenacityDamageRate);
             if(cc.healthPoint-attack>0){
             cc.healthPoint-=attack;
             cc.wasHited=true;
             cc.hitCD = cc.maxHitCD;
-            Debug.Log("www");
+            Debug.Log(attack);
             AttackScene.GetInstance().HitPause(AttackStrength);
             CamaeraControl.GetInstance().CameraShake(attackDisplaces);
             //受傷

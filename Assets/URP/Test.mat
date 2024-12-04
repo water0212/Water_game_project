@@ -50,7 +50,7 @@ Material:
     - _Scale: 16.8
     m_Colors:
     - _EdgeColor: {r: 5.311324, g: 0.054224025, b: 0, a: 0.9490196}
-    - _TexColor: {r: 1, g: 0.0047169924, b: 0.0047169924, a: 0}
+    - _TexColor: {r: 4, g: 0.01886797, b: 0.01886797, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2090389351214781349
 MonoBehaviour:

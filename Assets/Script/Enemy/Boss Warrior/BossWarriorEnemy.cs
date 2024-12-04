@@ -25,9 +25,9 @@ public class BossWarriorEnemy : Enemy
     public bool firstStage;
     public bool lastStage;
      [Header("速度數值")]  
-     public float currnetSpeed;
-     public float firstStageSpeed;
-     public float lastStageSpeed;
+    //  public float currnetSpeed;
+    //  public float firstStageSpeed;
+    //  public float lastStageSpeed;
      [Header("階段狀態")]
      public BaseState<BossWarriorEnemy> currentState; 
      public BaseState<BossWarriorEnemy> dashAndDashAttackState; 
@@ -46,7 +46,10 @@ public class BossWarriorEnemy : Enemy
 
     [Header("接收")]
     public VoidEventSO BossStartEvent;
-
+    [Header("廣播")]
+    public FloatFloatEventSO BossHealthChange;
+    public FloatFloatEventSO BossTenacityChange;
+    public VoidEventSO BossDead;
 
     public void BossStart(){
         Debug.Log("關主啟動");
@@ -66,6 +69,7 @@ public class BossWarriorEnemy : Enemy
         jumpState = new BossWarrior_Jump();
         croushAndAttackTwoTimesState = new BossWarrior_CroushAndAttackTwoTimesState();
         BossDeadState = new BossWarriorBossDeadState();
+        BossStuningState = new BossWarrior_StuningState();
     }
     protected override void OnEnable()
     {
@@ -138,7 +142,7 @@ public class BossWarriorEnemy : Enemy
         canMove_playerDead = false;
     }
     #endregion
-    #region 受到傷害
+    #region 受到傷害後是否轉變型態
         
     // public override void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength,float TenacityDamage,float TenacityDamageRate){
     //     if(wasHited)return;
@@ -178,7 +182,11 @@ public class BossWarriorEnemy : Enemy
     //         healthPoint -=Damage;
     //     }
     // }
-    
+    public void ChangeStage(){
+        firstStage = false;
+        lastStage = true;
+        
+    }
     #endregion
     
     public override void Dead()
@@ -195,7 +203,8 @@ public class BossWarriorEnemy : Enemy
         SwitchState(WarriorBossstate.BossStuningState);
         ishit = false;
         Stuning = true;
-        stuningTimeCount = stunTimeCount;
+        stunTime = stunTimeCount /*TODO:這邊可以乘上暈眩係數*/;
+        stuningTimeCount = stunTime;
     }
     #endregion
     public void CanDisslove(){
@@ -213,9 +222,13 @@ public class BossWarriorEnemy : Enemy
     public void StunRecover(){
         if(Stuning){
             stuningTimeCount-= Time.deltaTime;
+            BossTenacityChange.RaiseEvent(stunTime,stunTime - stuningTimeCount);
             if(stuningTimeCount<0){
                 Stuning = false;
                 anim.SetBool("Stuning",false);
+                SwitchState(WarriorBossstate.BaseState);
+                tenacityPoint = maxTenacity;
+                BossTenacityChange.RaiseEvent(maxTenacity,tenacityPoint);
             }
         }
     }

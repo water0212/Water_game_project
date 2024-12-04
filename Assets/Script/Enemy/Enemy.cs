@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
     [Header("攻擊力")]
     public float attackPower;
     [Header("防禦力")]
-    private float defense;
+    public float defense;
     [Header("攻擊延遲")]
     public float attackDelay;
     [Header("經驗值給予")]

@@ -44,7 +44,7 @@ public class Attack : MonoBehaviour
             else if(character.isBlock)
                 ReflectAttack(character, attackDisplaces,TenacityDamage);
             else {
-                character.TakeDamage(transform,attack,attackDisplaces,AttackStrength,TenacityDamage);
+                //character.TakeDamage(transform,attack,attackDisplaces,AttackStrength,TenacityDamage);
             }
         }
         else

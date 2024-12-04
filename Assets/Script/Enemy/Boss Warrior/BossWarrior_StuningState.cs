@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossWarrior_StuningState : MonoBehaviour
+public class BossWarrior_StuningState : BaseState<BossWarriorEnemy>
 {
     // Start is called before the first frame update
-    void Start()
+    float currentDefense;
+    public override void OnEnter(BossWarriorEnemy Enemy)
     {
-        
+        Debug.Log("Boss暈眩");
+        currentEnemy = Enemy;
+        currentDefense = currentEnemy.defense;
+        currentEnemy.defense = currentDefense*0.5f;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void PhysicUpdate()
+    { 
+    }
+    public override void LogicUpdate()
     {
-        
+    }
+
+    public override void OnExit()
+    {
+        currentEnemy.defense = currentDefense;
     }
 }

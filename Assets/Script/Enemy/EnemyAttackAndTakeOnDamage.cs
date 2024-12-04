@@ -22,7 +22,7 @@ public class EnemyAttackAndTakeOnDamage : AttackAndTakeOnDamage
             enemy.HurtEffect.RaiseEvent(enemy.transform.position+new Vector3(0,1.5f,0));
             AttackScene.GetInstance().HitPause(AttackStrength);
             CamaeraControl.GetInstance().CameraShake(attackDisplaces);
-            enemy.healthPoint-=attack;
+            enemy.healthPoint-=attack-enemy.defense;
             enemy.wasHited=true;
             enemy.isMoveRecovery = true;
             enemy.attacking= false;

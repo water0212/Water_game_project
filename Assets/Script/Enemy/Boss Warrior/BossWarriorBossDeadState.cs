@@ -24,6 +24,7 @@ public class BossWarriorBossDeadState : BaseState<BossWarriorEnemy>
             if(fade <=0){
                 fade = 1;
                 Debug.Log("開始腐爛");
+                currentEnemy.BossDead.RaiseEvent();
                 currentEnemy.DestoryGB();
             }
             material.SetFloat("_Fade", fade);

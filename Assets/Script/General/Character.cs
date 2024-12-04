@@ -11,6 +11,7 @@ public class Character : MonoBehaviour
     public UnityEvent<Transform,Vector2> onTakeDamage;
     public UnityEvent<Character> onHealthChange;
     public UnityEvent onperfectBlock;
+    private PlayerAttackAndTakeOnDamage playerATKCompoment;
     [Header("數值")]
     [Header("血量")]
     public float maxHealth;
@@ -56,13 +57,14 @@ public class Character : MonoBehaviour
     private void Awake() {
         playerController = GetComponent<PlayerControler>();    
         rb = GetComponent<Rigidbody2D>();
+        playerATKCompoment = GetComponent<PlayerAttackAndTakeOnDamage>();
     }
     private void Start() {
         healthPoint= maxHealth;
         Rollrecovery = MaxRollrecovery;
         onHealthChange?.Invoke(this);
         ExperienceProgress(0);
-        TakeTenacityDamage(0);
+        playerATKCompoment.TakeTenacityDamage(0,0,0);
     }
     private void OnEnable() {
         ExperienceGived.OnEventRaised += ExperienceProgress;
@@ -93,7 +95,7 @@ public class Character : MonoBehaviour
         }
     }
     #region 受傷與死亡
-    public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength,float TenacityDamage){
+    /*public void TakeDamage(Transform transform,float attack,Vector2 attackDisplaces,int AttackStrength,float TenacityDamage){
             if(wasHited|| isInvincible)
         return;
             if(playerController.isHanging){
@@ -128,18 +130,18 @@ public class Character : MonoBehaviour
             //TODO:減去內功防禦
             healthPoint -=Damage;
         }
-    }
+    }*/
     public void ReflectEffect(Enemy attacker, Vector2 attackDisplaces, float TenacityDamage){
         var revise = attackDisplaces/2;
         attacker.healthPoint-=1;
         if(!isPerfectBlock){
         Vector2 vir = new Vector2(rb.transform.position.x - attacker.transform.position.x,1).normalized;
         var AttackStrength = vir*revise;
-        TakeTenacityDamage(TenacityDamage*TenacityBlockRate);
+        playerATKCompoment.TakeTenacityDamage(0,TenacityDamage*TenacityBlockRate,0);
         rb.AddForce(AttackStrength,ForceMode2D.Impulse); 
         CamaeraControl.GetInstance().CameraShake(AttackStrength);    
         }else{
-            TakeTenacityDamage(TenacityDamage*0.1f);
+            playerATKCompoment.TakeTenacityDamage(0,TenacityDamage*0.1f,0);
             attacker.TakeTenacityDamage(TenacityDamage*(1-TenacityBlockRate),1);    
             AttackScene.GetInstance().HitPause(6);
             onperfectBlock?.Invoke();
