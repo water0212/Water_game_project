@@ -94,7 +94,7 @@ public class BossWarriorEnemy : Enemy
     }
     protected override void OnDisable()
     {
-        currentState.OnExit();
+        //currentState.OnExit();
         PlayerDead.OnEventRaised -= OnPlayerDeadEvent;
         BossStartEvent.OnEventRaised -= BossStart;
     }

@@ -22,7 +22,6 @@ public class PlayerControler : MonoBehaviour
     public PhysicsMaterial2D normalPhysicsState;
     private Animator anim;
     private Character character;
-    private CameraFollowObject _cameraConrol;
     [Header("基本參數")]
     public float maxSpeedX;
     public float forceMultiplier;
@@ -52,6 +51,7 @@ public class PlayerControler : MonoBehaviour
     public bool isHanging;
     public bool isFailing;
     [Header("鏡頭控制")]
+    [SerializeField] private CameraFollowObject _cameraConrol;
     [SerializeField] private GameObject CameraFloowObject;
     private float _fallSpeedYDampingChangeThreshold;
     [Header("除錯")]
@@ -78,7 +78,7 @@ public class PlayerControler : MonoBehaviour
         // inputAction.GamePlayer.Skill_Q.started += ActiveSkill_Q;
         // inputAction.GamePlayer.Skill_Load.started += LoadSkill_TEST;
         anim = GetComponent<Animator> ();
-        _cameraConrol = CameraFloowObject.GetComponent<CameraFollowObject> ();
+        
     }
     private void OnEnable() {
         inputAction.Enable();
@@ -87,6 +87,7 @@ public class PlayerControler : MonoBehaviour
     }
     private void Start(){
         _fallSpeedYDampingChangeThreshold = CameraManager.instence._fallSpeedYDampingChangeThreshold;
+        _cameraConrol = CameraFollowObject.GetInstance();
     }
     private void OnDisable() {
         inputAction.Disable();

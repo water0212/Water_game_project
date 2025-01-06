@@ -11,14 +11,23 @@ public class CameraFollowObject : MonoBehaviour
     private Coroutine coroutine;
     private PlayerControler playerControler;
     private bool _isFaceRight;
+    private static CameraFollowObject instance;
 
     private void Awake(){
+        _PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         playerControler = _PlayerTransform.GetComponent<PlayerControler>();
+        if(instance != null) {
+            Debug.LogWarning("Found more than one AttackScene in the Scene");
+        }
+        instance = this;
+    }
+    public static CameraFollowObject GetInstance() {
+        return instance;
     }
     private void Update() {
         transform.position = _PlayerTransform.position;
     }
-    public void CallTurn(){
+    public void CallTurn(){ 
         coroutine = StartCoroutine(FilpYLerp());
     }
     private IEnumerator FilpYLerp(){

@@ -12,6 +12,9 @@ TagManager:
   - EnemyHealthBar
   - EnemyTenacityBar
   - Boss
+  - Camera
+  - FirstCamera
+  - CameraFollowObject
   layers:
   - Default
   - TransparentFX

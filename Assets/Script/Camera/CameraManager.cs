@@ -1,13 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class CameraManager : MonoBehaviour
 {
     public static CameraManager instence;
 
-    [SerializeField] private CinemachineVirtualCamera[] _allVirualCamera;
+    [SerializeField] private List<CinemachineVirtualCamera> _allVirualCamera = new List<CinemachineVirtualCamera>();
 
     [Header("控制跳躍與墜落時的Y軸")]
     [SerializeField] private float _fallPanAmount = 0.25f;
@@ -31,20 +32,60 @@ public class CameraManager : MonoBehaviour
         }else {
             Debug.LogWarning("有多個CameraManager");
         }
-        for(int i = 0; i< _allVirualCamera.Length; i++){
-            if( _allVirualCamera[i].enabled){
-                currentCamera = _allVirualCamera[i];
-            }
-
-            _framingTransposer = currentCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
-        }
+    }
+    private void OnEnable() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    private void Start() {
+        //GetCamera();
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if( scene.name == "BossLevel"){
+            GetCamera();
 
         _normYPanAmount = _framingTransposer.m_YDamping;
 
         _startingTrackedObjectOffset = _framingTransposer.m_TrackedObjectOffset;
+        }
+    }
+    private void AddCameraToManager(CinemachineVirtualCamera camera)
+    {
+        _allVirualCamera.Add(camera);
+        Debug.Log($"Camera {camera.name} 已添加到 CameraManager");
+    }
+    private void GetCamera(){
+         _allVirualCamera.Clear();
+
+        CinemachineVirtualCamera[] cameras = FindObjectsOfType<CinemachineVirtualCamera>();
+            foreach (var camera in cameras)
+            {
+                AddCameraToManager(camera);
+            }
+            for(int i = 0; i< cameras.Length; i++){
+            if( _allVirualCamera[i].enabled && currentCamera == null && _allVirualCamera[i].CompareTag("FirstCamera")){
+                currentCamera = _allVirualCamera[i];
+                _framingTransposer = currentCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+            }
+
+            }
+        if (currentCamera == null && cameras.Length > 0)
+        {
+            currentCamera = cameras[0]; // 默認使用第一個攝像機
+            _framingTransposer = currentCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+            Debug.LogWarning($"未找到啟用的攝像機，默認選擇了 {currentCamera.name}");
+        }
+        else if (cameras.Length == 0)
+        {
+            Debug.LogError("場景中沒有找到任何 CinemachineVirtualCamera");
+        }
     }
     #region Pan Camera 
-            public void PanCameraOnContact(float panDistance, float panTime , PanDirection panDirection,bool panToStartingPos){
+    public void PanCameraOnContact(float panDistance, float panTime , PanDirection panDirection,bool panToStartingPos){
                 _panCameraCoroutine = StartCoroutine(PanCamera(panDistance ,panTime ,panDirection ,panToStartingPos));
             }
             private IEnumerator PanCamera(float panDistance, float panTime , PanDirection panDirection,bool panToStartingPos){
