@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 3253967874662527701}
   m_Layer: 0
   m_Name: CenterFollowPlayerCAM(OpenRoom)Prefeb
-  m_TagString: Untagged
+  m_TagString: FirstCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

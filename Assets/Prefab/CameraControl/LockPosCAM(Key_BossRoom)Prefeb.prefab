@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 7100318418561809607}
   m_Layer: 0
   m_Name: LockPosCAM(Key_BossRoom)Prefeb
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

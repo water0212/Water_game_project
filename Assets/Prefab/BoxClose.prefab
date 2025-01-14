@@ -101,6 +101,7 @@ MonoBehaviour:
   OpenSprite: {fileID: 548826065, guid: 18c8a855af80e2e4590f1cfb87df0644, type: 3}
   CloseSprite: {fileID: 551217322, guid: 18c8a855af80e2e4590f1cfb87df0644, type: 3}
   isDone: 0
+  SkillID: 0
   GainSkillEvent: {fileID: 11400000, guid: 0027e525cc115d74b81188c9a84a84b8, type: 2}
 --- !u!61 &4959282297245097473
 BoxCollider2D:

@@ -38,11 +38,19 @@ public class PlayerControler : MonoBehaviour
     [Header("跳躍有關")]
     public int canJumpTimes;
     public int MaxJumpTimes;
-    public float jumpDelay;
+    public float initialJumpDelay;
     public float maxJumpDelay;
+    public float initialJumpForce;
+    public float jumpCutForce;
+    public float JumpVelocityThreshold;
+    public float JumpFallGravity;
+    [SerializeField]private float jumpTimeCount;
+    [SerializeField]private bool isJumping;
     public int jump;
    // public float MaxJumpRecoverTime;
    // public float JumpRecoverTime;
+   [Header("原本重力")]
+    public float originGravity;
     [Header("狀態")]
     public bool isRolling;
     [Tooltip("攻擊動畫開始至結束")]
@@ -71,7 +79,8 @@ public class PlayerControler : MonoBehaviour
         character =  GetComponent<Character> ();
         inputAction.GamePlayer.Block.started += Block;
         inputAction.GamePlayer.Block.canceled += Unblock;
-        inputAction.GamePlayer.Jump.started += Jump;
+        inputAction.GamePlayer.Jump.started += JumpCheck;
+        inputAction.GamePlayer.Jump.canceled += JumpCancel;
         inputAction.GamePlayer.NormalAttack.started += NormalAttack;
         inputAction.GamePlayer.Roll.started += Roll;
         // inputAction.GamePlayer.Skill_E.started += ActiveSkill_E;
@@ -86,8 +95,10 @@ public class PlayerControler : MonoBehaviour
         faceOn = 1;
     }
     private void Start(){
+        //inputAction.GamePlayer.Enable();
         _fallSpeedYDampingChangeThreshold = CameraManager.instence._fallSpeedYDampingChangeThreshold;
         _cameraConrol = CameraFollowObject.GetInstance();
+        originGravity = rb2D.gravityScale;
     }
     private void OnDisable() {
         inputAction.Disable();
@@ -112,6 +123,7 @@ public class PlayerControler : MonoBehaviour
        TimeCount();
        CheckPreviousIsBlock();
        LedgeCrab();
+       //JumpHoldControl();
        
        anim.SetBool("EdgeCarb",isHanging);
       // Debug.DrawLine(Vector3.zero, Vector3.right * 10, Color.red);
@@ -145,23 +157,14 @@ public class PlayerControler : MonoBehaviour
         }
         if(!isHanging&&!isAttacking)
         FaceOnCheck();
-        if(jump>0){
-            jumpDelay-=Time.deltaTime;
-            if(jumpDelay < 0){jump=0;}
-            if(canJumpTimes>0&&!isRolling){
-                if(isHanging){
-                rb2D.gravityScale = 2.3f;
-                isHanging = false;    
-                }
-                rb2D.velocity = new Vector2(rb2D.velocity.x,0); 
-                rb2D.AddForce(transform.up*jumpForce,ForceMode2D.Impulse);
-                canJumpTimes--;
-                jump--;
-        }
-        }
-
-        if(physicCheck.isGround&&rb2D.velocity.y<= 0.1){
+        JumpInitialControl();
+        if(physicCheck.isGround&&rb2D.velocity.y<= 0.1 && !isHanging){
         canJumpTimes=MaxJumpTimes;   
+        isJumping = false; // 停止跳躍
+        rb2D.gravityScale = originGravity;
+        }
+        if(isJumping && rb2D.velocity.y<= 0.5 &&  !isHanging){
+            rb2D.gravityScale = JumpFallGravity;
         }
         
         
@@ -188,6 +191,12 @@ public class PlayerControler : MonoBehaviour
             isHurt = false;
             }
         }
+        if(jump >0){
+            initialJumpDelay-=Time.deltaTime;
+            if(initialJumpDelay < 0){jump=0;
+            Debug.Log("JumpCancel");
+            }
+        }
     }    
     #endregion
     
@@ -200,16 +209,34 @@ public class PlayerControler : MonoBehaviour
         
         
     }
-    private void Jump(InputAction.CallbackContext context)
+    private void JumpCheck(InputAction.CallbackContext context)
     {
         if(isHanging){
-            rb2D.gravityScale = 2.3f;
+            rb2D.gravityScale = originGravity;
             isHanging = false;
             canJumpTimes=MaxJumpTimes;
         }
         jump++;
-        jumpDelay = maxJumpDelay;
+        initialJumpDelay = maxJumpDelay;
         
+    }
+    private void JumpInitialControl(){
+        if(jump>0){
+            if(canJumpTimes>0&&!isRolling&&!isHanging){
+                    rb2D.gravityScale=originGravity;
+                    isJumping = true;
+                    rb2D.velocity = new Vector2(rb2D.velocity.x, 0.2f);
+                    rb2D.AddForce(transform.up*initialJumpForce, ForceMode2D.Impulse);
+                    canJumpTimes--;
+                    jump--;
+            } 
+        }
+    }
+    private void JumpCancel(InputAction.CallbackContext context){
+        if (inputAction.GamePlayer.Jump.phase == InputActionPhase.Canceled || jumpTimeCount <= 0){
+        rb2D.AddForce(Vector2.down* rb2D.velocity.y*(1- jumpCutForce), ForceMode2D.Impulse);
+        
+        }
     }
     #region "攻擊"
         

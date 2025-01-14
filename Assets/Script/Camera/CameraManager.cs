@@ -45,13 +45,12 @@ public class CameraManager : MonoBehaviour
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if( scene.name == "BossLevel"){
+        if( scene.name != "Persistent"){
             GetCamera();
-
         _normYPanAmount = _framingTransposer.m_YDamping;
-
         _startingTrackedObjectOffset = _framingTransposer.m_TrackedObjectOffset;
-        }
+        }// 若加載的不是常駐資源是關卡場景則加載其攝影機
+
     }
     private void AddCameraToManager(CinemachineVirtualCamera camera)
     {
