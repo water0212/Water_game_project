@@ -24,8 +24,11 @@ public class PlayerControler : MonoBehaviour
     private Character character;
     [Header("基本參數")]
     public float maxSpeedX;
-    public float forceMultiplier;
-    public float jumpForce;  
+    //public float forceMultiplier;
+    public float aceleration;
+    public float deaceleration;
+    public float verPower;
+    //public float jumpForce;  
     [Header("連擊持續時間")]
     public float maxAttackTime;
     public float attackTimecount;
@@ -152,7 +155,7 @@ public class PlayerControler : MonoBehaviour
     }
     #endregion
     private void FixedUpdate() {
-        if(!isAttacking&&!isHurt&&!character.isBlock&&!character.isDead&&!isRolling&&!isAttacking&&!isHanging) {
+        if(!isHurt&&!character.isBlock&&!character.isDead&&!isRolling&&!isHanging) {
         Move();    
         }
         if(!isHanging&&!isAttacking)
@@ -199,16 +202,21 @@ public class PlayerControler : MonoBehaviour
         }
     }    
     #endregion
-    
+    #region 移動
     private void Move(){
-        
+        //學習
         float currentSpeedX = rb2D.velocity.x;
         float desiredSpeedX = inputDirection.x * maxSpeedX;
-        float forceX = (desiredSpeedX - currentSpeedX) * forceMultiplier;
-        rb2D.AddForce(new Vector2(forceX, 0));
+        float speedDif = desiredSpeedX - currentSpeedX;
+        float accelRate = (Math.Abs(desiredSpeedX) > 0.01f) ? aceleration : deaceleration ;
+        float forceX = (float)Math.Pow(Math.Abs(speedDif)* accelRate, verPower) * Math.Sign(speedDif);
+        float atkdeaceleration = isAttacking ? 0.05f : 1;
+        rb2D.AddForce(new Vector2(forceX*atkdeaceleration, 0));
         
         
     }
+    #endregion
+    #region 跳躍相關
     private void JumpCheck(InputAction.CallbackContext context)
     {
         if(isHanging){
@@ -238,19 +246,21 @@ public class PlayerControler : MonoBehaviour
         
         }
     }
+    #endregion
     #region "攻擊"
         
-    #endregion
     private void NormalAttack(InputAction.CallbackContext context)
     {
         if(isRolling||DialogManager.GetInstance().dialogueIsPlaying)
         return;
-        transform.localScale=new Vector3(1,1,1);
+        //transform.localScale=new Vector3(1,1,1);
         anim.SetBool("isAttack", true);
         anim.SetTrigger("Attack");
         attackTimecount = maxAttackTime;
         
     }
+    #endregion
+    #region 翻滾
     private void Roll(InputAction.CallbackContext context)
     {
         if(isRolling||!physicCheck.isGround||character.RollTimes<=0)
@@ -265,6 +275,7 @@ public class PlayerControler : MonoBehaviour
         else
         rb2D.velocity = new Vector2(faceOn * RollForce, rb2D.velocity.y);
     }
+    #endregion
     private void CheckState(){
         rb2D.sharedMaterial = physicCheck.isGround?normalPhysicsState:jumpPhysicsState;
     }
@@ -343,9 +354,6 @@ public class PlayerControler : MonoBehaviour
     }
     public void DisabledRolling(){
         isRolling = false;
-    }
-    public void Velocity_X_zero(){
-        rb2D.velocity = new Vector2 (0,rb2D.velocity.y);
     }
     #endregion
 }

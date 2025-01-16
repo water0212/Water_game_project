@@ -13,12 +13,12 @@ public class Attacking1 : StateMachineBehaviour
     {
         
         playerControler = animator.GetComponent<PlayerControler>();
-        rb2D = animator.GetComponent<Rigidbody2D>();
+        //rb2D = animator.GetComponent<Rigidbody2D>();
         if(playerControler != null){
             playerControler.isAttacking = true;
         }
         if(rb2D != null){
-            rb2D.velocity = new Vector2(rb2D.velocity.x,0.3f);
+            //rb2D.velocity = new Vector2(rb2D.velocity.x,0.3f);
         }
     }
 
