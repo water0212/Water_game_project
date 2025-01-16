@@ -11,6 +11,7 @@ public class EnemyAttackAndTakeOnDamage : AttackAndTakeOnDamage
         enemy = GetComponentInParent<knightEnemy>();
         var atk = enemy.attackPower;
         AATD.attackDamage=(float)atk*AATD.attackMultiplier;
+        AATD.DamageTextSpawner = GetComponentInChildren<DamageTextSpawner>();
     }
     public override void OnTakeDamage(Transform transform, float attack, Vector2 attackDisplaces, int AttackStrength, float TenacityDamage, float TenacityDamageRate)
     {
@@ -20,6 +21,7 @@ public class EnemyAttackAndTakeOnDamage : AttackAndTakeOnDamage
         TakeTenacityDamage(attack, TenacityDamage,TenacityDamageRate);
         if(enemy.healthPoint-attack>0){
             enemy.HurtEffect.RaiseEvent(enemy.transform.position+new Vector3(0,1.5f,0));
+            AATD.DamageTextSpawner.SpawnDamageText((int)attack,enemy.transform.position);
             AttackScene.GetInstance().HitPause(AttackStrength);
             CamaeraControl.GetInstance().CameraShake(attackDisplaces);
             enemy.healthPoint-=attack-enemy.defense;
@@ -99,6 +101,7 @@ public class EnemyAttackAndTakeOnDamage : AttackAndTakeOnDamage
         [HideInInspector] public float TenacityDamage;
         [HideInInspector] public float TenacityDamageRate;
         [HideInInspector] public Vector2 attackDisplaces;
+        [HideInInspector] public DamageTextSpawner DamageTextSpawner;
 
     }
     [CustomEditor(typeof(EnemyAttackAndTakeOnDamage))]
@@ -117,6 +120,9 @@ public class EnemyAttackAndTakeOnDamage : AttackAndTakeOnDamage
                 attackAndTakeOnDamage.AATD.TenacityDamage = EditorGUILayout.FloatField("氣力傷害",attackAndTakeOnDamage.AATD.TenacityDamage);
                 attackAndTakeOnDamage.AATD.TenacityDamageRate = EditorGUILayout.FloatField("氣力倍率",attackAndTakeOnDamage.AATD.TenacityDamageRate);
                 attackAndTakeOnDamage.AATD.attackDisplaces = EditorGUILayout.Vector2Field("擊退位移",attackAndTakeOnDamage.AATD.attackDisplaces);
+            }
+            if(attackAndTakeOnDamage.AATD.TakeOnDamage){
+                attackAndTakeOnDamage.AATD.DamageTextSpawner = (DamageTextSpawner)EditorGUILayout.ObjectField("生成傷害數字",attackAndTakeOnDamage.AATD.DamageTextSpawner,typeof(DamageTextSpawner), true);
             }
         }
     }

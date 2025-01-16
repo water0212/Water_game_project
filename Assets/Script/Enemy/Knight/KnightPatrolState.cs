@@ -33,6 +33,7 @@ public class KnightPatrolState : BaseState<knightEnemy>
     virtual public void PatrolMove() {
         if(currentEnemy.physicCheck.isGround&&!currentEnemy.physicCheck.isOnTheFloor||currentEnemy.physicCheck.touchWall){
             currentEnemy.transform.localScale = new Vector3 (-currentEnemy.transform.localScale.x, 1,1); //武士_當碰到牆壁或懸崖時回頭
+            currentEnemy.DontRotateObj.RotateLock((int)currentEnemy.transform.localScale.x);
         }
         if(currentEnemy.physicCheck.isGround) {
         currentEnemy.rb.velocity = new Vector2(currentEnemy.currentSpeed*currentEnemy.faceOn.x*Time.deltaTime,currentEnemy.rb.velocity.y) ; //武士_在地上時移動

@@ -15,17 +15,20 @@ public class knightEnemy : Enemy
     protected BaseState<knightEnemy> patrolState;                 //敵人_巡邏狀態
     protected BaseState<knightEnemy> chaseState;                  //敵人_追擊狀態
     protected BaseState<knightEnemy> currentState;                //敵人_目前狀態
+    [Header("不要轉向的物件")]
+    [HideInInspector]public DontRotate DontRotateObj   ;        
     [Header("狀態欄")]
     private GameObject StateBar;
-    private RectTransform StateBarRectTransform;
+    public RectTransform StateBarRectTransform;
     private Image healthBar;
     private Image tenacityBar;                      
     protected override void Awake() {
         base.Awake();
         patrolState = new KnightPatrolState();
         chaseState = new knightChaseState();
-        StateBar = transform.Find ("Health bar").gameObject;
+        StateBar = transform.Find ("DontRotate/Health bar").gameObject;
         StateBarRectTransform = StateBar.GetComponent<RectTransform>();
+        DontRotateObj = GetComponentInChildren<DontRotate>();
     }
     protected override void OnEnable() {
         base.OnEnable();
@@ -35,11 +38,11 @@ public class knightEnemy : Enemy
     }
     protected override void Start(){
         base.Start();
-        GameObject healthBarGO = transform.Find ("Health bar/HealthBAR").gameObject;
+        GameObject healthBarGO = transform.Find ("DontRotate/Health bar/HealthBAR").gameObject;
         if(healthBarGO == null) {Debug.Log("沒找到血量條"); return; }
         healthBar = healthBarGO.GetComponent<Image>(); 
         if(healthBar == null) {Debug.Log("沒找到血量image"); return; }
-        GameObject TenacityBarGO = transform.Find ("Health bar/TenacityBAR").gameObject;
+        GameObject TenacityBarGO = transform.Find ("DontRotate/Health bar/TenacityBAR").gameObject;
         tenacityBar = TenacityBarGO.GetComponent<Image>();
         HealthUIChange();
         TenacityUIChange();
@@ -67,15 +70,15 @@ public class knightEnemy : Enemy
         currentState.OnExit();                          //敵人_觸發離開代碼
     }
     #region 受擊轉向
-
     public override void EnemyOnTakeDamage(Transform Enemytransform){
         if(Enemytransform.position.x>transform.position.x){
             transform.localScale= new Vector3(1, 1,1);
+            DontRotateObj.RotateLock((int)transform.localScale.x);
         }else{
             transform.localScale= new Vector3(-1, 1,1);
+            DontRotateObj.RotateLock((int)transform.localScale.x);
         }
     }  
- 
     #endregion
     #region 切換狀態
     public void SwitchState(NPCstate state) 

@@ -65,13 +65,15 @@ public class knightChaseState : BaseState<knightEnemy>
                 chaseFaceOn=1;
             }else if(currentEnemy.enemyPosition.x - currentEnemy.transform.position.x<-0.5) chaseFaceOn = -1;
             currentEnemy.transform.localScale = new Vector3 (chaseFaceOn, 1,1);
+            currentEnemy.DontRotateObj.RotateLock((int)currentEnemy.transform.localScale.x);
     }
 
     public override void OnExit()
     {
-       currentEnemy.anim.SetBool("Chasing",false);
+        currentEnemy.anim.SetBool("Chasing",false);
         currentEnemy.transform.localScale = new Vector3 (-chaseFaceOn, 1,1);
-       currentEnemy.inCombat = false;
+        currentEnemy.DontRotateObj.RotateLock((int)currentEnemy.transform.localScale.x);
+        currentEnemy.inCombat = false;
     }
     public bool FoundEnemyAndAttack(){
         
