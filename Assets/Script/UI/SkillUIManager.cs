@@ -17,19 +17,22 @@ public class SkillUIManager : MonoBehaviour
     public SkillManager skillManager;
     public TextMeshProUGUI SkillDescription;
     public StringEventSO skillDescriptionUpdateEvent;
-    public Button activeButtonE;
-    public Button activeButtonQ;
-    public Image lockE;
-    public Image lockQ;
+    private Skill currentSkill;
+    public Button[] activeButtonE = new Button[3];
+    public Button[] activeButtonQ = new Button[3];
+    public Image[] lockE = new Image[3];
+    public Image[] lockQ = new Image[3];
     public Sprite lockItem;
-    public Skill currentSkill;
     [Header("技能冷卻UI")]
-    public Image skillE_CD_Icon;
-    public Image skillE_CD_BackIcon;
-    public Image skillQ_CD_Icon;
-    public Image skillQ_CD_BackIcon;
-    public TextMeshProUGUI E_TimeOfUse;
-    public TextMeshProUGUI Q_TimeOfUse;
+
+    [Header("右方技能列")]
+    public Image[] skill_E_CD_Icon = new Image[3];
+    public Image[] skill_E_CD_BackIcon = new Image[3];
+    public TextMeshProUGUI[] canUse_E = new TextMeshProUGUI[3];
+    [Header("左方技能列")]
+    public Image[] skill_Q_CD_Icon = new Image[3];
+    public Image[] skill_Q_CD_BackIcon = new Image[3];
+    public TextMeshProUGUI[] canUse_Q = new TextMeshProUGUI[3];
     [Header("獲取技能UI通知")]
     private Queue<Skill> SkillQueue;
     public GameObject getUIFrame;
@@ -62,6 +65,9 @@ public class SkillUIManager : MonoBehaviour
                 }
             } 
     }
+    public void UpdateSkillSlots(){
+        skillUISlots = SkillSlotsParent.GetComponentsInChildren<SkillUISlots>();
+    }
     public void OpenSkillChooseUI()
     {
         if(Skill_Canvas.gameObject.activeSelf == true){
@@ -70,14 +76,10 @@ public class SkillUIManager : MonoBehaviour
         }
         Skill_Canvas.gameObject.SetActive(true);
         EnterSkillUI_icon.gameObject.SetActive(false);
-        Debug.Log ("www");
     }
     public void CloseSkillChooseUI(){
         Skill_Canvas.gameObject.SetActive(false);
         EnterSkillUI_icon.gameObject.SetActive(true);
-    }
-    public void UpdateSkillSlots(){
-        skillUISlots = SkillSlotsParent.GetComponentsInChildren<SkillUISlots>();
     }
         private void UpdateSkillDescription(string TEXT)
     {
@@ -85,54 +87,67 @@ public class SkillUIManager : MonoBehaviour
     }
     public void OpenSkillChoose(Skill skill){
         if(skill == null) return;
-        currentSkill = skill; 
-        if(lockE.sprite != lockItem||lockE.gameObject.activeSelf == false){
-            activeButtonE.gameObject.SetActive(true);
-        }
-        if(lockQ.sprite != lockItem||lockQ.gameObject.activeSelf == false){
-           activeButtonQ.gameObject.SetActive(true);
-        }
-        if(lockE.sprite==lockItem&&lockQ.sprite==lockItem){
-            Debug.Log("你尚未學會施放技能");
-        }
+        currentSkill = skill;
+        for (int i = 0; i < 3 ; i++){
+            if(lockE[i].sprite != lockItem||lockE[i].gameObject.activeSelf == false){
+                activeButtonE[i].gameObject.SetActive(true);
+            }
+            if(lockQ[i].sprite != lockItem||lockQ[i].gameObject.activeSelf == false){
+                activeButtonQ[i].gameObject.SetActive(true);
+            }
+        } 
+        //TODO:把skill搬移到Check中 然後再從check呼叫skillManager的Load
     }
     public void CloseSkillChoose(){
-        if(activeButtonE.gameObject.activeSelf == true){
-            activeButtonE.gameObject.SetActive(false);
+        foreach(Button activeButton in activeButtonE)
+        if(activeButton.gameObject.activeSelf == true){
+            activeButton.gameObject.SetActive(false);
         }
-        if(activeButtonQ.gameObject.activeSelf == true){
-            activeButtonQ.gameObject.SetActive(false);
+        foreach(Button activeButton in activeButtonQ)
+            activeButton.gameObject.SetActive(false);
         }
     }
-    public void CheckE(){
-        if(lockE.gameObject.activeSelf==false) lockE.gameObject.SetActive(true);
-        lockE.sprite = currentSkill.skillImage;
-        skillManager.LoadSkill_E(currentSkill);
+    public void ChooseE(int index){ //TODO:需要變成三個格子的CHECK
+        //if(lockE[index-1].gameObject.activeSelf) lockE[index-1].gameObject.SetActive(false);
+        DeleteActiveButton();
+        lockE[index-1].sprite = currentSkill.skillImage;
+        skill_E_CD_Icon[index-1].sprite = currentSkill.skillImage;
+        skill_E_CD_BackIcon[index-1].sprite = currentSkill.skillImage;
+        skillManager.LoadSkill_E(currentSkill,index);
     }
-    public void CheckQ(){
-        if(lockQ.gameObject.activeSelf==false) lockQ.gameObject.SetActive(true);
-        lockQ.sprite = currentSkill.skillImage;
-        skillManager.LoadSkill_Q(currentSkill);
+    public void ChooseQ(int index){//TODO:需要變成三個格子的CHECK
+        //if(lockQ[index-1].gameObject.activeSelf) lockQ[index-1].gameObject.SetActive(false);
+        DeleteActiveButton();
+        lockQ[index-1].sprite = currentSkill.skillImage;
+        skill_Q_CD_Icon[index-1].sprite = currentSkill.skillImage;
+        skill_Q_CD_BackIcon[index-1].sprite = currentSkill.skillImage;
+        skillManager.LoadSkill_Q(currentSkill,index);
+        //拖移至
     }
-    public void UpdateSkillIcon_E(float persentage){
-        skillE_CD_Icon.fillAmount = persentage;
+    private void DeleteActiveButton(){
+        for (int i = 0; i < 3 ; i++){
+                activeButtonE[i].gameObject.SetActive(false);
+                activeButtonQ[i].gameObject.SetActive(false);
+            
+        }
     }
-    public void UpdateSkillIcon_Q(float persentage){
-        skillQ_CD_Icon.fillAmount = persentage;
+    public void UpdateSkillIcon_E(float persentage,int i){
+        skill_E_CD_Icon[i].fillAmount = persentage;
     }
-    public void ChangeTimeOfUse_E(int Times){
-        E_TimeOfUse.text = Times.ToString();
+    public void UpdateSkillIcon_Q(float persentage,int i){
+        skill_Q_CD_Icon[i].fillAmount = persentage;
     }
-    public void ChangeTimeOfUse_Q(int Times){
-        Q_TimeOfUse.text= Times.ToString();
+    public void ChangeTimeOfUse_E(int Times,int i){
+        canUse_E[i].text = Times.ToString();
     }
-    public void ChangeSkillIcon_E(Sprite sprite){
-        skillE_CD_Icon.sprite = sprite;
-        skillE_CD_BackIcon.sprite = sprite;
+    public void ChangeTimeOfUse_Q(int Times,int i){
+        canUse_Q[i].text= Times.ToString();
     }
-    public void ChangeSkillIcon_Q(Sprite sprite){
-        skillQ_CD_Icon.sprite = sprite;
-        skillQ_CD_BackIcon.sprite = sprite;
+    public void ChangeEquipSkillIcon_E(int i){//更改目前裝備技能
+        
+    }
+    public void ChangeEquipSkillIcon_Q(int i){//更改目前裝備技能
+        
     }
     private void SetSkillNotifyQueue(Skill skill){
         SkillQueue.Enqueue(skill);

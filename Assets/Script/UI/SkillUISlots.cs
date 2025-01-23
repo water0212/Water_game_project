@@ -9,12 +9,12 @@ using TMPro;
 public class SkillUISlots : MonoBehaviour
 {
     public Skill skill= null;
-    public UnityEngine.UI.Image skillImage = null;
-    public TextMeshProUGUI skillName;
-    public TextMeshProUGUI skillDescription;
-    public Button button;
+    private UnityEngine.UI.Image skillImage = null;
+    private TextMeshProUGUI skillName;
+    private TextMeshProUGUI skillDescription;
+    private Button button;
     public StringEventSO stringEventSO;
-    public SkillUIManager skillUIManager;
+    private SkillUIManager skillUIManager;
     private void Awake() {
         skillName = GetComponentInChildren<TextMeshProUGUI>();
         skillImage = GetComponentInChildren<UnityEngine.UI.Image>();

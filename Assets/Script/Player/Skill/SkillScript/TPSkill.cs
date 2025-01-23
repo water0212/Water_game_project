@@ -41,7 +41,7 @@ public class TPSkill : Skill
         Debug.Log( skillName + "技能加載完畢");
     }
 
-    public override void Activate(GameObject user)
+    public override bool Activate(GameObject user)
     {
         if(useCount == 1 && (enemy == null || skillSummon.isSummoned == false)){
             Debug.Log("break");
@@ -58,23 +58,27 @@ public class TPSkill : Skill
             user.gameObject.transform.position = enemy.transform.position + targetOffset + new Vector3 ( 0, verticaloffset, 0);
             canTp = false;
             //氣力倍率增加
+        }else{
+            return false;
         }
+        return true;
     }
     public override void Update()
     {
-        if(useCount == 0){
-            cooldownCount += Time.deltaTime;
-            if(cooldownCount > cooldown){
-                useCount = 1;
-                cooldownCount = 0;
-            }
-        }
+    }
+    public void InitializeSkillData(GameObject user){
+        ISummonedAndEffectObject summonComponent = summonedObject.GetComponent<ISummonedAndEffectObject>();
+        summonComponent.Initialize(user,duration);
+    }
+    public override bool BackGroundUpdate()
+    {
         if(skillSummon.Target != null&&enemy == null){
             enemy = skillSummon.Target.GetComponent<Enemy>();
             canTp = true;
             TpMarkCount = MaxTpMarkCount;
-         //   Debug.Log("目標命中"+enemy.gameObject.name);
+            Debug.Log("目標命中"+enemy.gameObject.name);
         }
+
         if(enemy){
             TpMarkCount -= Time.deltaTime;
             if(TpMarkCount <= 0 ){
@@ -83,14 +87,21 @@ public class TPSkill : Skill
                 TpMarkCount = MaxTpMarkCount;
             }
         }
+        return base.BackGroundUpdate();
     }
-    public override void OnExit()
+
+    public override void OnEquip()
     {
-        throw new System.NotImplementedException();
+        
     }
-    public void InitializeSkillData(GameObject user){
-        ISummonedAndEffectObject summonComponent = summonedObject.GetComponent<ISummonedAndEffectObject>();
-        summonComponent.Initialize(user,duration);
+
+    public override void UnEquip()
+    {
+        
     }
-    
+
+    public override void UnLoad()
+    {
+        Destroy(summonedObject);
+    }
 }

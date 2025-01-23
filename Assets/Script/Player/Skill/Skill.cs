@@ -13,10 +13,35 @@ public abstract class Skill : ScriptableObject
     public int MaxUseCount;
     public float duration;
     public Sprite skillImage;
+    public bool isUpdate;
     [HideInInspector] public Animator animator;
     public AnimationClip animClip;
     public abstract void OnLoad(GameObject user);
+    public abstract void OnEquip();
     public abstract void Update();
-    public abstract void Activate(GameObject user);
-    public abstract void OnExit();
+    public abstract bool Activate(GameObject user);
+    public abstract void UnEquip();
+    public abstract void UnLoad();
+    public virtual bool BackGroundUpdate(){
+        ColdDownUpdate();
+        if(useCount >0) return true;
+        else return false;
+    }
+    public virtual void ColdDownUpdate(){
+        if(isUpdate) return;
+        if(useCount < MaxUseCount){
+            cooldownCount += Time.deltaTime;
+            if(cooldownCount > cooldown){
+                useCount ++;
+                cooldownCount = 0;
+            }
+        }
+    }
+    public virtual void ColdDownChange(float num){
+        cooldownCount += num;
+        if(cooldownCount > cooldown) {
+            useCount ++;
+            cooldownCount = 0;
+        }
+    } 
 }

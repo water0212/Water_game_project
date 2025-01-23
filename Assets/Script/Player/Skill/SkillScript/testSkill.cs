@@ -31,9 +31,9 @@ public class testSkill : Skill
         PC = user.GetComponent<PlayerControler>();
         Debug.Log(skillName + "技能加載完畢");
     }
-    public override void Activate(GameObject user)
+    public override bool Activate(GameObject user)
     {
-        if(useCount <= 0)return;
+        if(useCount <= 0)return false;
         useCount--;
         InitializeSkillData(user);
         skillSummon.fade = 1;
@@ -43,28 +43,35 @@ public class testSkill : Skill
         summonedObject.transform.position =user.transform.position+ new Vector3(PC.faceOn,0.5f,0);
         summonedObject.transform.localScale = new Vector3(PC.faceOn,1,1);
         animator.SetTrigger("Attack");
-        
+        return true;
     }
 
     public override void Update()
     {
-        if(useCount < MaxUseCount){
-            cooldownCount += Time.deltaTime;
-            if(cooldownCount > cooldown){
-                useCount ++;
-                cooldownCount = 0;
-            }
-        }
-    }
-
-    public override void OnExit()
-    {
-        
     }
     public void InitializeSkillData(GameObject user){
         Character cc = user.GetComponent<Character>();
         var damage = cc.attackPower*attackMultiplier;
         ISummonedAndDamageObject summonComponent = summonedObject.GetComponent<ISummonedAndDamageObject>();
         summonComponent.Initialize(user, damage,attackDisplaces,duration,AttackStrength,cc.TenacityDamageRate,TenacityDamage);
+    }
+    public override bool BackGroundUpdate()
+    {
+        return base.BackGroundUpdate();
+    }
+
+    public override void OnEquip()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void UnEquip()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void UnLoad()
+    {
+        Destroy(summonedObject);
     }
 }
