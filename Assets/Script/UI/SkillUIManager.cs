@@ -26,10 +26,15 @@ public class SkillUIManager : MonoBehaviour
     [Header("技能冷卻UI")]
 
     [Header("右方技能列")]
+    public int EquipSkill_E_Index = 0;
+    public GameObject[] skill_E_CD_GameObj = new GameObject[3];
     public Image[] skill_E_CD_Icon = new Image[3];
     public Image[] skill_E_CD_BackIcon = new Image[3];
     public TextMeshProUGUI[] canUse_E = new TextMeshProUGUI[3];
     [Header("左方技能列")]
+    public int EquipSkill_Q_Index = 0;
+
+    public GameObject[] skill_Q_CD_GameObj = new GameObject[3];
     public Image[] skill_Q_CD_Icon = new Image[3];
     public Image[] skill_Q_CD_BackIcon = new Image[3];
     public TextMeshProUGUI[] canUse_Q = new TextMeshProUGUI[3];
@@ -104,6 +109,7 @@ public class SkillUIManager : MonoBehaviour
             activeButton.gameObject.SetActive(false);
         }
         foreach(Button activeButton in activeButtonQ)
+        if(activeButton.gameObject.activeSelf == true){
             activeButton.gameObject.SetActive(false);
         }
     }
@@ -144,10 +150,22 @@ public class SkillUIManager : MonoBehaviour
         canUse_Q[i].text= Times.ToString();
     }
     public void ChangeEquipSkillIcon_E(int i){//更改目前裝備技能
-        
+        if(EquipSkill_E_Index >0){
+            Animator beforeAni= skill_E_CD_GameObj[EquipSkill_E_Index-1].GetComponent<Animator>();
+            beforeAni.SetTrigger("Exit");
+        }
+        Animator animator= skill_E_CD_GameObj[i].GetComponent<Animator>();
+        animator.SetTrigger("isReady");
+        EquipSkill_E_Index = i+1;
     }
     public void ChangeEquipSkillIcon_Q(int i){//更改目前裝備技能
-        
+        if(EquipSkill_Q_Index >0){
+            Animator beforeAni= skill_Q_CD_GameObj[EquipSkill_Q_Index-1].GetComponent<Animator>();
+            beforeAni.SetTrigger("Exit");
+        }
+        Animator animator= skill_Q_CD_GameObj[i].GetComponent<Animator>();
+        animator.SetTrigger("isReady");
+        EquipSkill_Q_Index = i+1;
     }
     private void SetSkillNotifyQueue(Skill skill){
         SkillQueue.Enqueue(skill);

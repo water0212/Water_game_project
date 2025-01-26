@@ -16,6 +16,8 @@ public class SkillManager : MonoBehaviour
 
     [Header("技能E")]
     public Skill[] Skill_E = new Skill[3];
+    private float FadeCount_E =0;
+    private float FadeTime_E = 5;
     public Skill currentSkill_E;
     private int maxSlots_Skill_E = 3;
     public int indexSlots_Skill_E = 1;
@@ -27,6 +29,8 @@ public class SkillManager : MonoBehaviour
     private int maxSlots_Skill_Q = 3;
     public int indexSlots_Skill_Q = 1;
     public int minindexSlots_Skill_Q = 1;
+    private float FadeCount_Q;
+    private float FadeTime_Q = 5;
     [Header("計算冷卻與施放準備")]
     public bool[] ReadySkill_E = new bool[3];
     public bool[] ReadySkill_Q = new bool[3];
@@ -51,9 +55,16 @@ public class SkillManager : MonoBehaviour
         BackGroundUpdateSkill();
         if(currentSkill_E != null ){
             currentSkill_E.Update();
+            
+            if(FadeCount_E < 0){
+                SwitchToNextSkill(ref Skill_E,9,minindexSlots_Skill_E,RightControlButton);
+            }else if(minindexSlots_Skill_E != indexSlots_Skill_E){
+                skillUIManager.skill_E_CD_GameObj[indexSlots_Skill_E-1].GetComponent<Animator>().SetBool("Fading",true);
+                FadeCount_E -= Time.deltaTime;
+            }
             for(int i =0; i<Skill_E.Length; i++){
                 if(Skill_E[i] == null) continue;
-                skillUIManager.ChangeEquipSkillIcon_E(i);
+                //skillUIManager.ChangeEquipSkillIcon_E(i);
             if(Skill_E[i].useCount <Skill_E[i].MaxUseCount)
             skillUIManager.UpdateSkillIcon_E(Skill_E[i].cooldownCount/Skill_E[i].cooldown,i);
             skillUIManager.ChangeTimeOfUse_E(Skill_E[i].useCount,i);
@@ -62,9 +73,16 @@ public class SkillManager : MonoBehaviour
 
         if(currentSkill_Q != null ){
             currentSkill_Q.Update();
+            if(FadeCount_Q < 0){
+                
+                SwitchToNextSkill(ref Skill_Q,9,minindexSlots_Skill_Q,LeftControlButton);
+            }else if(minindexSlots_Skill_Q != indexSlots_Skill_Q){
+                skillUIManager.skill_Q_CD_GameObj[indexSlots_Skill_Q-1].GetComponent<Animator>().SetBool("Fading",true);
+                FadeCount_Q -= Time.deltaTime;
+            }
             for(int i =0; i<Skill_Q.Length; i++){
                 if(Skill_Q[i] == null) continue;
-                skillUIManager.ChangeEquipSkillIcon_Q(i);
+                //skillUIManager.ChangeEquipSkillIcon_Q(i);
             if(Skill_Q[i].useCount <Skill_Q[i].MaxUseCount)
             skillUIManager.UpdateSkillIcon_Q(Skill_Q[i].cooldownCount/Skill_Q[i].cooldown,i);
             skillUIManager.ChangeTimeOfUse_Q(Skill_Q[i].useCount,i);
@@ -83,10 +101,10 @@ public class SkillManager : MonoBehaviour
         
     }//測試用
     public void LoadSkill_Q(Skill LoadSkill, int skillindex){//將技能放入技能槽位
+        Skill_Q[skillindex-1] = LoadSkill;
         if(currentSkill_Q == null){
             currentSkill_Q = LoadSkill;
         }
-        Skill_Q[skillindex-1] = LoadSkill;
         if(indexSlots_Skill_Q > skillindex){
             EquipSkill_Q(LoadSkill, skillindex);
         }
@@ -103,11 +121,14 @@ public class SkillManager : MonoBehaviour
         Skill_E[skillindex-1].OnLoad(Player);
     }
     public void EquipSkill_E(Skill nextSkill, int index){//替換可使用的技能
+    if(nextSkill == null){}if(indexSlots_Skill_E != 9)
+        skillUIManager.skill_E_CD_GameObj[indexSlots_Skill_E-1].GetComponent<Animator>().SetBool("Fading",false);
         currentSkill_E.UnEquip();
         currentSkill_E = nextSkill;
         currentSkill_E.OnEquip();
         indexSlots_Skill_E = index;
         skillUIManager.ChangeEquipSkillIcon_E(index);
+        FadeCount_E = FadeTime_E; 
     }
     /// <summary>
     /// 加載技能準備施放
@@ -115,11 +136,15 @@ public class SkillManager : MonoBehaviour
     /// <param name="nextSkill">下一個技能</param>
     /// <param name="index">下一個技能的位置(!=0)</param>
     public void EquipSkill_Q(Skill nextSkill, int index){
+        if(indexSlots_Skill_Q != 9){
+        skillUIManager.skill_Q_CD_GameObj[indexSlots_Skill_Q-1].GetComponent<Animator>().SetBool("Fading",false);
+        }
         currentSkill_Q.UnEquip();
         currentSkill_Q = nextSkill;
         currentSkill_Q.OnEquip();
         indexSlots_Skill_Q = index;
-        skillUIManager.ChangeEquipSkillIcon_Q(index);
+        skillUIManager.ChangeEquipSkillIcon_Q(index-1);
+        FadeCount_Q = FadeTime_Q;
     }
     public void ActiveSkill(InputAction.CallbackContext context){
         var controlName = context.control.name;
@@ -128,20 +153,21 @@ public class SkillManager : MonoBehaviour
             if(controlName == LeftControlButton){
                 if(!currentSkill_Q.Activate(Player)) return;
                 //ReadySkill_Q[indexSlots_Skill_Q] = false;
-                SwitchToNextSkill(ref Skill_Q,ref currentSkill_Q, indexSlots_Skill_Q,minindexSlots_Skill_Q, controlName);
+                SwitchToNextSkill(ref Skill_Q, indexSlots_Skill_Q,minindexSlots_Skill_Q, controlName);
             }else if(controlName == RightControlButton){
                 currentSkill_E.Activate(Player);
                 //ReadySkill_Q[indexSlots_Skill_E] = false;
-                SwitchToNextSkill(ref Skill_E,ref currentSkill_E,  indexSlots_Skill_E,minindexSlots_Skill_E, controlName);
+                SwitchToNextSkill(ref Skill_E,  indexSlots_Skill_E,minindexSlots_Skill_E, controlName);
             }else{
                 Debug.Log("無此技能按鍵" + controlName);
             }
         }
     }
-    public void SwitchToNextSkill(ref Skill[] skillList, ref Skill currentSkill, int indexSolt, int minIndexSlot, string BTN){
+    public void SwitchToNextSkill(ref Skill[] skillList, int indexSolt, int minIndexSlot, string BTN){
         if(minIndexSlot >= indexSolt){ // 當使用完技能後發現前幾個技能未準備好
             Debug.Log(BTN + LeftControlButton);
             if(BTN == LeftControlButton){
+                
                 Debug.Log(indexSolt + " "+skillList.Length);
                 for (int i = indexSolt; i < skillList.Length; i++) {//indexSolt是index的+1，而我正好想要比當前技能索引大的技能
                     Debug.Log("ReadySkill_Q" + " " + ReadySkill_Q[i].ToString());
@@ -181,12 +207,16 @@ public class SkillManager : MonoBehaviour
                 if(skill == null) continue;
                 int index = i+1;
                 bool isReady = skill.BackGroundUpdate();
-                if(isReady){
-                    ReadySkill_E[i] = true;
+                if(isReady){//找最小的isReady值
                     if(minindexSlots_Skill_E > index){
                         minindexSlots_Skill_E = index;
                     } 
+                }else{
+                    if(minindexSlots_Skill_E == index){
+                        minindexSlots_Skill_E+=1;
+                    }
                 }
+                ReadySkill_E[i] = isReady;
             }
         }
         if(currentSkill_Q != null){
@@ -202,11 +232,16 @@ public class SkillManager : MonoBehaviour
                 bool isReady = skill.BackGroundUpdate();
                 if(isReady){
                     //Debug.Log("bug" + i);
-                    ReadySkill_Q[i] = true;
+                    
                     if(minindexSlots_Skill_Q > index){
                         minindexSlots_Skill_Q = index;
                     } 
+                }else{
+                    if(minindexSlots_Skill_Q == index){
+                        minindexSlots_Skill_Q+=1;
+                    }
                 }
+                ReadySkill_Q[i] = isReady;
             }
         }
     }

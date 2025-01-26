@@ -24,7 +24,7 @@ public abstract class Skill : ScriptableObject
     public abstract void UnLoad();
     public virtual bool BackGroundUpdate(){
         ColdDownUpdate();
-        if(useCount >0) return true;
+        if(useCount > 0) return true;
         else return false;
     }
     public virtual void ColdDownUpdate(){
