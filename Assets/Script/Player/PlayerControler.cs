@@ -47,7 +47,8 @@ public class PlayerControler : MonoBehaviour
     public float jumpCutForce;
     public float JumpVelocityThreshold;
     public float JumpFallGravity;
-    [SerializeField]private float jumpTimeCount;
+    private bool isCancelJump;
+    //[SerializeField]private float jumpTimeCount;
     [SerializeField]private bool isJumping;
     public int jump;
    // public float MaxJumpRecoverTime;
@@ -83,7 +84,7 @@ public class PlayerControler : MonoBehaviour
         inputAction.GamePlayer.Block.started += Block;
         inputAction.GamePlayer.Block.canceled += Unblock;
         inputAction.GamePlayer.Jump.started += JumpCheck;
-        inputAction.GamePlayer.Jump.canceled += JumpCancel;
+        //inputAction.GamePlayer.Jump.canceled += JumpCancel;
         inputAction.GamePlayer.NormalAttack.started += NormalAttack;
         inputAction.GamePlayer.Roll.started += Roll;
         // inputAction.GamePlayer.Skill_E.started += ActiveSkill_E;
@@ -161,9 +162,11 @@ public class PlayerControler : MonoBehaviour
         if(!isHanging&&!isAttacking)
         FaceOnCheck();
         JumpInitialControl();
+        if(isJumping && !isCancelJump)JumpCancel();
         if(physicCheck.isGround&&rb2D.velocity.y<= 0.1 && !isHanging){
         canJumpTimes=MaxJumpTimes;   
         isJumping = false; // 停止跳躍
+        
         rb2D.gravityScale = originGravity;
         }
         if(isJumping && rb2D.velocity.y<= 0.5 &&  !isHanging){
@@ -235,15 +238,16 @@ public class PlayerControler : MonoBehaviour
                     isJumping = true;
                     rb2D.velocity = new Vector2(rb2D.velocity.x, 0.2f);
                     rb2D.AddForce(transform.up*initialJumpForce, ForceMode2D.Impulse);
+                    isCancelJump = false;
                     canJumpTimes--;
                     jump--;
             } 
         }
     }
-    private void JumpCancel(InputAction.CallbackContext context){
-        if (inputAction.GamePlayer.Jump.phase == InputActionPhase.Canceled || jumpTimeCount <= 0){
+    private void JumpCancel(){
+        if (inputAction.GamePlayer.Jump.phase == InputActionPhase.Canceled || inputAction.GamePlayer.Jump.phase == InputActionPhase.Waiting){
         rb2D.AddForce(Vector2.down* rb2D.velocity.y*(1- jumpCutForce), ForceMode2D.Impulse);
-        
+        isCancelJump = true;
         }
     }
     #endregion

@@ -97,7 +97,7 @@ public class SkillManager : MonoBehaviour
     {
         Debug.Log("skill_Load");
         if(context.started)
-        EquipSkill_E(testSkillLoad,2);
+        AddSkill(0);
         
     }//測試用
     public void LoadSkill_Q(Skill LoadSkill, int skillindex){//將技能放入技能槽位
@@ -151,10 +151,13 @@ public class SkillManager : MonoBehaviour
         //Debug.Log(controlName + LeftControlButton + RightControlButton);
         if(context.started){
             if(controlName == LeftControlButton){
-                if(!currentSkill_Q.Activate(Player)) return;
+
+                if(!currentSkill_Q) return;
+                currentSkill_Q.Activate(Player);
                 //ReadySkill_Q[indexSlots_Skill_Q] = false;
                 SwitchToNextSkill(ref Skill_Q, indexSlots_Skill_Q,minindexSlots_Skill_Q, controlName);
             }else if(controlName == RightControlButton){
+                if(!currentSkill_E) return;
                 currentSkill_E.Activate(Player);
                 //ReadySkill_Q[indexSlots_Skill_E] = false;
                 SwitchToNextSkill(ref Skill_E,  indexSlots_Skill_E,minindexSlots_Skill_E, controlName);
@@ -171,7 +174,7 @@ public class SkillManager : MonoBehaviour
                 Debug.Log(indexSolt + " "+skillList.Length);
                 for (int i = indexSolt; i < skillList.Length; i++) {//indexSolt是index的+1，而我正好想要比當前技能索引大的技能
                     Debug.Log("ReadySkill_Q" + " " + ReadySkill_Q[i].ToString());
-                    if(ReadySkill_Q[i] == true){
+                    if(ReadySkill_Q[i]){
                         EquipSkill_Q(skillList[i],i+1);
                         break;
                     }
@@ -213,7 +216,7 @@ public class SkillManager : MonoBehaviour
                     } 
                 }else{
                     if(minindexSlots_Skill_E == index){
-                        minindexSlots_Skill_E+=1;
+                        if(index != Skill_E.Length)minindexSlots_Skill_E+=1;
                     }
                 }
                 ReadySkill_E[i] = isReady;
@@ -238,7 +241,7 @@ public class SkillManager : MonoBehaviour
                     } 
                 }else{
                     if(minindexSlots_Skill_Q == index){
-                        minindexSlots_Skill_Q+=1;
+                        if(index != Skill_Q.Length)minindexSlots_Skill_Q+=1;
                     }
                 }
                 ReadySkill_Q[i] = isReady;

@@ -7,18 +7,17 @@ using UnityEngine.U2D.IK;
 [CreateAssetMenu(fileName = "Skill", menuName = "SkillSystem/Skills/test")]
 public class testSkill : Skill
 {
-    public bool count_storage_capability;
-    public float attack;
-    public float attackMultiplier;
     [Header("力道")]
+    private float attack;
+    public float attackMultiplier;
     public int AttackStrength;
+    public Vector2 attackDisplaces;
     
     [Header("氣力傷害")]
     public float TenacityDamage;
     public GameObject summonPrefab;
    [HideInInspector] public GameObject summonedObject;
    [HideInInspector] public SkillSummonAndDamage skillSummon;
-    public Vector2 attackDisplaces;
     private PlayerControler PC;
     public override void OnLoad(GameObject user)
     {
@@ -27,7 +26,6 @@ public class testSkill : Skill
         summonedObject = Instantiate(summonPrefab,Constants.SkillObjectPoolPosition, Quaternion.identity);
         animator = summonedObject.GetComponent<Animator>();
         skillSummon = summonedObject.GetComponent<SkillSummonAndDamage>();
-        attack = user.GetComponent<Character>().attackPower;
         PC = user.GetComponent<PlayerControler>();
         Debug.Log(skillName + "技能加載完畢");
     }
@@ -51,9 +49,9 @@ public class testSkill : Skill
     }
     public void InitializeSkillData(GameObject user){
         Character cc = user.GetComponent<Character>();
-        var damage = cc.attackPower*attackMultiplier;
+        attack = cc.attackPower;
         ISummonedAndDamageObject summonComponent = summonedObject.GetComponent<ISummonedAndDamageObject>();
-        summonComponent.Initialize(user, damage,attackDisplaces,duration,AttackStrength,cc.TenacityDamageRate,TenacityDamage);
+        summonComponent.Initialize(user, attack, attackMultiplier,attackDisplaces,duration,AttackStrength,cc.TenacityDamageRate,TenacityDamage);
     }
     public override bool BackGroundUpdate()
     {

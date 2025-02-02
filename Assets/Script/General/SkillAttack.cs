@@ -4,15 +4,16 @@ using UnityEngine;
 using UnityEditor;
 public class SkillAttackAndTakeOnDamage : MonoBehaviour
 {
-    private SkillSummonAndDamage Summon;
+    private IDamageProvider Summon;
     public SkillCustomAttackAndTakeOnDamage AATD;
     private void OnEnable(){
-        Summon = GetComponentInParent<SkillSummonAndDamage>();
-        var atk = Summon.attack;
+        Summon = GetComponentInParent<IDamageProvider>();
+        AATD.attackDamage = Summon.attackDamage;
+        AATD.attackMultiplier = Summon.attackMultiplier;
         AATD.AttackStrength = Summon.attackStrength;
-        AATD.attackDisplaces = Summon.attackDisplaces;
-        AATD.TenacityDamageRate = Summon.TenacityDamageRate;
         AATD.TenacityDamage = Summon.TenacityDamage;
+        AATD.TenacityDamageRate = Summon.TenacityDamageRate;
+        AATD.attackDisplaces = Summon.attackDisplaces;
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if(!AATD.Attacker) return;
@@ -20,7 +21,7 @@ public class SkillAttackAndTakeOnDamage : MonoBehaviour
             AATD.TenacityDamageRate = Summon.TenacityDamageRate;
             if (enemy != null)
             {
-                enemy.OnTakeDamage(transform,Summon.attack*AATD.attackMultiplier,AATD.attackDisplaces,AATD.AttackStrength,AATD.TenacityDamage,AATD.TenacityDamageRate);
+                enemy.OnTakeDamage(transform,AATD.attackDamage*AATD.attackMultiplier,AATD.attackDisplaces,AATD.AttackStrength,AATD.TenacityDamage,AATD.TenacityDamageRate);
             }
         
     }
