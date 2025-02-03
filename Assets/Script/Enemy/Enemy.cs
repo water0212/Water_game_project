@@ -120,9 +120,17 @@ public class Enemy : MonoBehaviour
     public virtual void TakeTenacityDamage(float TenacityDamage,float TenacityDamageRateBoost){
     }
     public virtual void HurtDisplacement(Transform attackTransform, Vector2 attackDisplaces){//受擊偏移
+        
         rb.velocity = Vector2.zero;
-        Vector2 vir = new Vector2(rb.transform.position.x - attackTransform.position.x,1).normalized;
-        rb.AddForce(vir*attackDisplaces,ForceMode2D.Impulse);
+        int HurtDirection;
+        if(rb.transform.position.x - attackTransform.position.x > 0){
+            HurtDirection = 1;
+        }else{
+            HurtDirection = -1;
+        }
+        Vector2 vir = new Vector2(HurtDirection,1).normalized;
+        Vector2 knockbackForce = new Vector2(vir.x * attackDisplaces.x, vir.y * attackDisplaces.y);
+        rb.AddForce(knockbackForce,ForceMode2D.Impulse);
     } 
     public virtual void Blocked(float stunTimeCount){
         anim.SetBool("Stuning", true);

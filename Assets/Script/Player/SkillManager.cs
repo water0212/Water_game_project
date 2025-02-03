@@ -97,7 +97,7 @@ public class SkillManager : MonoBehaviour
     {
         Debug.Log("skill_Load");
         if(context.started)
-        AddSkill(0);
+        AddSkill(2);
         
     }//測試用
     public void LoadSkill_Q(Skill LoadSkill, int skillindex){//將技能放入技能槽位
@@ -168,10 +168,7 @@ public class SkillManager : MonoBehaviour
     }
     public void SwitchToNextSkill(ref Skill[] skillList, int indexSolt, int minIndexSlot, string BTN){
         if(minIndexSlot >= indexSolt){ // 當使用完技能後發現前幾個技能未準備好
-            Debug.Log(BTN + LeftControlButton);
             if(BTN == LeftControlButton){
-                
-                Debug.Log(indexSolt + " "+skillList.Length);
                 for (int i = indexSolt; i < skillList.Length; i++) {//indexSolt是index的+1，而我正好想要比當前技能索引大的技能
                     Debug.Log("ReadySkill_Q" + " " + ReadySkill_Q[i].ToString());
                     if(ReadySkill_Q[i]){
@@ -215,9 +212,9 @@ public class SkillManager : MonoBehaviour
                         minindexSlots_Skill_E = index;
                     } 
                 }else{
-                    if(minindexSlots_Skill_E == index){
-                        if(index != Skill_E.Length)minindexSlots_Skill_E+=1;
-                    }
+                    // if(minindexSlots_Skill_E == index){
+                    //     if(index != Skill_E.Length)minindexSlots_Skill_E+=1;
+                    // }
                 }
                 ReadySkill_E[i] = isReady;
             }
@@ -240,9 +237,10 @@ public class SkillManager : MonoBehaviour
                         minindexSlots_Skill_Q = index;
                     } 
                 }else{
-                    if(minindexSlots_Skill_Q == index){
-                        if(index != Skill_Q.Length)minindexSlots_Skill_Q+=1;
-                    }
+                    //若當前技能使用，且當前技能還可以再使用，
+                    // if(minindexSlots_Skill_Q == index){
+                    //     if(index != Skill_Q.Length)minindexSlots_Skill_Q+=1;
+                    // }
                 }
                 ReadySkill_Q[i] = isReady;
             }

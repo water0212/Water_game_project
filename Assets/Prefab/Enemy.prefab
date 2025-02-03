@@ -807,10 +807,12 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  isGround: 0
+  isGround: 1
   touchWall: 0
-  isOnTheFloor: 0
-  canGrabTheEdge: 0
+  isOnTheFloor: 1
+  canGrabTheEdge: 1
+  checkDistance: 1.28
+  checkoffset: {x: -0.19, y: 1.35}
 --- !u!114 &5137001557628542221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -892,11 +894,11 @@ MonoBehaviour:
   healthPoint: 0
   maxHitCD: 0.1
   hitCD: 0
-  attackPower: 0
+  attackPower: 10
   defense: 0
   attackDelay: 0.2
   ExperiencePoint: 40
-  MoveforceMultplier: 50
+  MoveforceMultplier: 40
   stunTime: 2
   maxTenacity: 10
   tenacityPoint: 10
@@ -1025,8 +1027,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 1.8392999, y: -0.092350006, z: 0}
-    m_Extent: {x: 2.7103999, y: 0.79885, z: 0}
+    m_Center: {x: 1.83945, y: -0.09185001, z: 0}
+    m_Extent: {x: 2.70975, y: 0.79975, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

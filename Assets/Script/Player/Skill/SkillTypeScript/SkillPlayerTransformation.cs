@@ -11,25 +11,29 @@ public class SkillPlayerTransformation : MonoBehaviour, ITransformation, IDamage
     private GameObject user;//玩家
     private SpriteRenderer userSR;
     private SpriteRenderer SkillObjSR;
+    private AnimationClip clip;
 
-    public float SkillDuration;
-    private bool isUsingSkill; 
+    private float SkillDuration;
+    private bool isUsingSkill;
+    //用於表示技能的時間段
+    public List<bool> skillAnimationClock;
+
     public float attackDamage {get; set;}
     public Vector2 attackDisplaces {get; set;}
     public int attackStrength {get; set;}
     public float attackMultiplier {get; set;}
     public float TenacityDamage {get; set;}
     public float TenacityDamageRate {get; set;}
-    [SerializeField]private float attack;
     // Start is called before the first frame update
     private void OnEnable() {
-        userSR = user.GetComponent<SpriteRenderer>();
+        
         SkillObjSR = GetComponent<SpriteRenderer>();
         SkillObjSR.enabled = false;
     }
-    public void Initialize(GameObject user, float duration, float attack, float attackMultiplier,Vector2 attackDisplaces,int AttackStrength,float TenacityBlockRate,float TenacityDamage)
+    public void Initialize(GameObject user,AnimationClip clip, float duration, float attack, float attackMultiplier,Vector2 attackDisplaces,int AttackStrength,float TenacityBlockRate,float TenacityDamage)
     {
         this.user = user;
+        this.clip = clip;
         this.SkillDuration = duration;
         this.SkillDuration = duration;
         this.attackDamage = attack;
@@ -38,27 +42,32 @@ public class SkillPlayerTransformation : MonoBehaviour, ITransformation, IDamage
         this.attackStrength = attackStrength;
         this.TenacityDamageRate = TenacityDamageRate;
         this.TenacityDamage = TenacityDamage;
+        userSR = user.GetComponent<SpriteRenderer>();
     }
     public void ActiveSkillTransformation(){
-        isUsingSkill = true;
+        
         StartCoroutine(UsingSkill());
     }
         private IEnumerator UsingSkill(){//當isUsingSkill為true時角色消失 施放技能
-            
-            userSR.enabled = false;
+            //將其消失
+            userSR.color = Color.clear;
             SkillObjSR.enabled = true;
 
             Animator animator = GetComponent<Animator>();
             if(animator != null){
-                animator.Play("SkillAnimation");
+                animator.Play(clip.name);
+                isUsingSkill = true;
             }
 
-            yield return new WaitUntil(()=> isUsingSkill);
-            userSR.enabled = true;
+            yield return new WaitUntil(()=> !isUsingSkill);
+            userSR.color = Color.white;
             SkillObjSR.enabled = false;
         }
-    public void SetIsUsingSkill(){
-        isUsingSkill = true;
+    public void IsntUsingSkill(){
+        isUsingSkill = false;
+    }
+    public void SkillAnimationClock(int ID){
+        skillAnimationClock[ID] = true;
     }
 
 }

@@ -15,6 +15,7 @@ TagManager:
   - Camera
   - FirstCamera
   - CameraFollowObject
+  - Ground
   layers:
   - Default
   - TransparentFX

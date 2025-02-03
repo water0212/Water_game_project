@@ -28,7 +28,7 @@ public interface ISummonedAndEffectObject
 }
 public interface ITransformation
     {//追憶類技能，
-        void Initialize(GameObject user, float duration, float attack, float attackMultiplier,Vector2 attackDisplaces,int AttackStrength,float TenacityBlockRate,float TenacityDamage);
+        void Initialize(GameObject user,AnimationClip clip, float duration, float attack, float attackMultiplier,Vector2 attackDisplaces,int AttackStrength,float TenacityBlockRate,float TenacityDamage);
     }
 public interface IDamageProvider{
     //只需要輸出時的接口 目前使用於技能上

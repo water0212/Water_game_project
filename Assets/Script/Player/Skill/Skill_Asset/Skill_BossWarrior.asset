@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8dc8a42605e7f498959d7c888a55a9, type: 3}
+  m_Name: Skill_BossWarrior
+  m_EditorClassIdentifier: 
+  skillName: "\u4E00\u65AC\u82B1\u821E"
+  skillDescription: "\u5973\u821E\u8005\u6389\u843D\u7684\u8FFD\u61B6"
+  id: 2
+  cooldown: 1
+  cooldownCount: 0
+  useCount: 1
+  MaxUseCount: 1
+  duration: 3
+  skillImage: {fileID: -790599577, guid: 05e0567213a58c840a3ea79a4409bdfd, type: 3}
+  isUpdate: 0
+  animator: {fileID: 0}
+  clip: {fileID: 7400000, guid: 1a52fd62d63dae642937e520735df359, type: 2}
+  maxDistance: 10
+  tpDistance: 4
+  offest: 10
+  Layer:
+    serializedVersion: 2
+    m_Bits: 72
+  spawnPosition: {x: -49.858936, y: -30.96663}
+  attackMultiplier: 0.7
+  attackStrength: 5
+  attackDisplaces: {x: 2, y: 3}
+  TenacityDamage: 20
+  TenacityDamageRate: 0
+  summonPrefeb: {fileID: 5661989986542881171, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}

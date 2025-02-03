@@ -13,9 +13,10 @@ public abstract class Skill : ScriptableObject
     public int MaxUseCount;
     public float duration;
     public Sprite skillImage;
-    public bool isUpdate;
+    [HideInInspector]public bool isUpdate;
     [HideInInspector] public Animator animator;
-    public AnimationClip animClip;
+    [Tooltip("要播放的技能片段")]
+    public AnimationClip clip;
     public abstract void OnLoad(GameObject user);
     public abstract void OnEquip();
     public abstract void Update();

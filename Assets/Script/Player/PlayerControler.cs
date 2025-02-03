@@ -297,8 +297,16 @@ public class PlayerControler : MonoBehaviour
     public void HurtDisplacement(Transform attackTransform, Vector2 attackDisplaces){
         isHurt = true;
         rb2D.velocity = Vector2.zero;
-        Vector2 vir = new Vector2(rb2D.transform.position.x - attackTransform.position.x,1).normalized;
-        rb2D.AddForce(vir*attackDisplaces,ForceMode2D.Impulse);
+        int HurtDirection;
+        if(rb2D.transform.position.x - attackTransform.position.x > 0){
+            HurtDirection = 1;
+        }else{
+            HurtDirection = -1;
+        }
+        Debug.Log("被打了"+HurtDirection);
+        Vector2 vir = new Vector2(HurtDirection,1).normalized;
+        Vector2 knockbackForce = new Vector2(vir.x * attackDisplaces.x, vir.y * attackDisplaces.y);
+        rb2D.AddForce(knockbackForce,ForceMode2D.Impulse);
     }    
     #endregion
     
