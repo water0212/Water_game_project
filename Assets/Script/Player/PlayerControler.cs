@@ -141,7 +141,7 @@ public class PlayerControler : MonoBehaviour
             Turn();
         }
     }
-    private void Turn(){
+    public void Turn(){
         if(faceOn ==1 ){
             Vector3 rotator = new Vector3(transform.rotation.x, 180f , transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);

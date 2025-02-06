@@ -25,12 +25,12 @@ public class SkillAttackAndTakeOnDamage : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if(!AATD.Attacker) return;
             var enemy = other.GetComponent<AttackAndTakeOnDamage>();
-            if(enemy.tag == "Player") Debug.Log("打到玩家拉");
             AATD.TenacityDamageRate = Summon.TenacityDamageRate;
             if (enemy != null && enemy.tag != "Player")
             {
                 enemy.OnTakeDamage(transform,AATD.attackDamage*AATD.attackMultiplier,AATD.attackDisplaces,AATD.AttackStrength,AATD.TenacityDamage,AATD.TenacityDamageRate);
             }
+            else if(enemy != null && enemy.tag == "Player") Debug.Log("打到玩家拉");
         
     }
 }

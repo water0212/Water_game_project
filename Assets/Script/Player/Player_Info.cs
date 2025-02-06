@@ -24,5 +24,9 @@ public class Player_Info : MonoBehaviour
     public static int GetPlayerFaceon(){
         return instance.playerControler.faceOn;
     }
+    public static void ChangePlayerFaceOn(int faceOn){
+        instance.playerControler.faceOn = -faceOn;
+        instance.playerControler.Turn();
+    }
 }
 

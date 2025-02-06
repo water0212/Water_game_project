@@ -113,7 +113,7 @@ public class SkillUIManager : MonoBehaviour
             activeButton.gameObject.SetActive(false);
         }
     }
-    public void ChooseE(int index){ //TODO:需要變成三個格子的CHECK
+    public void ChooseE(int index){ 
         //if(lockE[index-1].gameObject.activeSelf) lockE[index-1].gameObject.SetActive(false);
         DeleteActiveButton();
         lockE[index-1].sprite = currentSkill.skillImage;
@@ -121,14 +121,13 @@ public class SkillUIManager : MonoBehaviour
         skill_E_CD_BackIcon[index-1].sprite = currentSkill.skillImage;
         skillManager.LoadSkill_E(currentSkill,index);
     }
-    public void ChooseQ(int index){//TODO:需要變成三個格子的CHECK
+    public void ChooseQ(int index){
         //if(lockQ[index-1].gameObject.activeSelf) lockQ[index-1].gameObject.SetActive(false);
         DeleteActiveButton();
         lockQ[index-1].sprite = currentSkill.skillImage;
         skill_Q_CD_Icon[index-1].sprite = currentSkill.skillImage;
         skill_Q_CD_BackIcon[index-1].sprite = currentSkill.skillImage;
         skillManager.LoadSkill_Q(currentSkill,index);
-        //拖移至
     }
     private void DeleteActiveButton(){
         for (int i = 0; i < 3 ; i++){

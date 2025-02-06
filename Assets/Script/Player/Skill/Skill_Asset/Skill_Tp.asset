@@ -21,8 +21,9 @@ MonoBehaviour:
   MaxUseCount: 1
   duration: 0.5
   skillImage: {fileID: -164947489, guid: 05e0567213a58c840a3ea79a4409bdfd, type: 3}
+  isUpdate: 0
   animator: {fileID: 0}
-  animClip: {fileID: 0}
+  clip: {fileID: 0}
   count_storage_capability: 0
   TenacityDamageRateBoost: 0
   TpMarkCount: 5
@@ -37,3 +38,4 @@ MonoBehaviour:
   attackDisplaces: {x: 0, y: 0}
   canUse: 1
   canTp: 0
+  SkillUsed: {fileID: 11400000, guid: 0d790673d07a9ce4f9a6b93293b70587, type: 2}

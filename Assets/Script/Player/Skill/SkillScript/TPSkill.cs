@@ -9,6 +9,7 @@ using UnityEngine.VFX;
 [CreateAssetMenu(fileName = "Skill", menuName = "SkillSystem/Skills/TP")]
 public class TPSkill : Skill
 {
+    private GameObject user;
     public bool count_storage_capability;
     [Header("氣力加成")]
     public float TenacityDamageRateBoost;
@@ -26,9 +27,12 @@ public class TPSkill : Skill
     private PlayerControler PC;
     public  bool canUse;
     public bool canTp;
+    [Header("接收")]
+    public SkillEventSO SkillUsed;
 
     public override void OnLoad(GameObject user)
     {
+        this.user = user;
         TpMarkCount = 0 ;
         cooldownCount = 0;
         useCount = 0;
@@ -39,6 +43,7 @@ public class TPSkill : Skill
         PC = user.GetComponent<PlayerControler>();
         InitializeSkillData(user);
         Debug.Log( skillName + "技能加載完畢");
+        SkillUsed.OnEventRaised += Teleport;
     }
 
     public override bool Activate(GameObject user)
@@ -51,17 +56,25 @@ public class TPSkill : Skill
             summonedObject.transform.position =user.transform.position+ new Vector3(PC.faceOn,1,0);
             summonedObject.transform.localScale = -new Vector3(PC.faceOn,1,1);
             rb.AddForce(new Vector2(speed * -summonedObject.transform.localScale.x,0),ForceMode2D.Impulse);
-        }else if (enemy !=null&&canTp){
-            //TODO:傳送片段
-            SpriteRenderer targetRenderer = enemy.GetComponent<SpriteRenderer>();
-            Vector3 targetOffset = new Vector3(-enemy.transform.localScale.x* distanceBehide,0,0);
-            user.gameObject.transform.position = enemy.transform.position + targetOffset + new Vector3 ( 0, verticaloffset, 0);
-            canTp = false;
-            //氣力倍率增加
+            SkillManager.GetSkillManager().SkillFinish();
         }else{
             return false;
         }
         return true;
+    }
+    private void Teleport(Skill skill){
+        if(skill.id != 1 && enemy !=null&&canTp){
+            SpriteRenderer targetRenderer = enemy.GetComponent<SpriteRenderer>();
+            Vector3 targetOffset = new Vector3(-enemy.transform.localScale.x* distanceBehide,0,0);
+            user.gameObject.transform.position = enemy.transform.position + targetOffset + new Vector3 ( 0, verticaloffset, 0);
+            if(user.gameObject.transform.position.x - enemy.transform.position.x >= 0f){
+                Player_Info.ChangePlayerFaceOn(-1);
+
+            }else{
+                Player_Info.ChangePlayerFaceOn(1);
+            }
+            canTp = false;
+        }
     }
     public override void Update()
     {
@@ -102,6 +115,7 @@ public class TPSkill : Skill
 
     public override void UnLoad()
     {
+        SkillUsed.OnEventRaised += Teleport;
         Destroy(summonedObject);
     }
 }

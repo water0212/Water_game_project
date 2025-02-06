@@ -65,6 +65,7 @@ public class SkillPlayerTransformation : MonoBehaviour, ITransformation, IDamage
         }
     public void IsntUsingSkill(){
         isUsingSkill = false;
+        SkillManager.GetSkillManager().SkillFinish();
     }
     public void SkillAnimationClock(int ID){
         skillAnimationClock[ID] = true;

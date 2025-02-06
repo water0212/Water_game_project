@@ -1830,8 +1830,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.055232048, y: 0.8154409}
-  m_Size: {x: 0.69480705, y: 1.4875684}
+  m_Offset: {x: -0.055232048, y: 0.7121141}
+  m_Size: {x: 0.69480705, y: 1.2809148}
   m_Direction: 0
 --- !u!50 &331989644
 Rigidbody2D:
@@ -1935,8 +1935,6 @@ MonoBehaviour:
   touchWall: 0
   isOnTheFloor: 0
   canGrabTheEdge: 0
-  checkDistance: 1.25
-  checkoffset: {x: -0.06, y: 1.54}
 --- !u!95 &331989647
 Animator:
   serializedVersion: 5
@@ -8449,7 +8447,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0.125, y: -0.25, z: 0}
+  m_DefaultVelocity: {x: 0, y: 0.5, z: 0}
 --- !u!4 &1118940561
 Transform:
   m_ObjectHideFlags: 0
@@ -9552,8 +9550,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.0022999644, y: -0.0026999712, z: 0}
-    m_Extent: {x: 1.6176, y: 1.6179, z: 0}
+    m_Center: {x: -0.00030004978, y: -0.002649963, z: 0}
+    m_Extent: {x: 1.6149, y: 1.61795, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -12729,6 +12727,8 @@ MonoBehaviour:
   ReadySkill_Q: 000000
   skillDatabase: {fileID: 11400000, guid: 16ccad8b3bfdc574faa4eaa21185862d, type: 2}
   skillUIManager: {fileID: 2056422250}
+  isUsingSkill: 0
+  CastSkill: {fileID: 11400000, guid: 0d790673d07a9ce4f9a6b93293b70587, type: 2}
   GainSkillEvent: {fileID: 11400000, guid: 0027e525cc115d74b81188c9a84a84b8, type: 2}
 --- !u!4 &1750680639
 Transform:
@@ -12871,49 +12871,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4511777403605792449, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4511777403605792449, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}
-      propertyPath: m_IncludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4516595838430920082, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}
-      propertyPath: m_Size.x
-      value: 6.185854
-      objectReference: {fileID: 0}
-    - target: {fileID: 4516595838430920082, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.54028213
-      objectReference: {fileID: 0}
-    - target: {fileID: 4516595838430920082, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4516595838430920082, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}
-      propertyPath: m_IncludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5661989986542881171, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}
       propertyPath: m_Name
       value: BossWarriorSkillPrefeb
-      objectReference: {fileID: 0}
-    - target: {fileID: 6924689443027627415, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}
-      propertyPath: m_Size.x
-      value: 6.042077
-      objectReference: {fileID: 0}
-    - target: {fileID: 6924689443027627415, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.51419926
-      objectReference: {fileID: 0}
-    - target: {fileID: 6924689443027627415, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6924689443027627415, guid: f56e6d22590686f45aa4ec7d2dc316dc, type: 3}
-      propertyPath: m_IncludeLayers.m_Bits
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

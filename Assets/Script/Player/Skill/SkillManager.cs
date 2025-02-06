@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ink.Runtime;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -38,9 +39,23 @@ public class SkillManager : MonoBehaviour
     [Header("技能數據與UI物件")]
     public SkillDatabase skillDatabase;
     public SkillUIManager skillUIManager;
+    public bool isUsingSkill;
+    private bool skillFinish;
+    [Header("廣播")]
+    public SkillEventSO CastSkill;
     [Header("監聽")]
     public FloatEventSO GainSkillEvent;
+    [Header("Instance")]
+    private static SkillManager instance;
+    public static SkillManager GetSkillManager(){
+        return instance;
+    }
     private void Awake() {
+        if(instance){
+            Debug.LogError("Found more than one SkillManager in same Scene");
+            Destroy(this);
+        }
+        instance = this;
          ReadySkill_E = new bool[3];
         ReadySkill_Q = new bool[3];
     }
@@ -96,8 +111,11 @@ public class SkillManager : MonoBehaviour
     public void LoadSkill_TEST(InputAction.CallbackContext context)
     {
         Debug.Log("skill_Load");
-        if(context.started)
+        if(context.started){
         AddSkill(2);
+        AddSkill(1);
+        AddSkill(0);
+        }
         
     }//測試用
     public void LoadSkill_Q(Skill LoadSkill, int skillindex){//將技能放入技能槽位
@@ -149,22 +167,43 @@ public class SkillManager : MonoBehaviour
     public void ActiveSkill(InputAction.CallbackContext context){
         var controlName = context.control.name;
         //Debug.Log(controlName + LeftControlButton + RightControlButton);
-        if(context.started){
+        if(context.started&&!isUsingSkill){
+            
             if(controlName == LeftControlButton){
-
-                if(!currentSkill_Q) return;
+                if(!currentSkill_Q || currentSkill_Q.useCount ==0) return;
+                CastSkill.RaiseEvent(currentSkill_Q);
                 currentSkill_Q.Activate(Player);
+                StartCoroutine(WaitSkill_Q_Finish());
                 //ReadySkill_Q[indexSlots_Skill_Q] = false;
-                SwitchToNextSkill(ref Skill_Q, indexSlots_Skill_Q,minindexSlots_Skill_Q, controlName);
+                
             }else if(controlName == RightControlButton){
-                if(!currentSkill_E) return;
+                if(!currentSkill_E || currentSkill_Q.useCount ==0) return;
+                CastSkill.RaiseEvent(currentSkill_E);
                 currentSkill_E.Activate(Player);
+                StartCoroutine(WaitSkill_E_Finish());
                 //ReadySkill_Q[indexSlots_Skill_E] = false;
-                SwitchToNextSkill(ref Skill_E,  indexSlots_Skill_E,minindexSlots_Skill_E, controlName);
+                
             }else{
                 Debug.Log("無此技能按鍵" + controlName);
             }
         }
+    }
+    public IEnumerator WaitSkill_E_Finish(){
+        isUsingSkill = true;
+        yield return new WaitUntil(() => skillFinish);
+        SwitchToNextSkill(ref Skill_E,  indexSlots_Skill_E,minindexSlots_Skill_E, "e");
+        skillFinish = false;
+        isUsingSkill = false;
+    }
+    public IEnumerator WaitSkill_Q_Finish(){
+        isUsingSkill = true;
+        yield return new WaitUntil(() => skillFinish);
+        SwitchToNextSkill(ref Skill_Q, indexSlots_Skill_Q,minindexSlots_Skill_Q, "q");
+        skillFinish = false;
+        isUsingSkill = false;
+    }
+    public void SkillFinish(){
+        skillFinish = true;
     }
     public void SwitchToNextSkill(ref Skill[] skillList, int indexSolt, int minIndexSlot, string BTN){
         if(minIndexSlot >= indexSolt){ // 當使用完技能後發現前幾個技能未準備好
