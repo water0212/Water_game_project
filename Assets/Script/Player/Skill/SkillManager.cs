@@ -39,10 +39,11 @@ public class SkillManager : MonoBehaviour
     [Header("技能數據與UI物件")]
     public SkillDatabase skillDatabase;
     public SkillUIManager skillUIManager;
-    public bool isUsingSkill;
+    public static bool isUsingSkill;
     private bool skillFinish;
     [Header("廣播")]
     public SkillEventSO CastSkill;
+    public VoidEventSO FinishSkill;
     [Header("監聽")]
     public FloatEventSO GainSkillEvent;
     [Header("Instance")]
@@ -203,7 +204,9 @@ public class SkillManager : MonoBehaviour
         isUsingSkill = false;
     }
     public void SkillFinish(){
+
         skillFinish = true;
+        FinishSkill.RaiseEvent();
     }
     public void SwitchToNextSkill(ref Skill[] skillList, int indexSolt, int minIndexSlot, string BTN){
         if(minIndexSlot >= indexSolt){ // 當使用完技能後發現前幾個技能未準備好

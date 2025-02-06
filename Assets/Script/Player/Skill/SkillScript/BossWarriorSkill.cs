@@ -62,7 +62,7 @@ public class BossWarriorSkill : Skill
             skillSummon.skillAnimationClock[0] = false;
             
         }else if(skillSummon.skillAnimationClock[1]){
-            user.GetComponent<Rigidbody2D>().gravityScale = 8f;
+            user.GetComponent<Rigidbody2D>().gravityScale = 16f;
             skillSummon.skillAnimationClock[1] = false;
         }
         return base.BackGroundUpdate();

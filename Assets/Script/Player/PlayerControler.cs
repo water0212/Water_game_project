@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ink.Runtime;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -22,6 +23,9 @@ public class PlayerControler : MonoBehaviour
     public PhysicsMaterial2D normalPhysicsState;
     private Animator anim;
     private Character character;
+    [Header("接收")]
+    public SkillEventSO ActiveSkill;
+    public VoidEventSO FinishSkill;
     [Header("基本參數")]
     public float maxSpeedX;
     //public float forceMultiplier;
@@ -57,6 +61,8 @@ public class PlayerControler : MonoBehaviour
     public float originGravity;
     [Header("狀態")]
     public bool isRolling;
+    private bool isUsingSkill;
+    private bool canJump;
     [Tooltip("攻擊動畫開始至結束")]
     public bool isAttacking;
     public bool isHurt;
@@ -91,8 +97,11 @@ public class PlayerControler : MonoBehaviour
         // inputAction.GamePlayer.Skill_Q.started += ActiveSkill_Q;
         // inputAction.GamePlayer.Skill_Load.started += LoadSkill_TEST;
         anim = GetComponent<Animator> ();
+        ActiveSkill.OnEventRaised += ActiveSkillF;
+        FinishSkill.OnEventRaised += FinishSkillF;
         
     }
+
     private void OnEnable() {
         inputAction.Enable();
         attackTimecount = maxAttackTime;
@@ -128,7 +137,6 @@ public class PlayerControler : MonoBehaviour
        CheckPreviousIsBlock();
        LedgeCrab();
        //JumpHoldControl();
-       
        anim.SetBool("EdgeCarb",isHanging);
       // Debug.DrawLine(Vector3.zero, Vector3.right * 10, Color.red);
     }
@@ -222,6 +230,7 @@ public class PlayerControler : MonoBehaviour
     #region 跳躍相關
     private void JumpCheck(InputAction.CallbackContext context)
     {
+        if(!canJump) return;
         if(isHanging){
             rb2D.gravityScale = originGravity;
             isHanging = false;
@@ -255,7 +264,7 @@ public class PlayerControler : MonoBehaviour
         
     private void NormalAttack(InputAction.CallbackContext context)
     {
-        if(isRolling||DialogManager.GetInstance().dialogueIsPlaying)
+        if(isRolling||DialogManager.GetInstance().dialogueIsPlaying&&isUsingSkill)
         return;
         //transform.localScale=new Vector3(1,1,1);
         anim.SetBool("isAttack", true);
@@ -358,6 +367,19 @@ public class PlayerControler : MonoBehaviour
             }
         }
         
+    }
+    #endregion
+    #region 關於技能
+    private void ActiveSkillF(Skill currentSkill){
+        isUsingSkill = true;
+        maxSpeedX*=0.2f;
+        canJump = false;
+
+    }
+    private void FinishSkillF(){
+        isUsingSkill = false;
+        maxSpeedX*=5f;
+        canJump = true;
     }
     #endregion
     #region 事件函式
