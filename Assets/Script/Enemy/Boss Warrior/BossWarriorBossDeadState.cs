@@ -13,6 +13,7 @@ public class BossWarriorBossDeadState : BaseState<BossWarriorEnemy>
     {
         Debug.Log("進入BossWarrior_BossDead");
         currentEnemy = Enemy;
+        currentEnemy.DebugLog.text = "BossWarrior_BossDead";
         currentEnemy.anim.Play("Death");
         material = currentEnemy.GetComponent<SpriteRenderer>().material;
 

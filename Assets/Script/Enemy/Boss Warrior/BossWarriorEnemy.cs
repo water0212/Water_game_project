@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
 public class BossWarriorEnemy : Enemy
 {
     [Header("Boss特殊")]
@@ -18,6 +19,7 @@ public class BossWarriorEnemy : Enemy
     public Transform leftJumpPos;
     public Transform rightJumpPos;
     public bool canDisslove;
+    public TextMeshProUGUI DebugLog;
     [Tooltip("被打的次數")]
     public int wasHitedTimesCountInCombat;
     public int wasHitedTimesCountInThisState;

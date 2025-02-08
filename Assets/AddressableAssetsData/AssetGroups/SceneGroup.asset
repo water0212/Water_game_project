@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SceneGroup
+  m_EditorClassIdentifier: 
+  m_GroupName: SceneGroup
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c8fb7b4797c368f4b83c07fcecb73833
+  m_SerializeEntries:
+  - m_GUID: 959504dbb6f928c48a805cd9a000a1fa
+    m_Address: BossLevel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7113c2ecee77a34cb3f91473095806f
+    m_Address: Persistent
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: edb39731a5185b4419e30c903dbebe50
+    m_Address: Teaching level
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e5b7fe8c4f6b9746963cba28721a204
+    m_Address: Assets/DataSO/SceneLoadFinishEvent.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 8ffcf9b83db1dec48a6a9454328c5c2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 55e365ba2d07d65409a5a03027da59b1, type: 2}
+    - {fileID: 11400000, guid: 90dac7c25190a1e4297f8b3f665d148d, type: 2}

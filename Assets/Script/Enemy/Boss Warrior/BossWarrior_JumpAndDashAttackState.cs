@@ -16,6 +16,7 @@ public class BossWarrior_JumpAndDashAttackState : BaseState<BossWarriorEnemy>
     {
        Debug.Log("進入BossWarrior_JumpAndDashAttackState");
        currentEnemy = Enemy;
+       currentEnemy.DebugLog.text = "BossWarrior_JumpAndDashAttackState";
        currentEnemy.ChaseEnemy();
        beginingGravityScale = currentEnemy.rb.gravityScale;
        currentEnemy.anim.SetTrigger("DashAndDashAttack");

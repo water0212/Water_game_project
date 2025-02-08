@@ -16,6 +16,7 @@ public class BossWarrior_SlideAndAttackState : BaseState<BossWarriorEnemy>
     {
         Debug.Log("進入BossWarrior_SlideAndAttackState");
         currentEnemy = Enemy;
+        currentEnemy.DebugLog.text = "BossWarrior_SlideAndAttackState";
         currentEnemy.ChaseEnemy();
         if(currentEnemy.firstStage){
             SwitchStateDelay = 3;

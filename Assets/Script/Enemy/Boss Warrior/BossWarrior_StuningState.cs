@@ -10,6 +10,7 @@ public class BossWarrior_StuningState : BaseState<BossWarriorEnemy>
     {
         Debug.Log("Boss暈眩");
         currentEnemy = Enemy;
+        currentEnemy.DebugLog.text = "BossWarrior_Stun";
         currentDefense = currentEnemy.defense;
         currentEnemy.defense = currentDefense*0.5f;
     }

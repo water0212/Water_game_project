@@ -17,6 +17,7 @@ public class BossWarrior_Jump : BaseState<BossWarriorEnemy>
        Debug.Log("進入BossWarrior_Jump");
        currentEnemy = Enemy;
        currentEnemy.ChaseEnemy();
+       currentEnemy.DebugLog.text = "BossWarrior_Jump";
        beginingGravityScale = currentEnemy.rb.gravityScale;
        if(currentEnemy.firstStage){
             JumpForce = 40;

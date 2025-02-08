@@ -4,3 +4,6 @@ public enum NPCstate{
 public enum Skillstate{
     ready,active,cooldown
 }
+public enum SceneType{
+    Level,Menu
+}

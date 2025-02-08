@@ -19,6 +19,7 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
     public override void OnEnter(BossWarriorEnemy enemy){
         Debug.Log("進入BossWarrior_CroushAndAttackTwoTimesState");
         currentEnemy = enemy;
+        currentEnemy.DebugLog.text = "BossWarrior_CroushAndAttackTwoTimesState";
         currentEnemy.ChaseEnemy();
         beginingGravityScale = currentEnemy.rb.gravityScale;
         currentEnemy.anim.SetTrigger("DashAndDashAttack");

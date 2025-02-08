@@ -62,7 +62,7 @@ public class PlayerControler : MonoBehaviour
     [Header("狀態")]
     public bool isRolling;
     private bool isUsingSkill;
-    private bool canJump;
+    private bool canJump = true;
     [Tooltip("攻擊動畫開始至結束")]
     public bool isAttacking;
     public bool isHurt;
@@ -106,6 +106,7 @@ public class PlayerControler : MonoBehaviour
         inputAction.Enable();
         attackTimecount = maxAttackTime;
         faceOn = 1;
+        canJump = true;
     }
     private void Start(){
         //inputAction.GamePlayer.Enable();

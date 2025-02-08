@@ -12,8 +12,8 @@ public class BossWarrior_BaseState : BaseState<BossWarriorEnemy>
     private int remainingTimeThreshold;
     public override void OnEnter(BossWarriorEnemy Enemy)
     {
-        Debug.Log("進入BossWarrior_BaseState");
         currentEnemy = Enemy;
+        currentEnemy.DebugLog.text = "BossWarrior_BaseState";
         remainingDamageThreshold = (int)Math.Ceiling(5*(currentEnemy.healthPoint/currentEnemy.maxHealth));
         if(currentEnemy.firstStage){
             remainingTimeThreshold = 3;

@@ -16,6 +16,7 @@ public class BossWarrior_FollowPlayerAndAttackState : BaseState<BossWarriorEnemy
     {
         Debug.Log("進入BossWarrior_FollowPlayerAndAttackState");
         currentEnemy = Enemy;
+        currentEnemy.DebugLog.text = "BossWarrior_FollowPlayerAndAttackState";
         currentEnemy.ChaseEnemy();
         if(currentEnemy.firstStage){
             MoveForce = 10;
