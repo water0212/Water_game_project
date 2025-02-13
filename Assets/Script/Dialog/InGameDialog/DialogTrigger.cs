@@ -10,18 +10,19 @@ public class DialogTrigger : MonoBehaviour
     // Start is called before the first frame update
     private TextMeshPro textMeshPro;
     private SpriteRenderer textBox;
-    private bool isTrigger;
+    [SerializeField]private bool isTrigger;
     private Color Textcolor;
     private Color Boxcolor;
     public int ID;
     public float Duration ;
-    private float DurationCount;
+    [SerializeField]private float DurationCount;
     public bool permanent;
     public bool isBoxFade;
     public float BoxFadeSpeed;
     public bool isTextFade;
-    public bool closeCollider;
     public float TextFadeSpeed;
+    [Header("是否可重複觸發")]
+    public bool canRestart;
     [Header("連接其他對話框")]
     public bool isLink;
     public int LinkID;
@@ -58,23 +59,32 @@ public class DialogTrigger : MonoBehaviour
         if(isTrigger&&Textcolor.a<=1&&isTextFade){
             Textcolor.a+=Time.deltaTime*TextFadeSpeed;
             textMeshPro.color = Textcolor;
+        }else if(!isTrigger&& Textcolor.a>=0&&isTextFade){
+            Textcolor.a-=Time.deltaTime*TextFadeSpeed;
+            textMeshPro.color = Textcolor;
         }
         if(isTrigger&&Boxcolor.a<=1&&isBoxFade){
             Boxcolor.a += Time.deltaTime*BoxFadeSpeed;
+            textBox.color = Boxcolor;
+        }else if(!isTrigger&& Boxcolor.a>=0&&isBoxFade){
+            Boxcolor.a-=Time.deltaTime*BoxFadeSpeed;
             textBox.color = Boxcolor;
         }
         if(!permanent&&isTrigger){
             DurationCount -= Time.deltaTime;
             if(DurationCount < 0){
                 if(isLink) IDEvent.RaiseEvent(LinkID);
-                Destroy(gameObject);
+                if(!canRestart)Destroy(gameObject);
+                else {
+                    isTrigger = false;
+                    DurationCount = Duration;
+                }
             }
         }
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        if(closeCollider) {
+        if(!canRestart) {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            return;
         }
         isTrigger = true;
         FadeCheck();

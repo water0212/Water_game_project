@@ -53,7 +53,6 @@ public class SkillSummonAndDamage : MonoBehaviour, ISummonedAndDamageObject, IDa
         }
     }
     public void ExitInCombat(){
-        SkillFinish();
         transform.position = Constants.SkillObjectPoolPosition;
         durationTimeCount = duration;
     }

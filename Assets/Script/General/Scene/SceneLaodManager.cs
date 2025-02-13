@@ -11,6 +11,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class SceneLaodManager : MonoBehaviour
 {
+    [Tooltip("是否要預先加載")]
+    public bool FirstLoadingScene;
     public GameObject player;
     public SceneRefenceSO FirstLoadScene;
     public SceneRefenceSO testLoadScene;
@@ -35,7 +37,7 @@ public class SceneLaodManager : MonoBehaviour
             Destroy(this);
         }
         instance = this;
-        sceneInstance = Addressables.LoadSceneAsync(FirstLoadScene.sceneRefence,LoadSceneMode.Additive);
+        if(FirstLoadingScene)sceneInstance = Addressables.LoadSceneAsync(FirstLoadScene.sceneRefence,LoadSceneMode.Additive);
         sceneInstance.Completed += OnSceneLoadComplete;
         currentScene = FirstLoadScene.sceneRefence;
 
@@ -44,7 +46,7 @@ public class SceneLaodManager : MonoBehaviour
         count = 0f;
     }
     private void Update() {
-        count+= Time.deltaTime;
+        //count+= Time.deltaTime;
         if(count > MaxCount){
             LoadScene(testLoadScene,new Vector2(-72.1999969f,-32.7000008f));
             count = -80f;

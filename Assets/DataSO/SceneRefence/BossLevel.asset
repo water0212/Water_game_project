@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed211a5b5dea7174c8d819c45fdfd774, type: 3}
   m_Name: BossLevel
   m_EditorClassIdentifier: 
+  sceneType: 0
   sceneRefence:
     m_AssetGUID: 959504dbb6f928c48a805cd9a000a1fa
     m_SubObjectName: 

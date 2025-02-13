@@ -41,6 +41,7 @@ public class testSkill : Skill
         summonedObject.transform.position =user.transform.position+ new Vector3(PC.faceOn,0.5f,0);
         summonedObject.transform.localScale = new Vector3(PC.faceOn,1,1);
         animator.SetTrigger("Attack");
+        skillSummon.SkillFinish();
         return true;
     }
 
