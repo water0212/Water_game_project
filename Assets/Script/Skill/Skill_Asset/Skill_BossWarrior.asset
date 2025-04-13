@@ -15,9 +15,9 @@ MonoBehaviour:
   skillName: "\u4E00\u65AC\u82B1\u821E"
   skillDescription: "\u5973\u821E\u8005\u6389\u843D\u7684\u8FFD\u61B6"
   id: 2
-  cooldown: 5
+  Maxcooldown: 5
   cooldownCount: 0
-  useCount: 0
+  useCount: 1
   MaxUseCount: 1
   duration: 3
   skillImage: {fileID: -790599577, guid: 05e0567213a58c840a3ea79a4409bdfd, type: 3}

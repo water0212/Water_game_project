@@ -31,7 +31,10 @@ public class testSkill : Skill
     }
     public override bool Activate(GameObject user)
     {
+        try
+        {
         if(useCount <= 0)return false;
+        NotifyActivated(this);
         useCount--;
         InitializeSkillData(user);
         skillSummon.fade = 1;
@@ -43,6 +46,13 @@ public class testSkill : Skill
         animator.SetTrigger("Attack");
         skillSummon.SkillFinish();
         return true;
+            
+        }
+        catch (System.Exception)
+        {
+        Debug.LogError("使用技能時出錯");
+        return false;
+        }
     }
 
     public override void Update()

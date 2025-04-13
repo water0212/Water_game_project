@@ -1,4 +1,5 @@
 // SkillManager.cs (重構版)
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,6 +10,9 @@ public class SkillManager : MonoBehaviour
     public SkillDatabase skillDatabase;
     public SkillUIManager skillUIManager;
     public Skill testSkillLoad;
+    private Action SkillSlot_QisUpdate;
+    private Action SkillSlot_EisUpdate;
+    public event Action<Skill> onActivated;
 
     public string LeftControlButton = "q";
     public string RightControlButton = "e";
@@ -44,13 +48,29 @@ public class SkillManager : MonoBehaviour
 
     private void Update()
     {
-        Skill_Q.Update();
-        Skill_E.Update();
+        Skill_Q.GroupUpdate();
+        Skill_E.GroupUpdate();
+        if(Skill_Q.GetCurrentSkill() != null)
+        foreach (var skill in Skill_Q.skills){
+            if(skill == null)continue;
+            skill.isUpdate = false;
+        }
+        if(Skill_E.GetCurrentSkill() != null)
+        foreach (var skill in Skill_E.skills){
+            if(skill == null)continue;
+            skill.isUpdate = false;
+        }
 
         UpdateSkillUI(Skill_Q, true);
         UpdateSkillUI(Skill_E, false);
     }
-
+        public void testLoadSkill(InputAction.CallbackContext context){
+            if(context.started){
+            AddSkill(0);
+            AddSkill(1);
+            AddSkill(2);
+            }
+    }
     public void AddSkill(float id)
     {
         Skill skill = skillDatabase.GetSkillByID((int)id);
@@ -73,7 +93,7 @@ public class SkillManager : MonoBehaviour
         if (controlName == LeftControlButton)
         {
             Skill skill = Skill_Q.GetCurrentSkill();
-            if (skill == null || skill.useCount <= 0) return;
+            if (skill == null || skill.GetUseCount() <= 0) return;
             CastSkill.RaiseEvent(skill);
             Skill_Q.ActivateSkill();
             StartCoroutine(WaitSkillFinish(Skill_Q));
@@ -81,7 +101,7 @@ public class SkillManager : MonoBehaviour
         else if (controlName == RightControlButton)
         {
             Skill skill = Skill_E.GetCurrentSkill();
-            if (skill == null || skill.useCount <= 0) return;
+            if (skill == null || skill.GetUseCount() <= 0) return;
             CastSkill.RaiseEvent(skill);
             Skill_E.ActivateSkill();
             StartCoroutine(WaitSkillFinish(Skill_E));
@@ -90,6 +110,9 @@ public class SkillManager : MonoBehaviour
         {
             Debug.Log("未知技能按鍵: " + controlName);
         }
+    }
+    public void ActiveSkill(Skill skill){
+        onActivated?.Invoke(skill);
     }
 
     private IEnumerator WaitSkillFinish(SkillSlotGroup group)
@@ -114,7 +137,7 @@ public class SkillManager : MonoBehaviour
         {
             Skill skill = list[i];
             if (skill == null) continue;
-            if (skill.useCount < skill.MaxUseCount)
+            if (skill.GetUseCount() < skill.MaxUseCount)
             {
                 if (isQ)
                     skillUIManager.UpdateSkillIcon_Q(skill.GetCooldown() / skill.Maxcooldown, i);
@@ -123,9 +146,9 @@ public class SkillManager : MonoBehaviour
             }
 
             if (isQ)
-                skillUIManager.ChangeTimeOfUse_Q(skill.useCount, i);
+                skillUIManager.ChangeTimeOfUse_Q(skill.GetUseCount(), i);
             else
-                skillUIManager.ChangeTimeOfUse_E(skill.useCount, i);
+                skillUIManager.ChangeTimeOfUse_E(skill.GetUseCount(), i);
         }
     }
 

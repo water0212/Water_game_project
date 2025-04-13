@@ -29,8 +29,8 @@ public class SkillUISlots : MonoBehaviour
     public void UpdateSkillUI(Skill ski){
         skill = ski;
         skillImage.sprite = skill.skillImage;
-        skillName.text = skill.skillName;
-        skillDescription.text = skill.skillDescription;
+        skillName.text = skill.GetSkill_Name();
+        skillDescription.text = skill.GetSkill_Description();
     }
     private void OnButtonClick(){
         Debug.Log("按下去瞜");

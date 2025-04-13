@@ -25,7 +25,6 @@ public class SkillSlotGroup : MonoBehaviour
         onEquip = onEquipCallback;
         onFadeVisualUpdate = onFadeUI;
     }
-
     public void LoadSkill(Skill skill, int index)
     {
         if (skill == null || index < 1 || index > 3) return;
@@ -47,24 +46,18 @@ public class SkillSlotGroup : MonoBehaviour
         currentSkill.OnEquip();
         currentIndex = index;
         fadeCount = 0;
-        onEquip?.Invoke(currentSkill, index);
         onFadeVisualUpdate?.Invoke(index - 1, false);
+        onEquip?.Invoke(currentSkill, index);
     }
 
-    public void Update()
+    public void GroupUpdate()
     {
         minReadyIndex = 0;
         for (int i = 0; i < skills.Length; i++)
         {
             Skill s = skills[i];
             if (s == null) continue;
-            s.isUpdate = false;
-        }
-
-        for (int i = 0; i < skills.Length; i++)
-        {
-            Skill s = skills[i];
-            if (s == null) continue;
+            currentSkill.Update();
             bool isReady = s.BackGroundUpdate();
             readyFlags[i] = isReady;
             if (isReady && (minReadyIndex == 0 || minReadyIndex > i + 1))
@@ -89,16 +82,17 @@ public class SkillSlotGroup : MonoBehaviour
             onFadeVisualUpdate?.Invoke(currentIndex - 1, true);
             if (fadeCount <= 0)
             {
-                EquipSkill(minReadyIndex);
                 onFadeVisualUpdate?.Invoke(currentIndex - 1, false);
+                EquipSkill(minReadyIndex);
             }
         }
     }
 
     public void ActivateSkill()
     {
-        if (currentSkill == null || currentSkill.useCount <= 0) return;
+        if (currentSkill == null || currentSkill.GetUseCount() <= 0) return;
         fadeCount = 0;
+        onFadeVisualUpdate?.Invoke(currentIndex - 1, false);
         currentSkill.Activate(player);
     }
 
@@ -107,9 +101,10 @@ public class SkillSlotGroup : MonoBehaviour
     private void SwitchToNext()
     {
         if (minReadyIndex == 0) return;
-        for (int i = currentIndex; i < skills.Length; i++)
+        for (int i = 0; i < skills.Length; i++)
         {
-            if (readyFlags[i])
+
+            if (readyFlags[i] && currentIndex-1 != i)
             {
                 EquipSkill(i + 1);
                 return;

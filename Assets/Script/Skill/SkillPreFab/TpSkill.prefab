@@ -163,7 +163,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Fade_material: {fileID: 2100000, guid: b71b469cb82fa9842b553469dd07c47e, type: 2}
   Effect_material: {fileID: 2100000, guid: addca85667ad7cb478d69bc71a7f8cdd, type: 2}
-  current_material: {fileID: 0}
   user: {fileID: 0}
   Target: {fileID: 0}
   isSummoned: 0
