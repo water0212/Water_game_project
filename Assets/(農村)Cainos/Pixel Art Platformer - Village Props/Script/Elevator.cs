@@ -11,6 +11,8 @@ namespace Cainos.PixelArtPlatformer_VillageProps
         [FoldoutGroup("Params")] public float waitTime = 1.0f;
         [FoldoutGroup("Params")] public float moveSpeed = 3.0f;
         [FoldoutGroup("Params")] public State startState = State.Up;
+        [FoldoutGroup("Params")] public bool waitInput = false;
+        [FoldoutGroup("Params")] public bool waitInputTrigger = false;
 
         [FoldoutGroup("Reference")] public Rigidbody2D platform;
         [FoldoutGroup("Reference")] public SpriteRenderer chainL;
@@ -77,8 +79,13 @@ namespace Cainos.PixelArtPlatformer_VillageProps
         {
             if (IsWaiting)
             {
+                if(waitInput && !waitInputTrigger){
+                }else
                 waitTimer += Time.deltaTime;
-                if (waitTimer > waitTime) IsWaiting = false;
+                if (waitTimer > waitTime) {
+                IsWaiting = false;
+                waitInputTrigger = false;
+                }    
                 curSpeed = 0.0f;
             }
             else
@@ -109,6 +116,10 @@ namespace Cainos.PixelArtPlatformer_VillageProps
         private void FixedUpdate()
         {
             Length = secondOrderDynamics.Update(targetLength, Time.fixedDeltaTime);
+        }
+        public void ElevatorTrigger()
+        {
+            waitInputTrigger = true;
         }
 
         public enum State

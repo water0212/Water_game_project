@@ -37,8 +37,10 @@ public class SceneLaodManager : MonoBehaviour
             Destroy(this);
         }
         instance = this;
-        if(FirstLoadingScene)sceneInstance = Addressables.LoadSceneAsync(FirstLoadScene.sceneRefence,LoadSceneMode.Additive);
-        sceneInstance.Completed += OnSceneLoadComplete;
+        if(FirstLoadingScene){
+            sceneInstance = Addressables.LoadSceneAsync(FirstLoadScene.sceneRefence,LoadSceneMode.Additive);
+            sceneInstance.Completed += OnSceneLoadComplete;
+        }
         currentScene = FirstLoadScene.sceneRefence;
 
     }

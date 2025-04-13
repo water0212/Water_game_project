@@ -20,6 +20,7 @@ public class BossWarriorEnemy : Enemy
     public Transform rightJumpPos;
     public bool canDisslove;
     public TextMeshProUGUI DebugLog;
+    public GameObject Soul;
     [Tooltip("被打的次數")]
     public int wasHitedTimesCountInCombat;
     public int wasHitedTimesCountInThisState;

@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "test",
+                    "type": "Button",
+                    "id": "8b930be1-c835-48bd-be25-d94819f4564e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -64,6 +73,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Skill_Load",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "905897dd-3baf-4b47-a6ab-c8e17dbb1ba2",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "test",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

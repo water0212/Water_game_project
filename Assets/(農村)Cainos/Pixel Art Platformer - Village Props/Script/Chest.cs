@@ -5,7 +5,7 @@ using Cainos.LucidEditor;
 
 namespace Cainos.PixelArtPlatformer_VillageProps
 {
-    public class Chest : MonoBehaviour
+    public class Chest : MonoBehaviour, IInteractable
     {
         [FoldoutGroup("Reference")]
         public Animator animator;
@@ -32,6 +32,11 @@ namespace Cainos.PixelArtPlatformer_VillageProps
         public void Close()
         {
             IsOpened = false;
+        }
+
+        public void TriggerAction()
+        {
+            Open();
         }
     }
 }

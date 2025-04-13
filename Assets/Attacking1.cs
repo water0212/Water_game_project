@@ -16,6 +16,7 @@ public class Attacking1 : StateMachineBehaviour
         //rb2D = animator.GetComponent<Rigidbody2D>();
         if(playerControler != null){
             playerControler.isAttacking = true;
+            playerControler.rb2D.velocity = new Vector2(0, playerControler.rb2D.velocity.y);
         }
         if(rb2D != null){
             //rb2D.velocity = new Vector2(rb2D.velocity.x,0.3f);

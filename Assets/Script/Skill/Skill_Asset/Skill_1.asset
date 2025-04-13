@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b586078abffb528459e417e68d781e41, type: 3}
+  m_Name: Skill_1
+  m_EditorClassIdentifier: 
+  skillName: "\u6E2C\u8A66\u6280\u80FD(\u5F31\u5316\u7248\u672C)"
+  skillDescription: "\u6B64\u6280\u80FD\u70BA\u6E2C\u8A66\u6280\u80FD \u9020\u62103\u500D\u653B\u64CA\u529B\u7684\u50B7\u5BB3\u4E26\u64CA\u98DB\u76EE\u6A19 "
+  id: 0
+  cooldown: 8
+  cooldownCount: 0.9969954
+  useCount: 0
+  MaxUseCount: 2
+  duration: 0.5
+  skillImage: {fileID: 1452074441, guid: 05e0567213a58c840a3ea79a4409bdfd, type: 3}
+  animator: {fileID: 0}
+  animClip: {fileID: 7400000, guid: 5f2c693384fe83c439958b01584f99b2, type: 2}
+  count_storage_capability: 1
+  attack: 10
+  attackMultiplier: 3
+  AttackStrength: 10
+  TenacityDamage: 100
+  summonPrefab: {fileID: 84057804891094169, guid: 5bf9baafe854b424aafea3ff48ee991e, type: 3}
+  summonedObject: {fileID: 0}
+  skillSummon: {fileID: 0}
+  attackDisplaces: {x: 3, y: 20}

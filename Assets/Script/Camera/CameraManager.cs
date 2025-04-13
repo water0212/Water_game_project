@@ -160,7 +160,7 @@ public class CameraManager : MonoBehaviour
         }
     #endregion
     #region Swap Camera
-        public void SwapCamera(CinemachineVirtualCamera cameraFromLeft, CinemachineVirtualCamera cameraFromRight, Vector2 triggerExitDirection){
+        public void SwapCamera(CinemachineVirtualCamera cameraFromLeft, CinemachineVirtualCamera cameraFromRight, Vector2 triggerExitDirection ){
             if(currentCamera == cameraFromLeft && triggerExitDirection.x > 0f){
                 Debug.Log("從左至右，當前攝像機=左攝像機");
                 //激活新相機

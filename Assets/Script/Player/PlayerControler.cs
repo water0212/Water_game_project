@@ -14,7 +14,7 @@ public class PlayerControler : MonoBehaviour
     public VoidEventSO SkillActive_Q;
     public VoidEventSO SkilllLoad;
     [Header("取得")]
-    private Rigidbody2D rb2D;
+    public Rigidbody2D rb2D;
     private CapsuleCollider2D capCo2D;
     public PlayerInputAction inputAction;
     private PhysicCheck physicCheck;
@@ -49,7 +49,6 @@ public class PlayerControler : MonoBehaviour
     public float maxJumpDelay;
     public float initialJumpForce;
     public float jumpCutForce;
-    public float JumpVelocityThreshold;
     public float JumpFallGravity;
     private bool isCancelJump;
     //[SerializeField]private float jumpTimeCount;

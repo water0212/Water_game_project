@@ -26,6 +26,8 @@ public class BossWarriorBossDeadState : BaseState<BossWarriorEnemy>
                 fade = 1;
                 Debug.Log("開始腐爛");
                 currentEnemy.BossDead.RaiseEvent();
+                var Soul = BossWarriorEnemy.Instantiate(currentEnemy.Soul, currentEnemy.transform.position, Quaternion.identity);
+                Soul.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 3);
                 currentEnemy.DestoryGB();
             }
             material.SetFloat("_Fade", fade);

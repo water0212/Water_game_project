@@ -1784,7 +1784,7 @@ Transform:
   m_GameObject: {fileID: 331989640}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -72.2, y: -29.6, z: 0}
+  m_LocalPosition: {x: -63.82, y: -15.68, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1874,6 +1874,7 @@ MonoBehaviour:
   SkillActive_E: {fileID: 11400000, guid: 17b91e4453393f04ba6d0766bc962fa7, type: 2}
   SkillActive_Q: {fileID: 11400000, guid: 1e06299b145ea1f429e32a777b0390a2, type: 2}
   SkilllLoad: {fileID: 11400000, guid: ed94c8fca6e25ed44a697316675d9f4f, type: 2}
+  rb2D: {fileID: 0}
   inputDirection: {x: 0, y: 0}
   jumpPhysicsState: {fileID: 6200000, guid: 4a43b1500cb11084c9b47c7d4b19d01c, type: 2}
   normalPhysicsState: {fileID: 6200000, guid: 6f62498d6ce462540b61c583c4ccdcdd, type: 2}
@@ -1889,12 +1890,11 @@ MonoBehaviour:
   maxHurtTime: 0.5
   RollForce: 15
   canJumpTimes: 0
-  MaxJumpTimes: 2
+  MaxJumpTimes: 1
   initialJumpDelay: 0
   maxJumpDelay: 0.2
-  initialJumpForce: 25
-  jumpCutForce: 0.3
-  JumpVelocityThreshold: 0.2
+  initialJumpForce: 22
+  jumpCutForce: 0.05
   JumpFallGravity: 4
   isJumping: 0
   jump: 0
@@ -2088,6 +2088,51 @@ MonoBehaviour:
     TenacityDamage: 0
     TenacityDamageRate: 0
     attackDisplaces: {x: 0, y: 0}
+--- !u!1 &333716755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 333716757}
+  - component: {fileID: 333716756}
+  m_Layer: 0
+  m_Name: ///ObjectSummonManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &333716756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333716755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b4121a0b73670438b0c463a74da829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectsInScene: []
+--- !u!4 &333716757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333716755}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &339512710
 GameObject:
   m_ObjectHideFlags: 0
@@ -8679,7 +8724,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0.05, y: 0.125, z: 0}
+  m_DefaultVelocity: {x: 0.125, y: -0.25, z: 0}
 --- !u!4 &1118940561
 Transform:
   m_ObjectHideFlags: 0
@@ -13013,8 +13058,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 11500000, guid: 3d61244a7353b414abb8b709d828cb2b, type: 3}
+        m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: ba301360-e3d1-45bb-a1de-e60b11a535ce
     m_ActionName: Skill/Skill_Load[/Keyboard/l]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8b930be1-c835-48bd-be25-d94819f4564e
+    m_ActionName: Skill/test[/Keyboard/o]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Skill
@@ -14849,6 +14910,51 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &2116931161
+GameObject:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2116931163}
+  - component: {fileID: 2116931162}
+  m_Layer: 0
+  m_Name: Prefab Indexer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2116931162
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116931161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a7c62fccbafd342991629222351294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scenePrefabInstances: []
+--- !u!4 &2116931163
+Transform:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116931161}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2117445585
 GameObject:
   m_ObjectHideFlags: 0
@@ -15065,7 +15171,9 @@ SceneRoots:
   - {fileID: 272687343}
   - {fileID: 470349863}
   - {fileID: 467661483}
+  - {fileID: 333716757}
   - {fileID: 1379432670}
   - {fileID: 504437556}
   - {fileID: 1497157067}
   - {fileID: 700671479}
+  - {fileID: 2116931163}
