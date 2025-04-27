@@ -8724,7 +8724,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0.075, y: 0.5, z: 0}
+  m_DefaultVelocity: {x: 0.125, y: -0.25, z: 0}
 --- !u!4 &1118940561
 Transform:
   m_ObjectHideFlags: 0
@@ -10276,60 +10276,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1368714765}
   m_CullTransparentMesh: 1
---- !u!1 &1376316899
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1376316900}
-  - component: {fileID: 1376316901}
-  m_Layer: 0
-  m_Name: Skill_Q
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1376316900
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1376316899}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1750680639}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1376316901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1376316899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7bf0c2ae2c49aa4b99dab9fb4c5ae80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controlKey: q
-  skills:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  readyFlags: 000000
-  currentIndex: 0
-  minReadyIndex: 0
-  fadeCount: 0
-  fadeTime: 5
 --- !u!1 &1379432667
 GameObject:
   m_ObjectHideFlags: 0
@@ -13002,13 +12948,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 331989640}
-  skillDatabase: {fileID: 11400000, guid: 16ccad8b3bfdc574faa4eaa21185862d, type: 2}
-  skillUIManager: {fileID: 2056422250}
   testSkillLoad: {fileID: 11400000, guid: 5bf0124107202da4fa7cd501501c3d1e, type: 2}
   LeftControlButton: q
   RightControlButton: e
-  Skill_Q: {fileID: 1376316901}
-  Skill_E: {fileID: 1887970302}
+  Skill_E:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  currentSkill_E: {fileID: 0}
+  indexSlots_Skill_E: 9
+  minindexSlots_Skill_E: 9
+  Skill_Q:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  currentSkill_Q: {fileID: 0}
+  indexSlots_Skill_Q: 9
+  minindexSlots_Skill_Q: 9
+  ReadySkill_E: 000000
+  ReadySkill_Q: 000000
+  skillDatabase: {fileID: 11400000, guid: 16ccad8b3bfdc574faa4eaa21185862d, type: 2}
+  skillUIManager: {fileID: 2056422250}
   CastSkill: {fileID: 11400000, guid: 0d790673d07a9ce4f9a6b93293b70587, type: 2}
   FinishSkill: {fileID: 11400000, guid: 537834035f9ba2340ac024488e3a2c18, type: 2}
   GainSkillEvent: {fileID: 11400000, guid: 0027e525cc115d74b81188c9a84a84b8, type: 2}
@@ -13024,9 +12984,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1376316900}
-  - {fileID: 1887970301}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1750680640
@@ -13090,11 +13048,23 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1750680638}
         m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
-        m_MethodName: testLoadSkill
+        m_MethodName: LoadSkill_TEST
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11500000, guid: 3d61244a7353b414abb8b709d828cb2b, type: 3}
+        m_TargetAssemblyTypeName: SkillManager, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13655,60 +13625,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863341953}
   m_CullTransparentMesh: 1
---- !u!1 &1887970300
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1887970301}
-  - component: {fileID: 1887970302}
-  m_Layer: 0
-  m_Name: Skill_E
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1887970301
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887970300}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1750680639}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1887970302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887970300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7bf0c2ae2c49aa4b99dab9fb4c5ae80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controlKey: e
-  skills:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  readyFlags: 000000
-  currentIndex: 0
-  minReadyIndex: 0
-  fadeCount: 0
-  fadeTime: 5
 --- !u!1 &1918027360
 GameObject:
   m_ObjectHideFlags: 0
