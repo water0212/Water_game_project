@@ -47,10 +47,10 @@ public class TPSkill : Skill
 
     public override bool Activate(GameObject user)
     {
+        base.Activate(user);
         try
         {
         if(useCount == 1 && (enemy == null || skillSummon.isSummoned == false)){
-            NotifyActivated(this);
             InitializeSkillData(user);
             useCount = 0;
             skillSummon.isSummoned = true;
@@ -109,6 +109,7 @@ public class TPSkill : Skill
                 skillSummon.Target = null;
                 enemy = null;
                 TpMarkCount = MaxTpMarkCount;
+                canTp = false;
             }
         }
         }

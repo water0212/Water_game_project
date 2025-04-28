@@ -23,7 +23,10 @@ public abstract class Skill : ScriptableObject
     public abstract void OnLoad(GameObject user);
     public abstract void OnEquip();
     public abstract void Update();
-    public abstract bool Activate(GameObject user);
+    public virtual bool Activate(GameObject user){
+        NotifyActivated(this);
+        return true;
+    }
     public abstract void UnEquip();
     public abstract void UnLoad();
     public virtual bool BackGroundUpdate(){
