@@ -15,24 +15,30 @@ public class PhysicCheck : MonoBehaviour
    public Vector2 grabEdgeOffset;
    public LayerMask groundLayer;
    [Header("狀態")]
-   public bool isGround;
-   public bool touchWall;
-   public bool isOnTheFloor;
-   public bool canGrabTheEdge;
-   /* [Header("穿越地板修正")]
-    public float checkDistance;
-    public Vector2 checkoffset;*/
-   private void FixedUpdate() {
+   private bool isGround;
+    private bool touchWall;
+    private bool isOnTheFloor;
+    private bool canGrabTheEdge;
+
+    public bool IsGround { get => isGround; set => isGround = value; }
+    public bool TouchWall { get => touchWall; set => touchWall = value; }
+    public bool IsOnTheFloor { get => isOnTheFloor; set => isOnTheFloor = value; }
+    public bool CanGrabTheEdge { get => canGrabTheEdge; set => canGrabTheEdge = value; }
+
+    /* [Header("穿越地板修正")]
+public float checkDistance;
+public Vector2 checkoffset;*/
+    private void FixedUpdate() {
     Check();
    }
 
     private void Check()
     {
         //檢測
-       isOnTheFloor = Physics2D.OverlapCircle((Vector2)transform.position + flooroffset*transform.localScale.x,checkRadious,groundLayer);
-       isGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset*transform.localScale.x,checkRadious,groundLayer);
-       touchWall = Physics2D.OverlapCircle(new Vector2(transform.position.x+wallOffset.x*transform.localScale.x,transform.position.y + wallOffset.y),checkRadious,groundLayer);
-       canGrabTheEdge =  Physics2D.OverlapCircle(new Vector2(transform.position.x+grabEdgeOffset.x*transform.localScale.x,transform.position.y + grabEdgeOffset.y),checkRadious,groundLayer);
+       IsOnTheFloor = Physics2D.OverlapCircle((Vector2)transform.position + flooroffset*transform.localScale.x,checkRadious,groundLayer);
+       IsGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset*transform.localScale.x,checkRadious,groundLayer);
+       TouchWall = Physics2D.OverlapCircle(new Vector2(transform.position.x+wallOffset.x*transform.localScale.x,transform.position.y + wallOffset.y),checkRadious,groundLayer);
+       CanGrabTheEdge =  Physics2D.OverlapCircle(new Vector2(transform.position.x+grabEdgeOffset.x*transform.localScale.x,transform.position.y + grabEdgeOffset.y),checkRadious,groundLayer);
         //牆體判斷自己做的
         //下面是穿越地面的判斷 看情況保留
         /*RaycastHit2D checkhit = Physics2D.Raycast((Vector2)transform.position+checkoffset, Vector2.down, checkDistance, groundLayer);

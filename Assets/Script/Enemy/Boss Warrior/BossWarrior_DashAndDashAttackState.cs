@@ -27,7 +27,7 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
          dashForce = 70+(currentEnemy.playerDistance_x)*0.5f;
         }   
         currentEnemy.wasHitedTimesCountInThisState = 0;
-        attackDelay = currentEnemy.attackDelay;
+        attackDelay = currentEnemy.AttackDelay;
         isExitThisState = false ;
         isAttack = false ;
         ActiveDash = false ;
@@ -87,12 +87,12 @@ public class BossWarrior_DashAndDashAttackState : BaseState<BossWarriorEnemy>
         playerPosition =  currentEnemy.enemyPosition;
         currentEnemy.anim.SetTrigger("Attack!");
         Debug.Log(dashForce+"衝刺");
-        currentEnemy.rb.AddForce(new Vector2(dashForce*currentEnemy.faceOn.x, 0),ForceMode2D.Impulse);
+        currentEnemy.rb.AddForce(new Vector2(dashForce*currentEnemy.FaceOn.x, 0),ForceMode2D.Impulse);
     }
     private WarriorBossstate StateChoose(){
         currentEnemy.ChaseEnemy();
         if(FollowPlayerAndAttackStateChoose()&&currentEnemy.wasHitedTimesCountInThisState > 2){
-            currentEnemy.attackDelay = 0.5f;
+            currentEnemy.AttackDelay = 0.5f;
             return WarriorBossstate.FollowPlayerAndAttackState;
         }
         if(JumpChoose()){

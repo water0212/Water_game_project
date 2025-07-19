@@ -18,7 +18,7 @@ public class knightChaseState : BaseState<knightEnemy>
     public override void OnEnter(knightEnemy Enemy)
     {
         currentEnemy = Enemy;
-        currentEnemy.attackDelayCount = currentEnemy.attackDelay;
+        currentEnemy.attackDelayCount = currentEnemy.AttackDelay;
         currentEnemy.currentSpeed = currentEnemy.chaseSpeed;
         currentEnemy.anim.SetBool("Chasing",true);
         
@@ -32,16 +32,16 @@ public class knightChaseState : BaseState<knightEnemy>
             currentEnemy.SwitchState(NPCstate.Patrol);
         }
         if(!currentEnemy.readyToattack&&FoundEnemyAndAttack()&&!currentEnemy.Stuning) currentEnemy.readyToattack = true;
-        if(currentEnemy.readyToattack&&!currentEnemy.Stuning&&!currentEnemy.isDead&&currentEnemy.physicCheck.isGround){
+        if(currentEnemy.readyToattack&&!currentEnemy.Stuning&&!currentEnemy.isDead&&currentEnemy.physicCheck.IsGround){
             AttackDelayCount();
         }
     }
     public override void PhysicUpdate()
     {
-       if(currentEnemy.physicCheck.isGround&&currentEnemy.physicCheck.isOnTheFloor&&currentEnemy.canMove_playerDead&&!currentEnemy.attacking&&!currentEnemy.Stuning&&!currentEnemy.readyToattack&&!currentEnemy.wasHited&&!currentEnemy.isDead) ChaseMove();
-       else if(!currentEnemy.physicCheck.isOnTheFloor&&currentEnemy.physicCheck.isGround) currentEnemy.rb.velocity =Vector2.zero;
+       if(currentEnemy.physicCheck.IsGround&&currentEnemy.physicCheck.IsOnTheFloor&&currentEnemy.canMove_playerDead&&!currentEnemy.attacking&&!currentEnemy.Stuning&&!currentEnemy.readyToattack&&!currentEnemy.wasHited&&!currentEnemy.isDead) ChaseMove();
+       else if(!currentEnemy.physicCheck.IsOnTheFloor&&currentEnemy.physicCheck.IsGround) currentEnemy.rb.velocity =Vector2.zero;
        //if(!currentEnemy.Stuning&&!currentEnemy.attacking)CheckAndFaceOn();
-        if(currentEnemy.physicCheck.touchWall)Jump();
+        if(currentEnemy.physicCheck.TouchWall)Jump();
     }
 
     
@@ -81,7 +81,7 @@ public class knightChaseState : BaseState<knightEnemy>
             
             if(hit1.collider!=null&&hit1.collider.CompareTag("Player")&&!currentEnemy.attacking){
             //    Debug.Log(hit1);
-                if(currentEnemy.physicCheck.isGround)currentEnemy.rb.velocity = currentEnemy.rb.velocity * new Vector2(0,1);
+                if(currentEnemy.physicCheck.IsGround)currentEnemy.rb.velocity = currentEnemy.rb.velocity * new Vector2(0,1);
                return true;
             }
             else return false;
@@ -95,12 +95,12 @@ public class knightChaseState : BaseState<knightEnemy>
         }else if(currentEnemy.attackDelayCount<0){
                 if(!currentEnemy.ishit){
                     currentEnemy.anim.Play("Attack1");
-                    currentEnemy.attackDelayCount = currentEnemy.attackDelay;
+                    currentEnemy.attackDelayCount = currentEnemy.AttackDelay;
                     currentEnemy.ishit = true;
                     currentEnemy.readyToattack = false;
                 }else if(currentEnemy.ishit){
                     currentEnemy.anim.Play("Attack2");
-                    currentEnemy.attackDelayCount = currentEnemy.attackDelay;
+                    currentEnemy.attackDelayCount = currentEnemy.AttackDelay;
                     currentEnemy.ishit = false;
                     currentEnemy.readyToattack = false;
                 } 

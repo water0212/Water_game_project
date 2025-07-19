@@ -26,7 +26,7 @@ public class BossWarrior_JumpAndDashAttackState : BaseState<BossWarriorEnemy>
          JumpForce = 70+(currentEnemy.playerDistance_x)*0.5f;
         }   
         currentEnemy.wasHitedTimesCountInThisState = 0;
-        attackDelay = currentEnemy.attackDelay;
+        attackDelay = currentEnemy.AttackDelay;
         isExitThisState = false ;
         ActiveJumpToAttack = false ;
         ActiveAttack = false ;
@@ -69,7 +69,7 @@ public class BossWarrior_JumpAndDashAttackState : BaseState<BossWarriorEnemy>
                 currentEnemy.anim.SetBool("JumpToAttack", true);
             }
             
-        }else if (ActiveJump&&ActiveJumpToAttack&&!ActiveAttack&&(currentEnemy.rb.velocity.y<0||currentEnemy.physicCheck.isGround)){
+        }else if (ActiveJump&&ActiveJumpToAttack&&!ActiveAttack&&(currentEnemy.rb.velocity.y<0||currentEnemy.physicCheck.IsGround)){
             if(currentEnemy.firstStage){
                 currentEnemy.rb.gravityScale = 25f;
                 if(currentEnemy.playerDistance_y< 2){
@@ -100,20 +100,20 @@ public class BossWarrior_JumpAndDashAttackState : BaseState<BossWarriorEnemy>
         currentEnemy.ChaseEnemy();
         currentEnemy.anim.SetTrigger("Jump!");
         Debug.Log(JumpForce+"跳躍");
-        currentEnemy.rb.AddForce(new Vector2(JumpForce*currentEnemy.faceOn.x, JumpForce),ForceMode2D.Impulse);
+        currentEnemy.rb.AddForce(new Vector2(JumpForce*currentEnemy.FaceOn.x, JumpForce),ForceMode2D.Impulse);
     }
     private WarriorBossstate StateChoose(){
         currentEnemy.ChaseEnemy();
         if(currentEnemy.wasHitedTimesCountInThisState > 1 || currentEnemy.playerDistance_x <5){
-            currentEnemy.attackDelay = 2;
+            currentEnemy.AttackDelay = 2;
             return WarriorBossstate.Jump;
         }
         if(DashAttackChoose()||currentEnemy.lastStage){
-             currentEnemy.attackDelay = 0.5f;
+             currentEnemy.AttackDelay = 0.5f;
             return WarriorBossstate.DashAndDashAttackState;
         }
         if(FollowPlayerAndAttackStateChoose()){
-            currentEnemy.attackDelay = 1;
+            currentEnemy.AttackDelay = 1;
             return WarriorBossstate.FollowPlayerAndAttackState;
         }
         return WarriorBossstate.BaseState;

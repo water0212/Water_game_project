@@ -8,17 +8,59 @@ using UnityEngine.Accessibility;
 using UnityEngine.InputSystem.iOS;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.Events;
+using System.Runtime.Remoting.Messaging;
 
 public class Enemy : MonoBehaviour
 {
 
- //   public ParticleSystem HurtEffect;
- //   public ParticleSystem DeadEffect;
-    [HideInInspector]public Rigidbody2D rb;
-    [HideInInspector]public PhysicCheck physicCheck;
-    [HideInInspector]public Animator anim;
-    public Vector2 faceOn;
-    public UnityEvent<Transform> onTakeDamage;
+    [Header("基本屬性")]
+    [Space(5)]
+    [Header("血量")]
+    [SerializeField]private float maxHealth;
+    [SerializeField]private float healthPoint;
+    public float HealthPoint { get => healthPoint; set => healthPoint = Mathf.Clamp(value, 0, MaxHealth); }
+    public float MaxHealth { 
+        get => maxHealth; 
+        set {
+        maxHealth = Mathf.Max(0, value);  
+        if (healthPoint > maxHealth)
+            healthPoint = maxHealth;   
+        } 
+    }
+
+
+    [Header("面向")]
+    [SerializeField]private Vector2 faceOn;
+    public Vector2 FaceOn { get => faceOn; set => faceOn = value; }
+
+    [Header("受擊冷卻")]
+    [SerializeField]private float maxHitCD;
+    [SerializeField]private float hitCD;
+    public float MaxHitCD { get => maxHitCD; set => maxHitCD = value; }
+    public float HitCD { get => hitCD; set => hitCD = value; }
+
+    [Header("攻擊力")]
+    [SerializeField]private float attackPower;
+    public float AttackPower { get => attackPower; set => attackPower = value; }
+
+    [Header("防禦力")]
+    [SerializeField]private float defense;
+    public float Defense { get => defense; set => defense = value; }
+
+    [Header("攻擊延遲")]
+    [SerializeField]private float attackDelay;
+    public float AttackDelay { get => attackDelay; set => attackDelay = value; }
+
+    [Header("經驗值給予")]
+    [SerializeField]private int experiencePoint;
+    public int ExperiencePoint { get => experiencePoint; set => experiencePoint = value; }
+    [Header("移動力")]
+    public float MoveforceMultplier;
+    [Header("暈眩時間")]
+    public float stunTime;
+        [Header("氣力")]
+    public float maxTenacity;
+    public float tenacityPoint;
     [Header("辨別敵友")]
     public Vector2 checkSize;
     public Vector2 Offset;
@@ -27,39 +69,10 @@ public class Enemy : MonoBehaviour
     public Transform enemyTransform;
     public Vector2 enemyPosition;
     public LayerMask teamLayer;
-    [Header("身體數值")]  
-    [Header("最大血量")]
-    public float maxHealth;
-    public float healthPoint;
-    [Header("受擊冷卻")]
-    public float maxHitCD;
-    public float hitCD;
-    [Header("攻擊力")]
-    public float attackPower;
-    [Header("防禦力")]
-    public float defense;
-    [Header("攻擊延遲")]
-    public float attackDelay;
-    [Header("經驗值給予")]
-    public int ExperiencePoint;
-    [Header("移動力")]
-    public float MoveforceMultplier;
-    [Header("暈眩時間")]
-    public float stunTime;
-        [Header("氣力")]
-    public float maxTenacity;
-    public float tenacityPoint;
-    [Header("計時器")]
-    [HideInInspector]public float moveRecovery;
+    [Header("恢復移動")]
     public float maxMoveRecovery;
-    [Tooltip("是否正在回復移動")]
+    [HideInInspector]public float moveRecovery;
     public bool isMoveRecovery;
-    [Header("追擊時間")]
-    public float chaseTime;
-    [HideInInspector]public float chasingTimeCount;
-    [HideInInspector]public float stuningTimeCount;
-    [HideInInspector]public float attackDelayCount;
-
     [Header("狀態")]
     [Tooltip("被打")]
     public bool wasHited;
@@ -79,6 +92,8 @@ public class Enemy : MonoBehaviour
     public bool readyToattack;
     [Tooltip("被打硬直了")]
     public bool isknockback;
+    [Header("額外設定")]
+    public bool canHurtDisplacement;
 
     [Header("廣播")]
     public PositionEventSO HurtEffect;
@@ -86,6 +101,14 @@ public class Enemy : MonoBehaviour
     public FloatEventSO ExperienceGive;
     [Header("接收")]
     public VoidEventSO PlayerDead;
+    [HideInInspector]public Rigidbody2D rb;
+    [HideInInspector]public PhysicCheck physicCheck;
+    [HideInInspector]public Animator anim;
+    [Header("計時器")]
+    public float stuningTimeCount;
+    public float chasingTimeCount;
+    public float attackDelayCount;
+    public UnityEvent<Transform> onTakeDamage;
 
     protected virtual void Awake() {
         rb = GetComponent<Rigidbody2D> ();
@@ -99,13 +122,13 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void OnEnable() {
         canMove_playerDead = true; 
-        healthPoint= maxHealth;
+        HealthPoint= MaxHealth;
         tenacityPoint = maxTenacity;               
                    //敵人_觸發進入代碼
     }
     protected virtual void Update() {
         
-        faceOn = new Vector2((int)transform.localScale.x,transform.localScale.y);           //敵人_面向
+        FaceOn = new Vector2((int)transform.localScale.x,transform.localScale.y);           //敵人_面向
 
     }
     protected virtual void FixedUpdate() {
@@ -120,7 +143,7 @@ public class Enemy : MonoBehaviour
     public virtual void TakeTenacityDamage(float TenacityDamage,float TenacityDamageRateBoost){
     }
     public virtual void HurtDisplacement(Transform attackTransform, Vector2 attackDisplaces){//受擊偏移
-        
+        if(!canHurtDisplacement) return;
         rb.velocity = Vector2.zero;
         int HurtDirection;
         if(rb.transform.position.x - attackTransform.position.x > 0){
@@ -147,11 +170,11 @@ public class Enemy : MonoBehaviour
     public void DestoryGB(){
         Destroy(gameObject);
     }  
-        public virtual bool FoundEnemy(){
-            return false;
-        }
+    public virtual bool FoundEnemy(){
+        return false;
+    }
     public void CheckKnockback(){
-        if(wasHited&&!physicCheck.isGround){
+        if(wasHited&&!physicCheck.IsGround){
             isknockback = true;
         }
     }

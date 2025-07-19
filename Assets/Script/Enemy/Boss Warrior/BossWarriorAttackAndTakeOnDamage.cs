@@ -11,7 +11,7 @@ public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
 
     public void OnEnable() {
         enemy = GetComponentInParent<BossWarriorEnemy>();
-        var atk = enemy.attackPower;
+        var atk = enemy.AttackPower;
         AATD.attackDamage=(float)atk*AATD.attackMultiplier;
     }
     public override void OnTakeDamage(Transform transform, float attack, Vector2 attackDisplaces, int AttackStrength, float TenacityDamage, float TenacityDamageRate)
@@ -20,20 +20,20 @@ public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
         base.OnTakeDamage(transform, attack, attackDisplaces, AttackStrength, TenacityDamage, TenacityDamageRate);
         if(enemy.wasHited)return;
         TakeTenacityDamage(attack,TenacityDamage,TenacityDamageRate);
-        if(enemy.healthPoint-attack>0){
+        if(enemy.HealthPoint-attack>0){
             enemy.HurtEffect.RaiseEvent(enemy.transform.position+new Vector3(0,0.5f,0));
             AttackScene.GetInstance().HitPause(AttackStrength);
             CamaeraControl.GetInstance().CameraShake(attackDisplaces);
             enemy.anim.SetTrigger("Hurt");
-            enemy.healthPoint-=attack-enemy.defense;
-            if(enemy.healthPoint < enemy.maxHealth/2) enemy.ChangeStage();
+            enemy.HealthPoint-=attack-enemy.Defense;
+            if(enemy.HealthPoint < enemy.MaxHealth/2) enemy.ChangeStage();
             enemy.wasHited=true;
             enemy.isMoveRecovery = true;
             enemy.attacking= false;
             //canMove=false;
             enemy.moveRecovery = enemy.maxMoveRecovery;
-            enemy.hitCD = enemy.maxHitCD;
-            enemy.BossHealthChange.RaiseEvent(enemy.maxHealth,enemy.healthPoint);
+            enemy.HitCD = enemy.MaxHitCD;
+            enemy.BossHealthChange.RaiseEvent(enemy.MaxHealth,enemy.HealthPoint);
             if(attack>0){
                enemy.onTakeDamage?.Invoke(transform); 
                enemy.HurtDisplacement(transform,attackDisplaces);
@@ -41,9 +41,9 @@ public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
             
 
         }else{
-            enemy.healthPoint = 0;
+            enemy.HealthPoint = 0;
             CamaeraControl.GetInstance().CameraShake(attackDisplaces);
-            enemy.BossHealthChange.RaiseEvent(enemy.maxHealth,enemy.healthPoint);
+            enemy.BossHealthChange.RaiseEvent(enemy.MaxHealth,enemy.HealthPoint);
             enemy.Dead();
         //    AttackScene.GetInstance().HitPause(AttackStrength+10f);
         }
@@ -67,7 +67,7 @@ public class BossWarriorAttackAndTakeOnDamage : AttackAndTakeOnDamage
             enemy.tenacityPoint = 0; 
             var Damage = attack*TenacityDamageRateBoost;
             //TODO:減去內功防禦
-            enemy.healthPoint -=Damage;
+            enemy.HealthPoint -=Damage;
         }
        // enemy.TenacityUIChange();
     }

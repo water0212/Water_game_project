@@ -68,7 +68,6 @@ public class PlayerControler : MonoBehaviour
     public bool isHanging;
     public bool isFailing;
     [Header("鏡頭控制")]
-    [SerializeField] private CameraFollowObject _cameraConrol;
     [SerializeField] private GameObject CameraFloowObject;
     private float _fallSpeedYDampingChangeThreshold;
     [Header("除錯")]
@@ -110,7 +109,6 @@ public class PlayerControler : MonoBehaviour
     private void Start(){
         //inputAction.GamePlayer.Enable();
         _fallSpeedYDampingChangeThreshold = CameraManager.instence._fallSpeedYDampingChangeThreshold;
-        _cameraConrol = CameraFollowObject.GetInstance();
         originGravity = rb2D.gravityScale;
     }
     private void OnDisable() {
@@ -154,12 +152,12 @@ public class PlayerControler : MonoBehaviour
             Vector3 rotator = new Vector3(transform.rotation.x, 180f , transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             faceOn = -1;
-            _cameraConrol.CallTurn();
+            CameraFollowObject.GetInstance().CallTurn();
         }else{
             Vector3 rotator = new Vector3(transform.rotation.x, 0 , transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             faceOn = 1;
-            _cameraConrol.CallTurn();
+            CameraFollowObject.GetInstance().CallTurn();
         }
     }
     #endregion
@@ -171,7 +169,7 @@ public class PlayerControler : MonoBehaviour
         FaceOnCheck();
         JumpInitialControl();
         if(isJumping && !isCancelJump)JumpCancel();
-        if(physicCheck.isGround&&rb2D.velocity.y<= 0.1 && !isHanging){
+        if(physicCheck.IsGround&&rb2D.velocity.y<= 0.1 && !isHanging){
         canJumpTimes=MaxJumpTimes;   
         isJumping = false; // 停止跳躍
         
@@ -276,7 +274,7 @@ public class PlayerControler : MonoBehaviour
     #region 翻滾
     private void Roll(InputAction.CallbackContext context)
     {
-        if(isRolling||!physicCheck.isGround||character.RollTimes<=0)
+        if(isRolling||!physicCheck.IsGround||character.RollTimes<=0)
         return;
         //isRolling = true;
         //character.isInvincible = true;
@@ -290,7 +288,7 @@ public class PlayerControler : MonoBehaviour
     }
     #endregion
     private void CheckState(){
-        rb2D.sharedMaterial = physicCheck.isGround?normalPhysicsState:jumpPhysicsState;
+        rb2D.sharedMaterial = physicCheck.IsGround?normalPhysicsState:jumpPhysicsState;
     }
     #region 攻擊時間計算
     public void AttackCombo(){

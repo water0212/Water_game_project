@@ -17,8 +17,8 @@ public class SkillManager : MonoBehaviour
     public string LeftControlButton = "q";
     public string RightControlButton = "e";
 
-    public SkillSlotGroup Skill_Q = new SkillSlotGroup();
-    public SkillSlotGroup Skill_E = new SkillSlotGroup();
+    public SkillSlotGroup Skill_Q;
+    public SkillSlotGroup Skill_E ;
 
     public static bool isUsingSkill = false;
     private bool skillFinish = false;

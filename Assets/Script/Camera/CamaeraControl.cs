@@ -21,7 +21,7 @@ public class CamaeraControl : MonoBehaviour
     private void Start() {
         GetNewBound();
     }
-    private void GetNewBound(){
+    public void GetNewBound(){
         currentCamera = CameraManager.instence.currentCamera;
         var obj = GameObject.FindGameObjectWithTag("Bounds");
         if(obj == null){

@@ -31,7 +31,7 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
             DashTimes = 3;
         }   
         currentEnemy.wasHitedTimesCountInThisState = 0;
-        attackDelay = currentEnemy.attackDelay;
+        attackDelay = currentEnemy.AttackDelay;
         isExitThisState = false ;
         ActiveDash = false ;
     }
@@ -40,7 +40,7 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
             currentEnemy.ChaseEnemy(true);
             if (DashTimes>0 && currentEnemy.playerDistance_x >8){
                 currentEnemy.canChangeState = false;
-                currentEnemy.attackDelay = 0.5f;
+                currentEnemy.AttackDelay = 0.5f;
                 currentEnemy.SwitchState(WarriorBossstate.CroushAndAttackTwoTimesState);
             }else{
             currentEnemy.canChangeState = false; 
@@ -65,7 +65,7 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
         if(isExitThisState) return;
         if(ActiveDash){
             currentEnemy.ChaseEnemy(true);
-            if(currentEnemy.playerDistance_x < 1 || currentEnemy.physicCheck.touchWall == true){
+            if(currentEnemy.playerDistance_x < 1 || currentEnemy.physicCheck.TouchWall == true){
                 Debug.Log("停止");
                 currentEnemy.rb.gravityScale = 45;
                 currentEnemy.anim.SetTrigger("Stop!");
@@ -86,12 +86,12 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
         ActiveDash = true;
         currentEnemy.anim.SetTrigger("Dash!");
         Debug.Log(dashForce+"衝刺");
-        currentEnemy.rb.AddForce(new Vector2(dashForce*currentEnemy.faceOn.x, 0),ForceMode2D.Impulse);
+        currentEnemy.rb.AddForce(new Vector2(dashForce*currentEnemy.FaceOn.x, 0),ForceMode2D.Impulse);
     }
     private void SummonGhost(){
         Debug.Log("召喚GHOST");
         summonedOB = UnityEngine.Object.Instantiate(currentEnemy.Ghost,orignalPos+new Vector3(0,0.5f,0), Quaternion.identity);
-        summonedOB.GetComponent<Rigidbody2D>().AddForce(new Vector2(dashForce*0.7f*currentEnemy.faceOn.x, 0),ForceMode2D.Impulse);
+        summonedOB.GetComponent<Rigidbody2D>().AddForce(new Vector2(dashForce*0.7f*currentEnemy.FaceOn.x, 0),ForceMode2D.Impulse);
         summonedOB.GetComponent<BossSummonItemAttackAndOnTakeDamage>().Initialize(currentEnemy);
         isGhostLive = true;
     }
@@ -106,11 +106,11 @@ public class BossWarrior_CroushAndAttackTwoTimesState : BaseState<BossWarriorEne
     private WarriorBossstate StateChoose()
     {   currentEnemy.ChaseEnemy();
         if(currentEnemy.playerDistance_x<5 || currentEnemy.playerDistance_y >2){
-        currentEnemy.attackDelay = 2.5f;
+        currentEnemy.AttackDelay = 2.5f;
         return WarriorBossstate.FollowPlayerAndAttackState;
         }
         else if (currentEnemy.playerDistance_x >5 || currentEnemy.playerDistance_x<30){
-            currentEnemy.attackDelay = 3.5f;
+            currentEnemy.AttackDelay = 3.5f;
             return WarriorBossstate.DashAndDashAttackState;
         }
         return WarriorBossstate.BaseState;

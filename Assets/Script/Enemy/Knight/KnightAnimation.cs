@@ -19,7 +19,7 @@ public class KnightAnimation : MonoBehaviour
     private void Update() {
         anim.SetFloat("VelocityY",rb.velocity.y);
         anim.SetFloat("VelocityX",Math.Abs(rb.velocity.x));
-        anim.SetBool("IsGround",physicCheck.isGround);
+        anim.SetBool("IsGround",physicCheck.IsGround);
         anim.SetBool("IsHurt",knight.wasHited);
     }
     public void Hurt(){

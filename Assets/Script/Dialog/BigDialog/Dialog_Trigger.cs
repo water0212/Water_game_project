@@ -40,7 +40,8 @@ public class Dialog_Trigger : MonoBehaviour
         animator.SetBool("PlayerInRange", isPlayerInRange); 
         }
     }
-    public void PlayDialog(){
+    protected virtual void PlayDialog(){
         DialogManager.GetInstance().EnterDialogMode(inkJSON);
     }
+    
 }

@@ -29,7 +29,7 @@ public class Attack : MonoBehaviour
         }
         else{
         Enemy ee = GetComponentInParent<Enemy>();
-        var atk = ee.attackPower;
+        var atk = ee.AttackPower;
         attack=(float)atk*attackMultiplier;
         }
     }

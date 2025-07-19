@@ -33,7 +33,7 @@ public class SkillSlotGroup : MonoBehaviour
 
         if (currentSkill == null)
             EquipSkill(index);
-        else if (currentIndex > index)
+        else if (currentIndex >= index)
             EquipSkill(index);
     }
 
