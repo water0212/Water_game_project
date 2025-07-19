@@ -16,7 +16,10 @@ public class knightEnemy : Enemy
     protected BaseState<knightEnemy> chaseState;                  //敵人_追擊狀態
     protected BaseState<knightEnemy> currentState;                //敵人_目前狀態
     [Header("不要轉向的物件")]
-    [HideInInspector]public DontRotate DontRotateObj   ;        
+    [HideInInspector]public DontRotate DontRotateObj;
+
+    [Header("追擊時間")]
+    public float chaseTime;     
     [Header("狀態欄")]
     private GameObject StateBar;
     public RectTransform StateBarRectTransform;
@@ -113,7 +116,7 @@ public class knightEnemy : Enemy
     #endregion  
     #region 檢測敵人
         public override bool FoundEnemy(){
-            var hit = Physics2D.BoxCast(transform.position + (Vector3)Offset,checkSize,0,new Vector2(faceOn.x,0),checkDistance,enemyLayer);
+            var hit = Physics2D.BoxCast(transform.position + (Vector3)Offset,checkSize,0,new Vector2(FaceOn.x,0),checkDistance,enemyLayer);
             if(hit.collider!=null&&hit.collider.CompareTag("Player")){
                 enemyTransform = hit.transform;
                 StartCoroutine(ChaseEnemy(chaseTime));
@@ -124,7 +127,7 @@ public class knightEnemy : Enemy
     {
         Gizmos.color = UnityEngine.Color.red;
         Vector3 boxCastOrigin = transform.position + (Vector3)Offset;
-        Vector3 boxCastEnd = boxCastOrigin + new Vector3(faceOn.x,0,0).normalized * checkDistance;
+        Vector3 boxCastEnd = boxCastOrigin + new Vector3(FaceOn.x,0,0).normalized * checkDistance;
         Gizmos.DrawWireCube(boxCastOrigin, checkSize);
         Gizmos.DrawWireCube(boxCastEnd, checkSize);
     }
@@ -198,8 +201,8 @@ public class knightEnemy : Enemy
     }
     public void HitTimeCount(){
         if(wasHited){
-            hitCD-=Time.deltaTime;
-            if(hitCD<0){
+            HitCD-=Time.deltaTime;
+            if(HitCD<0){
                 wasHited=false;
             }
         }
@@ -241,7 +244,7 @@ public class knightEnemy : Enemy
     #endregion
     #region 狀態欄計算與更新
     public void   HealthUIChange(){
-        var persentage = healthPoint/maxHealth;
+        var persentage = HealthPoint/MaxHealth;
         healthBar.fillAmount = persentage; 
     }
     public void TenacityUIChange(){

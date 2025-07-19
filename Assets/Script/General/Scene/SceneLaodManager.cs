@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -11,6 +13,12 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class SceneLaodManager : MonoBehaviour
 {
+    [Header("各類管理器")]
+    [SerializeField] private CameraManager cameraManager;
+    [SerializeField] private CamaeraControl cameraControl;
+    [SerializeField] private ObjectSummonManager objectSummonManager;
+    [SerializeField] private DialogManager dialogManager;
+    [SerializeField] private InputManager inputManager;
     [Tooltip("是否要預先加載")]
     public bool FirstLoadingScene;
     public GameObject player;
@@ -47,39 +55,36 @@ public class SceneLaodManager : MonoBehaviour
     private void OnEnable() {
         count = 0f;
     }
-    private void Update() {
-        //count+= Time.deltaTime;
-        if(count > MaxCount){
-            LoadScene(testLoadScene,new Vector2(-72.1999969f,-32.7000008f));
-            count = -80f;
-        }
-    }
     public static void LoadScene(SceneRefenceSO scene, Vector2 position){
-        instance.StartCoroutine(instance.blackFadeIn(2f,scene,position));
+        instance.StartCoroutine(instance.BlackFadeIn(2f,scene,position));
     }
     private IEnumerator LoadSceneasyns(SceneRefenceSO scene , Vector2 position){
         
         sceneInstance = Addressables.LoadSceneAsync(scene.sceneRefence, LoadSceneMode.Additive);
         SceneLoading.RaiseEvent();
         yield return sceneInstance ;
+        NewLoadingEvent();
+        // 加載結束
+        SceneLoadFinish.RaiseEvent();
         player.transform.position = position;
         StartCoroutine(FadeOut(2f));
         currentScene = scene.sceneRefence;
-        SceneLoadFinish.RaiseEvent();
-        
     }
 
-    public IEnumerator blackFadeIn(float duration,SceneRefenceSO scene, Vector2 position)
+    private IEnumerator BlackFadeIn(float duration,SceneRefenceSO scene, Vector2 position)
     {
         for (float t = 0; t < duration; t += Time.deltaTime)
         {
             blackBackGround.color = new Color(0, 0, 0, t / duration);
             yield return null;
         }
-            //StartCoroutine(FadeIn(LoadImage, 1f));
+            StartCoroutine(FadeIn(LoadImage, 1f));
             LoadImage.color = new Color(LoadImage.color.r, LoadImage.color.g, LoadImage.color.b, 1);
-            Addressables.UnloadSceneAsync(currentSceneInstance);
+            var unloadHandle = Addressables.UnloadSceneAsync(currentSceneInstance);
+            yield return unloadHandle;
             StartCoroutine(LoadSceneasyns(scene, position));
+            
+            
     }
     public IEnumerator FadeIn(Image fadeImage,float duration)
     {
@@ -105,4 +110,10 @@ public class SceneLaodManager : MonoBehaviour
 {
     currentSceneInstance = temp.Result;
 }
+
+    private void NewLoadingEvent()
+    {
+        cameraControl.GetNewBound();
+        
+    }
 }

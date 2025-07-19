@@ -11,8 +11,8 @@ public class BossWarrior_StuningState : BaseState<BossWarriorEnemy>
         Debug.Log("Boss暈眩");
         currentEnemy = Enemy;
         currentEnemy.DebugLog.text = "BossWarrior_Stun";
-        currentDefense = currentEnemy.defense;
-        currentEnemy.defense = currentDefense*0.5f;
+        currentDefense = currentEnemy.Defense;
+        currentEnemy.Defense = currentDefense*0.5f;
     }
 
     public override void PhysicUpdate()
@@ -24,6 +24,6 @@ public class BossWarrior_StuningState : BaseState<BossWarriorEnemy>
 
     public override void OnExit()
     {
-        currentEnemy.defense = currentDefense;
+        currentEnemy.Defense = currentDefense;
     }
 }

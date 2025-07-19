@@ -17,7 +17,12 @@ public class CameraFollowObject : MonoBehaviour
         _PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         playerControler = _PlayerTransform.GetComponent<PlayerControler>();
         if(instance != null) {
-            Debug.LogWarning("Found more than one AttackScene in the Scene");
+            Debug.LogWarning("Found more than one FollowObj in the Scene");
+        }
+        else
+        {
+            instance = this;
+            Debug.LogWarning("Found one FollowObj in the Scene");
         }
         instance = this;
     }
@@ -52,4 +57,10 @@ public class CameraFollowObject : MonoBehaviour
         }else
         return 0;
     }
+
+    private void OnDestroy()
+    {
+        instance = null;
+    }
+    
 }

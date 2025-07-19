@@ -23,21 +23,27 @@ public class SkillUIManager : MonoBehaviour
     public Image[] lockE = new Image[3];
     public Image[] lockQ = new Image[3];
     public Sprite lockItem;
-    [Header("技能冷卻UI")]
 
-    [Header("右方技能列")]
+    [Header("E 技能列")]
     public int EquipSkill_E_Index = 0;
     public GameObject[] skill_E_CD_GameObj = new GameObject[3];
+    [Header("E 技冷卻遮罩")]
     public Image[] skill_E_CD_Icon = new Image[3];
     public Image[] skill_E_CD_BackIcon = new Image[3];
+    [Header("E 技次數文字")]
     public TextMeshProUGUI[] canUse_E = new TextMeshProUGUI[3];
-    [Header("左方技能列")]
+
+    [Header("Q 技能列")]
     public int EquipSkill_Q_Index = 0;
 
     public GameObject[] skill_Q_CD_GameObj = new GameObject[3];
+    [Header("Q 技冷卻遮罩")]
     public Image[] skill_Q_CD_Icon = new Image[3];
     public Image[] skill_Q_CD_BackIcon = new Image[3];
+    [Header("Q 技次數文字")]
     public TextMeshProUGUI[] canUse_Q = new TextMeshProUGUI[3];
+    [Header("技能綁定")]
+    private SkillUIBinder[,] _binders = new SkillUIBinder[3,2];
     [Header("獲取技能UI通知")]
     private Queue<Skill> SkillQueue;
     public GameObject getUIFrame;
@@ -49,6 +55,11 @@ public class SkillUIManager : MonoBehaviour
     private void Awake() {
         getUIAnimation = getUIFrame.GetComponent<Animator>();
         SkillQueue = new Queue<Skill>();
+        for (int i = 0; i < 3; i++)
+        {
+            _binders[i, 0] = new SkillUIBinder(skill_Q_CD_Icon[i], canUse_Q[i]);
+            _binders[i, 1] = new SkillUIBinder(skill_E_CD_Icon[i], canUse_E[i]);
+        }
     }
     private void Start() {
         UpdateSkillSlots();
@@ -189,4 +200,11 @@ public class SkillUIManager : MonoBehaviour
         getUIFrame.SetActive(false);
         QueueChecker = null;
     }
+
+    private void SubscribeSkillToUI(Skill skill, int index, bool isE )
+    {
+        var binder = _binders[index, isE ? 1 : 0];
+        binder.BindTo(skill);
+    }
 }
+

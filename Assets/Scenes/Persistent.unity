@@ -286,7 +286,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30546641}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.08200073, y: 1.75, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1784,7 +1784,7 @@ Transform:
   m_GameObject: {fileID: 331989640}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -63.82, y: -15.68, z: 0}
+  m_LocalPosition: {x: -68.3, y: -26.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1904,7 +1904,6 @@ MonoBehaviour:
   isHurt: 0
   isHanging: 0
   isFailing: 0
-  _cameraConrol: {fileID: 0}
   CameraFloowObject: {fileID: 0}
   lineDownStartOffset: 1.3
   lineDownEndOffset: 1.1
@@ -1931,10 +1930,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  isGround: 0
-  touchWall: 0
-  isOnTheFloor: 0
-  canGrabTheEdge: 0
 --- !u!95 &331989647
 Animator:
   serializedVersion: 5
@@ -2523,7 +2518,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 429603468}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.04399872, y: 1.6200008, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2782,14 +2777,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4baa609025ac97a4db44f86d0f569b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FirstLoadingScene: 0
+  cameraManager: {fileID: 1579092027}
+  cameraControl: {fileID: 1579092028}
+  objectSummonManager: {fileID: 333716756}
+  dialogManager: {fileID: 470349862}
+  inputManager: {fileID: 272687342}
+  FirstLoadingScene: 1
   player: {fileID: 331989640}
   FirstLoadScene: {fileID: 11400000, guid: 0f433eb2f5aae394691d2d7b89663967, type: 2}
   testLoadScene: {fileID: 11400000, guid: 0f433eb2f5aae394691d2d7b89663967, type: 2}
   SceneLoading: {fileID: 11400000, guid: 88eee66d56b50c74ca5c4595b4dbe17f, type: 2}
   SceneLoadFinish: {fileID: 11400000, guid: 0e5b7fe8c4f6b9746963cba28721a204, type: 2}
   currentScene:
-    m_AssetGUID: 
+    m_AssetGUID: edb39731a5185b4419e30c903dbebe50
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
@@ -4197,7 +4197,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7066e0747291df44fa5c2bf93bee3a6e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1bffd98a9f205924f85659f90f851f5f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10383,7 +10383,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1392412284}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.005996704, y: 1.8430004, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11652,7 +11652,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 11277a3f23988ec47908362d708edaa8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ec4c01ccf318e9e41879d1ddebfe06b8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

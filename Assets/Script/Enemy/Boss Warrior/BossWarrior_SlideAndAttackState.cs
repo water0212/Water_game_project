@@ -28,7 +28,7 @@ public class BossWarrior_SlideAndAttackState : BaseState<BossWarriorEnemy>
         beginingGravityScale = currentEnemy.rb.gravityScale;
         Debug.Log(SlideForce+"鏟擊");
          currentEnemy.wasHitedTimesCountInThisState = 0;
-        attackDelay = currentEnemy.attackDelay;
+        attackDelay = currentEnemy.AttackDelay;
         isExitThisState = false;
         isAttack = false;
         ActiveSlide = false;
@@ -76,10 +76,10 @@ public class BossWarrior_SlideAndAttackState : BaseState<BossWarriorEnemy>
         currentEnemy.ChaseEnemy();
         playerPosition =  currentEnemy.enemyPosition;
         currentEnemy.anim.SetTrigger("Slide!");
-        currentEnemy.rb.AddForce(new Vector2(SlideForce*currentEnemy.faceOn.x, 0),ForceMode2D.Impulse);
+        currentEnemy.rb.AddForce(new Vector2(SlideForce*currentEnemy.FaceOn.x, 0),ForceMode2D.Impulse);
     }
     private WarriorBossstate StateChoose(){
-        currentEnemy.attackDelay = 3.5f;
+        currentEnemy.AttackDelay = 3.5f;
         return WarriorBossstate.Jump;
     }
 }

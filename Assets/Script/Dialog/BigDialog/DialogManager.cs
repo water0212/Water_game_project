@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Ink.Runtime;
@@ -21,12 +22,21 @@ public class DialogManager : MonoBehaviour
     private TextMeshProUGUI[] choicesText;
 
     private Story currentStory;
+    private List<KeyValuePair<string, Action>> pendingBindings = new List<KeyValuePair<string, Action>>();
     [SerializeField]public bool dialogueIsPlaying { get ; private set; }
     private static DialogManager instance;
     
     private const string SPEAKER_TAG = "speaker";
     private const string PORTRAITS_TAG = "portrait";
     private const string LAYOUT_TAG = "layout";
+    public void BindExternalFunction(string functionName, Action fn)
+    {
+        // 加到 pending
+        pendingBindings.Add(new KeyValuePair<string, Action>(functionName, fn));
+        // 如果對話已經開始，也立即綁一次
+        if (currentStory != null)
+            currentStory.BindExternalFunction(functionName, fn);
+    }
 
     private void Awake() {
         if(instance == null){
@@ -60,6 +70,9 @@ public class DialogManager : MonoBehaviour
     }
     public void EnterDialogMode(TextAsset inkJSON){
         currentStory = new Story(inkJSON.text);
+        foreach (var kv in pendingBindings)
+            currentStory.BindExternalFunction(kv.Key, kv.Value);
+        
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         ContinueStory();
@@ -69,6 +82,8 @@ public class DialogManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        currentStory = null;
+        pendingBindings.Clear();
     }
     private void ContinueStory(){
         if(currentStory.canContinue){
@@ -109,22 +124,31 @@ public class DialogManager : MonoBehaviour
     private void DisPlayChoices(){
         List<Choice> currentChoices = currentStory.currentChoices;
 
-        if(currentChoices.Count > choices.Length){
-            Debug.LogWarning("太多選擇要放了");
+        // 1. 如果根本沒有選項，全部隱藏後直接 return
+        if (currentChoices.Count == 0){
+            for(int i = 0; i < choices.Length; i++){
+                choices[i].SetActive(false);
+            }
+            return;
         }
-        int index = 0;
 
-        foreach (Choice choice in currentChoices)
-        {
-            choices[index].gameObject.SetActive(true);
-            choicesText[index].text = choice.text;
-            index++;
+        // 2. 如果選項太多，只取前面 choices.Length 個
+        int count = Mathf.Min(currentChoices.Count, choices.Length);
+
+        // 3. 顯示並設定文字
+        for(int i = 0; i < count; i++){
+            choices[i].SetActive(true);
+            choicesText[i].text = currentChoices[i].text;
         }
-        for( int i =index; i<choices.Length; i++){
-            choices[i].gameObject.SetActive(false);
+        // 4. 多餘的按鈕全部隱藏
+        for(int i = count; i < choices.Length; i++){
+            choices[i].SetActive(false);
         }
+
+        // 5. 選中第一個（用於鍵盤／手把操作）
         StartCoroutine(SelectFirstChoice());
     }
+
 
     private IEnumerator SelectFirstChoice(){
         EventSystem.current.SetSelectedGameObject(null);
@@ -137,7 +161,7 @@ public class DialogManager : MonoBehaviour
     
     if (choicesIndex >= 0 && choicesIndex < currentStory.currentChoices.Count) {
         currentStory.ChooseChoiceIndex(choicesIndex);
-        //ContinueStory();  // 確保選擇之後繼續故事
+        ContinueStory();  // 確保選擇之後繼續故事
     } else {
         Debug.LogWarning("Invalid choice index: " + choicesIndex);
     }

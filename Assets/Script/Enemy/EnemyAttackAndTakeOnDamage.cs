@@ -9,7 +9,7 @@ public class EnemyAttackAndTakeOnDamage : AttackAndTakeOnDamage
     public EnemyCustomAttackAndTakeOnDamage AATD;
     public void OnEnable() {
         enemy = GetComponentInParent<knightEnemy>();
-        var atk = enemy.attackPower;
+        var atk = enemy.AttackPower;
         AATD.attackDamage=(float)atk*AATD.attackMultiplier;
         AATD.DamageTextSpawner = GetComponentInChildren<DamageTextSpawner>();
     }
@@ -19,18 +19,18 @@ public class EnemyAttackAndTakeOnDamage : AttackAndTakeOnDamage
         base.OnTakeDamage(transform, attack, attackDisplaces, AttackStrength, TenacityDamage, TenacityDamageRate);
         if(enemy.wasHited)return;
         TakeTenacityDamage(attack, TenacityDamage,TenacityDamageRate);
-        if(enemy.healthPoint-attack>0){
+        if(enemy.HealthPoint-attack>0){
             enemy.HurtEffect.RaiseEvent(enemy.transform.position+new Vector3(0,1.5f,0));
             AATD.DamageTextSpawner.SpawnDamageText((int)attack,enemy.transform.position);
             AttackScene.GetInstance().HitPause(AttackStrength);
             CamaeraControl.GetInstance().CameraShake(attackDisplaces);
-            enemy.healthPoint-=attack-enemy.defense;
+            enemy.HealthPoint-=attack-enemy.Defense;
             enemy.wasHited=true;
             enemy.isMoveRecovery = true;
             enemy.attacking= false;
             //canMove=false;
             enemy.moveRecovery = enemy.maxMoveRecovery;
-            enemy.hitCD = enemy.maxHitCD;
+            enemy.HitCD = enemy.MaxHitCD;
             
             if(attack>0){
                enemy.onTakeDamage?.Invoke(transform); 
@@ -39,7 +39,7 @@ public class EnemyAttackAndTakeOnDamage : AttackAndTakeOnDamage
             
 
         }else{
-            enemy.healthPoint = 0;
+            enemy.HealthPoint = 0;
             CamaeraControl.GetInstance().CameraShake(attackDisplaces);
             enemy.Dead();
         //    AttackScene.GetInstance().HitPause(AttackStrength+10f);
@@ -59,7 +59,7 @@ public class EnemyAttackAndTakeOnDamage : AttackAndTakeOnDamage
             var Damage = attack*TenacityDamageRateBoost;
             enemy.Blocked(enemy.stunTime);
             //TODO:減去內功防禦
-            enemy.healthPoint -=Damage;
+            enemy.HealthPoint -=Damage;
         }
         enemy.TenacityUIChange();
     }

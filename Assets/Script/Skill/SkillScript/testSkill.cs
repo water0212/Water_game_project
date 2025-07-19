@@ -31,6 +31,8 @@ public class testSkill : Skill
     }
     public override bool Activate(GameObject user)
     {
+        base.Activate(user);
+
         if(useCount <= 0)return false;
         useCount--;
         InitializeSkillData(user);
@@ -43,6 +45,7 @@ public class testSkill : Skill
         animator.SetTrigger("Attack");
         skillSummon.SkillFinish();
         return true;
+
     }
 
     public override void Update()

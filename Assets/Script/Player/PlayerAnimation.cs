@@ -42,7 +42,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void UpdateAnimator() {
         anim.SetFloat("VelocityX",Mathf.Abs(rb.velocity.x));
-        anim.SetBool("isGround",physicCheck.isGround);
+        anim.SetBool("isGround",physicCheck.IsGround);
         anim.SetFloat("VelocityY",rb.velocity.y);
     }
     public void HurtAnimation(){

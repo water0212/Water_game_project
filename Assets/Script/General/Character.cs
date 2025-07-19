@@ -133,7 +133,7 @@ public class Character : MonoBehaviour
     }*/
     public void ReflectEffect(Enemy attacker, Vector2 attackDisplaces, float TenacityDamage){
         var revise = attackDisplaces/2;
-        attacker.healthPoint-=1;
+        attacker.HealthPoint-=1;
         if(!isPerfectBlock){
         Vector2 vir = new Vector2(rb.transform.position.x - attacker.transform.position.x,1).normalized;
         var AttackStrength = vir*revise;

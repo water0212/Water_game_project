@@ -9,12 +9,18 @@ using UnityEngine.Events;
 public class Sign : MonoBehaviour
 {
     // Start is called before the first frame update
-    SignSpriteF signSpriteF;
+    SignSpriteF _signSpriteF;
     private void Awake() {
-        signSpriteF = GetComponent<SignSpriteF>();
-        
+        _signSpriteF = GetComponent<SignSpriteF>();
     }
 
+    private void Update()
+    {
+        if (Player_Info.GetPlayerFaceon() == 1)
+            transform.localRotation = Quaternion.Euler(new Vector3(0,0, 0));
+        else
+            transform.localRotation = Quaternion.Euler(new Vector3(0,180f, 0));
+    }
 
     //public bool canPress;
 
@@ -22,12 +28,12 @@ public class Sign : MonoBehaviour
         
 
         GameObject otherGameobject = other.gameObject;
-        signSpriteF.OnSignEvent(otherGameobject);
+        _signSpriteF.OnSignEvent(otherGameobject);
     }
     private void OnTriggerExit2D(Collider2D other) {
         
 
         GameObject otherGameobject = other.gameObject;
-        signSpriteF.OnSignEventEnd(otherGameobject);
+        _signSpriteF.OnSignEventEnd(otherGameobject);
     }
 }

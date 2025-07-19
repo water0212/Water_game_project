@@ -216,8 +216,8 @@ public class BossWarriorEnemy : Enemy
     #region 計時器
     public void HitTimeCount(){
         if(wasHited){
-            hitCD-=Time.deltaTime;
-            if(hitCD<0){
+            HitCD-=Time.deltaTime;
+            if(HitCD<0){
                 wasHited=false;
             }
         }
@@ -261,7 +261,7 @@ public class BossWarriorEnemy : Enemy
     int enemyInfront = (enemyPosition.x - transform.position.x) > 0? 2 : -2;
 
     // 檢查距離和方向
-    if (currentDistance > lastDistance && faceOn.x != enemyInfront)
+    if (currentDistance > lastDistance && FaceOn.x != enemyInfront)
     {
         Debug.LogWarning("正在遠離");
         lastDistance = currentDistance;

@@ -26,7 +26,7 @@ public class BossWarrior_FollowPlayerAndAttackState : BaseState<BossWarriorEnemy
             MoveSpeed = 15;
         }  
         Debug.Log("開扁");
-        attackDelay = currentEnemy.attackDelay;
+        attackDelay = currentEnemy.AttackDelay;
         isExitThisState = false;
         isMoving = false;
         ActiveAttack = false;
@@ -85,10 +85,10 @@ public class BossWarrior_FollowPlayerAndAttackState : BaseState<BossWarriorEnemy
     private WarriorBossstate StateChoose(){
         currentEnemy.ChaseEnemy();
         if(currentEnemy.wasHitedTimesCountInThisState > 0 || currentEnemy.lastStage){
-            currentEnemy.attackDelay = 0.5f;
+            currentEnemy.AttackDelay = 0.5f;
             return WarriorBossstate.Jump;
         }
-        currentEnemy.attackDelay = 1;
+        currentEnemy.AttackDelay = 1;
         return WarriorBossstate.BaseState;
     }
 }

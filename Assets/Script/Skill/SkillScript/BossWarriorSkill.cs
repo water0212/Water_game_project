@@ -46,7 +46,12 @@ public class BossWarriorSkill : Skill
     }
     public override bool Activate(GameObject user)
     {
+        base.Activate(user);
+        spawnPosition = CheckSpawnSkillPosition();
+        try
+        {
         if(useCount <= 0) return false;
+        NotifyActivated(this);
         useCount--;
         InitializeSkillData(user);
         user.transform.position = spawnPosition;

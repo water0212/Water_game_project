@@ -25,7 +25,7 @@ public class BossWarrior_Jump : BaseState<BossWarriorEnemy>
          JumpForce = 60;
         }   
         currentEnemy.wasHitedTimesCountInThisState = 0;
-        attackDelay = currentEnemy.attackDelay;
+        attackDelay = currentEnemy.AttackDelay;
         isExitThisState = false ;
         ActiveJump = false ;
         JumpEnd = false ;
@@ -80,18 +80,18 @@ public class BossWarrior_Jump : BaseState<BossWarriorEnemy>
     private WarriorBossstate StateChoose(){
         currentEnemy.ChaseEnemy();
         if(CroushAndAttackTwoTimesState()){
-            currentEnemy.attackDelay = 2;
+            currentEnemy.AttackDelay = 2;
             return WarriorBossstate.CroushAndAttackTwoTimesState;
         }
         if(JumpAndDashAttackState()){
-            currentEnemy.attackDelay = 1.5f;
+            currentEnemy.AttackDelay = 1.5f;
             return WarriorBossstate.JumpAndDashAttackState;
         }
         if(DashAttackChoose()||currentEnemy.lastStage){
-            currentEnemy.attackDelay = 0.5f;
+            currentEnemy.AttackDelay = 0.5f;
             return WarriorBossstate.DashAndDashAttackState;
         }
-        currentEnemy.attackDelay = 1;
+        currentEnemy.AttackDelay = 1;
         return WarriorBossstate.BaseState;
     }
 
@@ -108,7 +108,7 @@ public class BossWarrior_Jump : BaseState<BossWarriorEnemy>
         if(currentEnemy.playerDistance_x >10 && currentEnemy.playerDistance_x <20 &&currentEnemy.firstStage)
         return true;
         else if(currentEnemy.lastStage && currentEnemy.playerDistance_x >10 && currentEnemy.playerDistance_x <30){
-            currentEnemy.attackDelay -= 1f;
+            currentEnemy.AttackDelay -= 1f;
             return true;
         }
         return false ;
