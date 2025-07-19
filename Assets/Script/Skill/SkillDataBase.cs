@@ -17,6 +17,6 @@ public class SkillDatabase : ScriptableObject
     }
     public Skill GetSkillByID(int id)
     {
-        return skills.Find(skill => skill.GetId() == id);
+        return skills.Find(skill => skill.id == id);
     }
 }

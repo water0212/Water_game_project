@@ -59,16 +59,10 @@ public class BossWarriorSkill : Skill
         //user.isUsingSkill = true;
         //user.SetUsingSkill(duration);
         return true;
-        }
-        catch (System.Exception)
-        {
-            Debug.LogError("使用技能時出錯");
-            return false;
-        }
     }
     public override bool BackGroundUpdate()
     {
-        
+        if(skillSummon != null)
             if(skillSummon.skillAnimationClock[0]){
                 user.transform.position = user.transform.position + new Vector3(0,tpDistance,0);
                 skillSummon.skillAnimationClock[0] = false;
